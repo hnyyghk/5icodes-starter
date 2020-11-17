@@ -1,0 +1,6 @@
+org.springframework.boot.SpringApplicationRunListener=\
+  com._5icodes.starter.common.application.ApplicationPrepareRunListener
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com._5icodes.starter.common.CommonAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.common.CommonEnvInjector

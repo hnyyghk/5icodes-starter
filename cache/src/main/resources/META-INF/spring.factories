@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com._5icodes.starter.cache.CacheAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.cache.CacheEnvInjector
+org.springframework.boot.SpringApplicationRunListener=\
+  com._5icodes.starter.cache.JetCacheAnnotationListener

@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com._5icodes.starter.stress.StressAutoConfiguration
