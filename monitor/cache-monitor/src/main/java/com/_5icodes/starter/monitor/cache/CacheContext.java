@@ -8,4 +8,5 @@ public class CacheContext {
     private final String key;
     private CacheOperationType cacheOperationType;
     private Integer valueSize;
+    private Boolean exception;
 }

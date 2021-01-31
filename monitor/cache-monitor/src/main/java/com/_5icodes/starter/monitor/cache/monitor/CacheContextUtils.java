@@ -1,5 +1,6 @@
 package com._5icodes.starter.monitor.cache.monitor;
 
+import com._5icodes.starter.common.utils.TimeUtil;
 import com._5icodes.starter.monitor.cache.CacheContext;
 import com._5icodes.starter.monitor.cache.CacheOperationType;
 
@@ -15,7 +16,7 @@ public class CacheContextUtils {
     }
 
     private static void initContext(String key) {
-        CacheContext cacheContext = new CacheContext(System.currentTimeMillis(), key);
+        CacheContext cacheContext = new CacheContext(TimeUtil.currentTimeMillis(), key);
         CACHE_THREAD_LOCAL.set(cacheContext);
     }
 

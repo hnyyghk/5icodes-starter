@@ -24,9 +24,15 @@ public class CustomValueOperations<K, V> implements ValueOperations<K, V> {
         CacheContext cacheContext = CacheContextUtils.getCacheContext();
         T res;
         if (null != cacheContext) {
-            cacheContextConsumer.accept(cacheContext);
-            res = supplier.get();
-            CacheMetricNodeRegister.register(cacheContext);
+            try {
+                cacheContextConsumer.accept(cacheContext);
+                res = supplier.get();
+            } catch (Exception e) {
+                cacheContext.setException(true);
+                throw e;
+            } finally {
+                CacheMetricNodeRegister.register(cacheContext);
+            }
         } else {
             res = supplier.get();
         }

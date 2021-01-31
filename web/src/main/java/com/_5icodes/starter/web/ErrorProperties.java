@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 @ConfigurationProperties(prefix = WebConstants.ERROR_PREFIX)
 public class ErrorProperties implements CodeMsg {
     private Integer code = -1;
-    private String message = "似乎已断开网络连接";
+    private String message = "服务器竟然出错了";
 
     @PostConstruct
     public void postConstructMethod() {

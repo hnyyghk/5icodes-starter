@@ -12,6 +12,11 @@ public class CacheMonitorAutoConfiguration {
     }
 
     @Bean
+    public CacheMetricReporter cacheMetricReporter() {
+        return new CacheMetricReporter();
+    }
+
+    @Bean
     public RedisTemplateSerializerWrapper redisTemplateSerializerWrapper() {
         return new RedisTemplateSerializerWrapper();
     }
