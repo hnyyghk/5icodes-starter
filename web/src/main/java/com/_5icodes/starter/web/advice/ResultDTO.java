@@ -6,14 +6,12 @@ import com._5icodes.starter.common.utils.SpringUtils;
 import com._5icodes.starter.web.SuccessProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @ToString
 @EqualsAndHashCode
 public class ResultDTO<T> {
-    @Setter
     private String reqId;
     private final Integer code;
     private final String message;
@@ -57,5 +55,9 @@ public class ResultDTO<T> {
     protected ResultDTO(Integer code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    protected void setReqId(String reqId) {
+        this.reqId = reqId;
     }
 }

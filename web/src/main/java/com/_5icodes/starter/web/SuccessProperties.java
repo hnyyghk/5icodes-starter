@@ -2,11 +2,11 @@ package com._5icodes.starter.web;
 
 import com._5icodes.starter.common.exception.CodeMsg;
 import com._5icodes.starter.common.exception.CodeMsgRegistry;
-import com._5icodes.starter.common.utils.SpringUtils;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 @Data
 @ConfigurationProperties(prefix = WebConstants.SUCCESS_PREFIX)
@@ -16,6 +16,11 @@ public class SuccessProperties implements CodeMsg {
 
     @PostConstruct
     public void postConstructMethod() {
-        CodeMsgRegistry.register(SpringUtils.getBean(SuccessProperties.class));
+        CodeMsgRegistry.register(this);
+    }
+
+    @PreDestroy
+    public void preDestroyMethod() {
+        CodeMsgRegistry.deRegister(this);
     }
 }
