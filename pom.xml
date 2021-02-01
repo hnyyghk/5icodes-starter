@@ -30,6 +30,7 @@
         <jackson.version>2.11.3</jackson.version>
         <jetcache.version>2.6.0</jetcache.version>
         <apollo.version>1.3.0</apollo.version>
+        <guava.version>20.0</guava.version>
     </properties>
 
     <dependencies>
@@ -100,6 +101,12 @@
                 <groupId>com.5icodes</groupId>
                 <artifactId>web</artifactId>
                 <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
 
             <dependency>

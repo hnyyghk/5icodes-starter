@@ -10,6 +10,7 @@ import com.alicp.jetcache.anno.CreateCache;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,13 @@ import java.util.Date;
 public class TestController {
     @Autowired
     private RedisTemplate redisTemplate;
+    @Value("${testApollo:123}")
+    private String testApollo;
+
+    @GetMapping("/apollo")
+    public String testApollo() {
+        return testApollo;
+    }
 
     @PostMapping("/test")
     public Object test() {

@@ -1,2 +1,4 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.apollo.ApolloEnvInjector
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com._5icodes.starter.apollo.ApolloAutoConfiguration
