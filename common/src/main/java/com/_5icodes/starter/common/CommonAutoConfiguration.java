@@ -18,6 +18,11 @@ public class CommonAutoConfiguration {
     }
 
     @Bean
+    public TraceUtils traceUtils() {
+        return new TraceUtils();
+    }
+
+    @Bean
     public CachingMetadataReaderFactoryProvider cachingMetadataReaderFactoryProvider(ApplicationContext context) throws Exception {
         return new CachingMetadataReaderFactoryProvider(context);
     }

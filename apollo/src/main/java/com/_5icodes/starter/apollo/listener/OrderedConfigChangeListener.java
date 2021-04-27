@@ -1,5 +1,7 @@
 package com._5icodes.starter.apollo.listener;
 
+import brave.ScopedSpan;
+import com._5icodes.starter.common.utils.TraceUtils;
 import com.ctrip.framework.apollo.ConfigChangeListener;
 import com.ctrip.framework.apollo.model.ConfigChange;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
@@ -23,9 +25,14 @@ public class OrderedConfigChangeListener {
     }
 
     public void onChange(ConfigChangeEvent changeEvent) {
-        logValChange(changeEvent);
-        for (ConfigChangeListener listener : listeners) {
-            listener.onChange(changeEvent);
+        ScopedSpan span = TraceUtils.span("apollo-config");
+        try {
+            logValChange(changeEvent);
+            for (ConfigChangeListener listener : listeners) {
+                listener.onChange(changeEvent);
+            }
+        } finally {
+            span.finish();
         }
     }
 
