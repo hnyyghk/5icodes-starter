@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: test
+test: test
+testApollo: ENC(IyyA1qUGhf0iUugTGPdrbBdOa3hIVkNhLfFW95gwutH2Suwx80i+a1f2uoxY4OSC)
+server:
+  port: 8000
+#  　　1. 配置文件分类
+#  　　　　A. 按作用分类
+#  　　　　　　application：用于spring boot项目的自动化配置；
+#  　　　　　　bootstrap：由父ApplicationContext加载的，比applicaton优先加载，且boostrap里面的属性不能被覆盖；
+#  　　　　B. 按格式分类：
+#  　　　　　　.properties：数据无序，数据类型单一；
+#  　　　　　　.yml： 数据有序，数据类型多样化，支持数组[]，对象{}，集合-，map等；
+#  　　2. 配置文件默认位置及执行顺序
+#  　　　　A. 项目根目录下的config目录下：最先加载；
+#  　　　　B. 项目根目录下：第二加载；
+#  　　　　C. resources目录下的config目录下：第三加载；
+#  　　　　D. resources目录下(application.properties默认位置)：最后加载；
+#  　　　　当然可以通过spring.config.location自定义配置文件位置，通过spring.config.name自定义文件名。
+#  2. 配置属性读取方式
+#  　　A. @ConfigurationProperties注解(适用于配置属性较多的情况)
+#  　　　　首先要在main方法启动类上加@EnableConfigurationProperties，然后在自定义bean上加@ConfigurationProperties注解。
+#  　　B. @Value注解(适用于配置属性较少的情况)
+#  　　　　I. @Value(${property:defaultValue})：配置文件里对应的属性，defaultValue为属性为空时默认值，若属性没有且默认值没有，类启动就会报错
+#  　　　　II. @Value(#{obj.property?:defaultValue})：SPEL表达式对应的内容，obj代表对象
+#  　　　　III. @Value的处理器StringValueResolver初始化时机是PropertySourcesPlaceholderConfigurer类postProcessBeanFactory方法中，而处理@Value属性解析的时机是在getBean中的处理依赖resolveDependency方法中

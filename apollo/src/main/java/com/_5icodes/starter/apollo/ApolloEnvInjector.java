@@ -29,7 +29,7 @@ public class ApolloEnvInjector extends AbstractProfileEnvironmentPostProcessor i
         super.onAllProfiles(env, application);
     }
 
-    private void processEnableApolloConfig(ConfigurableEnvironment env, SpringApplication application) {
+    protected void processEnableApolloConfig(ConfigurableEnvironment env, SpringApplication application) {
         if (env.containsProperty(PropertySourcesConstants.APOLLO_BOOTSTRAP_NAMESPACES)) {
             return;
         }
@@ -55,14 +55,40 @@ public class ApolloEnvInjector extends AbstractProfileEnvironmentPostProcessor i
         namespaces.addAll(ApolloUtils.preLoadPublicNamespaces());
     }
 
-    private void setApolloMetaLocation(ConfigurableEnvironment env, String apolloMetaLocation) {
-        //本地使用docker-quick-start时需手动配置VM options为-Dapollo.configService=http://localhost:8080，配置apollo.meta拉取的是容器内网IP
-        PropertySourceUtils.put(env, "apollo.meta", apolloMetaLocation);
+    /**
+     * @see https://github.com/ctripcorp/apollo/wiki/Java客户端使用指南#五本地开发模式
+     */
+    @Override
+    protected void onIntegrationTest(ConfigurableEnvironment env, SpringApplication application) {
+        System.setProperty("env", "LOCAL");
+        super.onIntegrationTest(env, application);
     }
 
     @Override
+    protected void onDev(ConfigurableEnvironment env, SpringApplication application) {
+        setApolloMetaLocation(env, "http://localhost:8080");
+        //本地使用docker-quick-start不修改任何配置时需手动配置VM options为-Dapollo.configService=http://localhost:8080，仅配置apollo.meta拉取的是容器内网IP
+        System.setProperty("apollo.configService", "http://localhost:8080");
+        super.onDev(env, application);
+    }
+
+    @Override
+    protected void onPrd(ConfigurableEnvironment env, SpringApplication application) {
+        setApolloMetaLocation(env, "http://113.104.209.69/apolloConfig");
+        super.onPrd(env, application);
+    }
+
+    protected void setApolloMetaLocation(ConfigurableEnvironment env, String apolloMetaLocation) {
+        PropertySourceUtils.put(env, "apollo.meta", apolloMetaLocation);
+    }
+
+    /**
+     * 比apollo优先级高
+     *
+     * @see com.ctrip.framework.apollo.spring.boot.ApolloApplicationContextInitializer#getOrder()
+     */
+    @Override
     public int getOrder() {
-        //比apollo优先级高
         return -1;
     }
 }

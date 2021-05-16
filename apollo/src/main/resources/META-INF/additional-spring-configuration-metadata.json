@@ -1,0 +1,25 @@
+{
+  "properties": [
+    {
+      "name": "apollo.bootstrap.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "enable or disable apollo autoConfiguration on spring bootstrap."
+    },
+    {
+      "name": "app.id",
+      "type": "java.lang.String",
+      "description": "unique app id of the application."
+    },
+    {
+      "name": "apollo.bootstrap.namespaces",
+      "type": "java.lang.String",
+      "description": "apollo namespaces include private and public, separate by comma."
+    },
+    {
+      "name": "apollo.meta",
+      "type": "java.lang.String",
+      "description": "apollo meta server url."
+    }
+  ]
+}
