@@ -86,10 +86,4 @@ public class SpringApplicationUtils {
     public void setApplicationName(String appName) {
         applicationName = appName;
     }
-
-    public String getApplicationName(ConfigurableEnvironment env) {
-        String appName = env.getProperty("spring.application.name");
-        Assert.notNull(appName, "spring.application.name must not be null");
-        return appName;
-    }
 }

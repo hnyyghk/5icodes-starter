@@ -7,7 +7,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 public class TestEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     @Override
-    protected void onLocal(ConfigurableEnvironment env, SpringApplication application) {
+    protected void onDev(ConfigurableEnvironment env, SpringApplication application) {
         System.out.println(PropertySourceUtils.get(env,"test"));
         System.out.println(PropertySourceUtils.getPriority(env,"test"));
         System.out.println(env.getProperty("test"));
@@ -32,6 +32,6 @@ public class TestEnvInjector extends AbstractProfileEnvironmentPostProcessor {
         System.out.println(PropertySourceUtils.getPriority(env,"test"));
         System.out.println(env.getProperty("test"));
         System.out.println("----------------------");
-        super.onLocal(env, application);
+        super.onDev(env, application);
     }
 }

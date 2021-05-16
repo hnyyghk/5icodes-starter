@@ -5,11 +5,9 @@ import com._5icodes.starter.common.CommonConstants;
 import com._5icodes.starter.common.exception.MissingModuleException;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -35,14 +33,6 @@ public class ApplicationPrepareRunListener extends ApplicationRunListenerAdapter
         setDefaultActiveProfile(environment);
         injectBasePackages2Environment(environment);
         super.doEnvironmentPrepared(environment);
-    }
-
-    @Override
-    protected void doContextPrepared(ConfigurableApplicationContext context) {
-        String appName = context.getEnvironment().getProperty("spring.application.name");
-        Assert.notNull(appName, "spring.application.name must not be null");
-        SpringApplicationUtils.setApplicationName(appName);
-        super.doContextPrepared(context);
     }
 
     private void injectBasePackages2Environment(ConfigurableEnvironment environment) {

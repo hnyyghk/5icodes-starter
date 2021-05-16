@@ -19,7 +19,7 @@ import java.util.Set;
 public class ApolloEnvInjector extends AbstractProfileEnvironmentPostProcessor implements Ordered {
     @Override
     protected void onAllProfiles(ConfigurableEnvironment env, SpringApplication application) {
-        String appName = SpringApplicationUtils.getApplicationName(env);
+        String appName = SpringApplicationUtils.getApplicationName();
         PropertySourceUtils.put(env, PropertySourcesConstants.APOLLO_BOOTSTRAP_ENABLED, true);
         PropertySourceUtils.put(env, PropertySourcesConstants.APOLLO_BOOTSTRAP_EAGER_LOAD_ENABLED, true);
         PropertySourceUtils.put(env, "app.id", appName);
