@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.jasypt.JasyptEnvInjector

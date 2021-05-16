@@ -19,6 +19,7 @@
         <module>cache</module>
         <module>common</module>
         <module>demo</module>
+        <module>jasypt</module>
         <module>monitor</module>
         <module>stress</module>
         <module>web</module>
@@ -86,6 +87,12 @@
             <dependency>
                 <groupId>com.5icodes</groupId>
                 <artifactId>common</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
+                <artifactId>jasypt</artifactId>
                 <version>${starter.version}</version>
             </dependency>
 
