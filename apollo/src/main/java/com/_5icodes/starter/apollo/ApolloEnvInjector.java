@@ -41,7 +41,8 @@ public class ApolloEnvInjector extends AbstractProfileEnvironmentPostProcessor i
     }
 
     private void addNamespacesOnAnnotation(SpringApplication application, Set<String> namespaces) {
-        EnableApolloConfig apolloConfig = SpringApplicationUtils.getBootApplicationClass(application).getAnnotation(EnableApolloConfig.class);
+        Class<?> bootApplicationClass = SpringApplicationUtils.getBootApplicationClass(application);
+        EnableApolloConfig apolloConfig = bootApplicationClass.getAnnotation(EnableApolloConfig.class);
         if (null == apolloConfig || ArrayUtils.isEmpty(apolloConfig.value())) {
             return;
         }
