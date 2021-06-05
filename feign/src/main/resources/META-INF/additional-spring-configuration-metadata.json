@@ -1,0 +1,73 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "name": "auth properties",
+      "type": "com._5icodes.starter.feign.auth.BasicAuthProperties",
+      "sourceType": "com._5icodes.starter.feign.auth.BasicAuthProperties"
+    },
+    {
+      "name": "feign.httpclient",
+      "type": "com._5icodes.starter.feign.CustomFeignHttpClientProperties",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com._5icodes.starter.feign.auth.BasicAuthProperties",
+      "name": "feign.auth.userName",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.feign.auth.BasicAuthProperties",
+      "name": "feign.auth.password",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "feign.httpclient.connection-request-timeout",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties",
+      "defaultValue": 1000
+    },
+    {
+      "name": "feign.httpclient.connection-timeout",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties"
+    },
+    {
+      "name": "feign.httpclient.connection-timer-repeat",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties"
+    },
+    {
+      "name": "feign.httpclient.disable-ssl-validation",
+      "type": "java.lang.Boolean",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties"
+    },
+    {
+      "name": "feign.httpclient.follow-redirects",
+      "type": "java.lang.Boolean",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties"
+    },
+    {
+      "name": "feign.httpclient.max-connections",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties"
+    },
+    {
+      "name": "feign.httpclient.max-connections-per-route",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties"
+    },
+    {
+      "name": "feign.httpclient.time-to-live",
+      "type": "java.lang.Long",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties"
+    },
+    {
+      "name": "feign.httpclient.time-to-live-unit",
+      "type": "java.util.concurrent.TimeUnit",
+      "sourceType": "com._5icodes.starter.feign.CustomFeignHttpClientProperties"
+    }
+  ]
+}

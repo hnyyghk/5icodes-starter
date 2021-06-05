@@ -15,7 +15,7 @@ public class JsonUtils {
     private static final ObjectMapper objectMapper = SpringUtils.getBean(ObjectMapper.class);
     private static final ObjectMapper objectMapperWithOutLowerCase = objectMapper.copy().setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     private static final ObjectMapper objectMapperIncludeTypeInfo = objectMapper.copy().setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
-            //enableDefaultTyping方法已过期，在比较老的博客中，踩了坑用activateDefaultTyping替代
+            //enableDefaultTyping方法已过期, 在比较老的博客中, 踩了坑用activateDefaultTyping替代
             //.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
             .activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.EVERYTHING, JsonTypeInfo.As.PROPERTY);
 

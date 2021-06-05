@@ -68,7 +68,7 @@ public class ApolloEnvInjector extends AbstractProfileEnvironmentPostProcessor i
     @Override
     protected void onDev(ConfigurableEnvironment env, SpringApplication application) {
         setApolloMetaLocation(env, "http://localhost:8080");
-        //本地使用docker-quick-start不修改任何配置时需手动配置VM options为-Dapollo.configService=http://localhost:8080，仅配置apollo.meta拉取的是容器内网IP
+        //本地使用docker-quick-start不修改任何配置时需手动配置VM options为-Dapollo.configService=http://localhost:8080, 仅配置apollo.meta拉取的是容器内网IP
         System.setProperty("apollo.configService", "http://localhost:8080");
         super.onDev(env, application);
     }

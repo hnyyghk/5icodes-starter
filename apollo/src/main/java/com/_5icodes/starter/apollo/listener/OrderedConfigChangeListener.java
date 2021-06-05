@@ -25,11 +25,11 @@ public class OrderedConfigChangeListener {
     }
 
     /**
-     * 优先触发EnvironmentChangeEvent，因为可以触发Environment的连锁更新，譬如jasypt解密
+     * 优先触发EnvironmentChangeEvent, 因为可以触发Environment的连锁更新, 譬如jasypt解密
      * @see com.ulisesbocchio.jasyptspringboot.caching.RefreshScopeRefreshedEventListener#onApplicationEvent(ApplicationEvent)
      * 另外该事件会触发ConfigurationProperties的rebind
      * @see org.springframework.cloud.context.properties.ConfigurationPropertiesRebinder#onApplicationEvent(EnvironmentChangeEvent)
-     * 然后触发RefreshScope刷新，因为可能将要刷新的bean依赖rebind properties
+     * 然后触发RefreshScope刷新, 因为可能将要刷新的bean依赖rebind properties
      * @see com._5icodes.starter.apollo.listener.RefreshScopeConfigChangeListener#onChange(ConfigChangeEvent)
      * 最后触发AutoUpdateConfigChangeListener刷新@Value注解的变量
      *

@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com._5icodes.starter.feign.FeignAutoConfiguration
+org.springframework.boot.SpringApplicationRunListener=\
+  com._5icodes.starter.feign.FeignAnnotationListener
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.feign.FeignEnvInjector
