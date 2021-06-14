@@ -1,0 +1,38 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "name": "mock",
+      "type": "com._5icodes.starter.stress.feign.test.remote.MockProperties",
+      "sourceType": "com._5icodes.starter.stress.feign.test.remote.MockProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "mock.api-defines",
+      "type": "java.util.List<com._5icodes.starter.stress.feign.test.remote.MockApiDefine>",
+      "description": "mock api define.",
+      "sourceType": "com._5icodes.starter.stress.feign.test.remote.MockProperties"
+    },
+    {
+      "name": "mock.enable",
+      "type": "java.lang.Boolean",
+      "description": "enable mock.",
+      "sourceType": "com._5icodes.starter.stress.feign.test.remote.MockProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "mock.server",
+      "type": "java.lang.String",
+      "description": "mock server address.",
+      "sourceType": "com._5icodes.starter.stress.feign.test.remote.MockProperties"
+    },
+    {
+      "name": "mock.timeout",
+      "type": "java.lang.Long",
+      "description": "mock timeout.",
+      "sourceType": "com._5icodes.starter.stress.feign.test.remote.MockProperties",
+      "defaultValue": 50
+    }
+  ]
+}

@@ -32,12 +32,20 @@ import java.util.Date;
 public class TestController {
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private TestFeign testFeign;
+
     @Value("${testApollo:123}")
     private String testApollo;
 
     @GetMapping("/apollo")
     public String testApollo() {
         return testApollo;
+    }
+
+    @GetMapping("/feign")
+    public String testFeign() {
+        return testFeign.getTest();
     }
 
     @PostMapping("/test")

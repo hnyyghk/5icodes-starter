@@ -15,6 +15,7 @@
     <version>${starter.version}</version>
     <description>Starter practice for Spring Cloud</description>
     <modules>
+        <module>feign-stress</module>
         <module>apollo</module>
         <module>cache</module>
         <module>cache-monitor</module>
@@ -114,6 +115,12 @@
             <dependency>
                 <groupId>com.5icodes</groupId>
                 <artifactId>stress</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
+                <artifactId>feign-stress</artifactId>
                 <version>${starter.version}</version>
             </dependency>
 

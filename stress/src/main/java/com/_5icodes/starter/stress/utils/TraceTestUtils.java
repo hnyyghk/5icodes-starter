@@ -17,4 +17,10 @@ public class TraceTestUtils {
             log.info(format, arguments);
         }
     }
+
+    public void info(boolean enable, String format, Object... arguments) {
+        if (log.isDebugEnabled() && enable) {
+            log.info(format, arguments);
+        }
+    }
 }

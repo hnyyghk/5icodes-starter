@@ -42,7 +42,11 @@ public class OrderedConfigChangeListener {
             //apollo变更时间监听
             logValChange(changeEvent);
             for (ConfigChangeListener listener : listeners) {
-                listener.onChange(changeEvent);
+                try {
+                    listener.onChange(changeEvent);
+                } catch (Exception e) {
+                    log.error("fire changeEvent error:", e);
+                }
             }
         } finally {
             span.finish();
