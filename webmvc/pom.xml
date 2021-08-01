@@ -9,42 +9,33 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo</artifactId>
+    <artifactId>webmvc</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.5icodes</groupId>
-            <artifactId>webmvc</artifactId>
+            <artifactId>common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.5icodes</groupId>
-            <artifactId>cache-monitor</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.5icodes</groupId>
-            <artifactId>cache-stress</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.5icodes</groupId>
-            <artifactId>apollo</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.5icodes</groupId>
-            <artifactId>jasypt</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.5icodes</groupId>
-            <artifactId>feign-stress</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
+            <artifactId>feign</artifactId>
         </dependency>
     </dependencies>
 </project>

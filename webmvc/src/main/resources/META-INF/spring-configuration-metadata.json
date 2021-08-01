@@ -1,0 +1,37 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com._5icodes.starter.webmvc.WebMvcProperties",
+      "name": "starter.web",
+      "type": "com._5icodes.starter.webmvc.WebMvcProperties"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.SuccessProperties",
+      "name": "starter.web.success",
+      "type": "com._5icodes.starter.webmvc.SuccessProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com._5icodes.starter.webmvc.WebMvcProperties",
+      "name": "starter.web.autoWrap",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.WebMvcProperties",
+      "name": "starter.web.autoWrapExcludeClasses",
+      "type": "java.util.List"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.SuccessProperties",
+      "name": "starter.web.success.code",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.SuccessProperties",
+      "name": "starter.web.success.message",
+      "type": "java.lang.String"
+    }
+  ]
+}
