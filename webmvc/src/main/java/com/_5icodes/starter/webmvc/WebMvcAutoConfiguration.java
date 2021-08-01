@@ -9,8 +9,14 @@ import com._5icodes.starter.webmvc.auth.feign.FeignAuthInterceptor;
 import com._5icodes.starter.webmvc.common.RequestMappingRegister;
 import com._5icodes.starter.webmvc.condition.ConditionalOnAutoWrap;
 import feign.Feign;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.CollectionUtils;
@@ -20,6 +26,7 @@ import java.util.Set;
 
 @Configuration
 @EnableConfigurationProperties({WebMvcProperties.class, SuccessProperties.class, ErrorProperties.class})
+//@AutoConfigureBefore({ErrorMvcAutoConfiguration.class, ServletWebServerFactoryAutoConfiguration.class})
 public class WebMvcAutoConfiguration {
     @Configuration
     @ConditionalOnAuth
@@ -67,5 +74,12 @@ public class WebMvcAutoConfiguration {
     @Bean
     public RequestMappingRegister requestMappingRegister() {
         return new RequestMappingRegister();
+    }
+
+    @Bean
+    public ErrorController errorController(ErrorAttributes errorAttributes,
+                                           ErrorProperties errorProperties,
+                                           @Value("${server.error.path:${error:path:/error}}") String errorPath) {
+        return new com._5icodes.starter.webmvc.advice.ErrorController(errorAttributes, errorProperties, errorPath);
     }
 }
