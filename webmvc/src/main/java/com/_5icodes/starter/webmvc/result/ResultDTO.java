@@ -1,4 +1,4 @@
-package com._5icodes.starter.webmvc.advice;
+package com._5icodes.starter.webmvc.result;
 
 import com._5icodes.starter.common.exception.CodeMsg;
 import com._5icodes.starter.common.exception.CodeMsgRegistry;
@@ -59,5 +59,9 @@ public class ResultDTO<T> {
 
     protected void setReqId(String reqId) {
         this.reqId = reqId;
+    }
+
+    protected void setData(T data) {
+        this.data = data;
     }
 }

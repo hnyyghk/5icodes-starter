@@ -1,19 +1,19 @@
 package com._5icodes.starter.webmvc;
 
-import com._5icodes.starter.webmvc.advice.CodeMsgResponseBodyAdvice;
-import com._5icodes.starter.webmvc.advice.GlobalControllerAdvice;
+import com._5icodes.starter.feign.FeignAutoConfiguration;
+import com._5icodes.starter.webmvc.result.CodeMsgResponseBodyAdvice;
+import com._5icodes.starter.webmvc.result.GlobalControllerAdvice;
 import com._5icodes.starter.webmvc.advice.HandlerExceptionResolverEditor;
 import com._5icodes.starter.webmvc.auth.PermissionInterceptor;
 import com._5icodes.starter.webmvc.auth.condition.ConditionalOnAuth;
 import com._5icodes.starter.webmvc.auth.feign.FeignAuthInterceptor;
 import com._5icodes.starter.webmvc.common.RequestMappingRegister;
 import com._5icodes.starter.webmvc.condition.ConditionalOnAutoWrap;
+import com._5icodes.starter.webmvc.feign.CodeMsgDecodeAnnotationConfigHolder;
 import feign.Feign;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -80,6 +80,16 @@ public class WebMvcAutoConfiguration {
     public ErrorController errorController(ErrorAttributes errorAttributes,
                                            ErrorProperties errorProperties,
                                            @Value("${server.error.path:${error:path:/error}}") String errorPath) {
-        return new com._5icodes.starter.webmvc.advice.ErrorController(errorAttributes, errorProperties, errorPath);
+        return new com._5icodes.starter.webmvc.result.ErrorController(errorAttributes, errorProperties, errorPath);
+    }
+
+    @Configuration
+    @ConditionalOnClass(FeignAutoConfiguration.class)
+    @AutoConfigureBefore(FeignAutoConfiguration.class)
+    public static class FeignWebExceptionConfiguration {
+        @Bean
+        public CodeMsgDecodeAnnotationConfigHolder codeMsgDecodeAnnotationConfigHolder() {
+            return new CodeMsgDecodeAnnotationConfigHolder();
+        }
     }
 }

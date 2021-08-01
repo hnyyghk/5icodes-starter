@@ -1,4 +1,4 @@
-package com._5icodes.starter.webmvc.advice;
+package com._5icodes.starter.webmvc.result;
 
 import com._5icodes.starter.common.utils.TraceUtils;
 import com._5icodes.starter.webmvc.WebMvcConstants;

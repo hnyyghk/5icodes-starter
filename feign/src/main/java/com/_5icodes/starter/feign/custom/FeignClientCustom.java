@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * @see com.netflix.client.config.DefaultClientConfigImpl
  * @see org.springframework.cloud.client.loadbalancer.LoadBalancerRetryProperties
  */
-@Target({ElementType.TYPE})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface FeignClientCustom {

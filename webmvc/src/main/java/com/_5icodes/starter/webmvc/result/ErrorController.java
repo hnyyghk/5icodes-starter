@@ -1,4 +1,4 @@
-package com._5icodes.starter.webmvc.advice;
+package com._5icodes.starter.webmvc.result;
 
 import com._5icodes.starter.common.utils.TraceUtils;
 import com._5icodes.starter.webmvc.ErrorProperties;
@@ -48,8 +48,7 @@ public class ErrorController extends AbstractErrorController {
         if (status != null) {
             response.setStatus(status);
         }
-        //todo
-        ResultDTO resultDTO = new ResultDTO(-1, msg);
+        ResultDTO resultDTO = new ResultDTO(errorProperties.getCode(), msg);
         resultDTO.setReqId(TraceUtils.getReqId());
         return resultDTO;
     }
