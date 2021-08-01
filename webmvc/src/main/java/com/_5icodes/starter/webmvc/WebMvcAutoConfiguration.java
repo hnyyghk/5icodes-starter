@@ -6,6 +6,7 @@ import com._5icodes.starter.webmvc.advice.HandlerExceptionResolverEditor;
 import com._5icodes.starter.webmvc.auth.PermissionInterceptor;
 import com._5icodes.starter.webmvc.auth.condition.ConditionalOnAuth;
 import com._5icodes.starter.webmvc.auth.feign.FeignAuthInterceptor;
+import com._5icodes.starter.webmvc.common.RequestMappingRegister;
 import com._5icodes.starter.webmvc.condition.ConditionalOnAutoWrap;
 import feign.Feign;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -61,5 +62,10 @@ public class WebMvcAutoConfiguration {
         public FeignAuthInterceptor feignAuthInterceptor(WebMvcProperties webMvcProperties) {
             return new FeignAuthInterceptor(webMvcProperties);
         }
+    }
+
+    @Bean
+    public RequestMappingRegister requestMappingRegister() {
+        return new RequestMappingRegister();
     }
 }

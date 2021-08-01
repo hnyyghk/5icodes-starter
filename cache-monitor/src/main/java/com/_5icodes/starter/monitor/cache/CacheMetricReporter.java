@@ -14,6 +14,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
+//todo
 public class CacheMetricReporter extends AbstractSmartLifecycle implements Runnable {
     private static final ScheduledExecutorService SCHEDULER = new ScheduledThreadPoolExecutor(1,
             new BasicThreadFactory.Builder().namingPattern("redis-metric-report-%d").daemon(true).build());
