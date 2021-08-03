@@ -44,7 +44,7 @@ public class TestController {
     }
 
     @GetMapping("/feign")
-    public String testFeign() {
+    public Object testFeign() {
         return testFeign.getTest();
     }
 

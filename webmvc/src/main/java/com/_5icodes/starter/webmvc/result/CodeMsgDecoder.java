@@ -1,7 +1,6 @@
 package com._5icodes.starter.webmvc.result;
 
 import com._5icodes.starter.common.utils.JsonUtils;
-import com._5icodes.starter.webmvc.ErrorProperties;
 import com._5icodes.starter.webmvc.SuccessProperties;
 import feign.FeignException;
 import feign.Response;
@@ -20,12 +19,10 @@ import java.util.Objects;
 public class CodeMsgDecoder implements Decoder {
     private final Decoder delegate;
     private final SuccessProperties successProperties;
-    private final ErrorProperties errorProperties;
 
-    public CodeMsgDecoder(Decoder delegate, SuccessProperties successProperties, ErrorProperties errorProperties) {
+    public CodeMsgDecoder(Decoder delegate, SuccessProperties successProperties) {
         this.delegate = delegate;
         this.successProperties = successProperties;
-        this.errorProperties = errorProperties;
     }
 
     @Override
@@ -35,34 +32,30 @@ public class CodeMsgDecoder implements Decoder {
         String message;
         String data;
         try {
-            ResultDTO resultDTO = JsonUtils.parse(str, ResultDTO.class);
+            ResultDTO<?> resultDTO = JsonUtils.parse(str, ResultDTO.class);
             code = resultDTO.getCode();
             message = resultDTO.getMessage();
             data = JsonUtils.toJson(resultDTO.getData());
         } catch (Exception e) {
-            //todo
-            return new ResultDTO(errorProperties.getCode(), String.format("decode feign result: %s error", str));
+            throw new DecodeException(response.status(), String.format("decode feign result error:\n%s", str), response.request(), e);
         }
         //todo
         if (!successProperties.getCode().equals(code)) {
             //todo
-            return new ResultDTO(code, message);
+            return new ResultDTO<>(code, message);
         }
         if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) type;
             if (Objects.equals(parameterizedType.getRawType(), ResultDTO.class)) {
                 Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
                 if (ArrayUtils.getLength(actualTypeArguments) != 1) {
-                    return new ResultDTO(errorProperties.getCode(),
-                            "ParameterizedType ResultDTO must only have one actualTypeArgument");
+                    throw new DecodeException(response.status(), "ParameterizedType ResultDTO must only have one actualTypeArgument", response.request());
                 }
                 Type actualTypeArgument = actualTypeArguments[0];
                 if (Objects.equals(Void.class, actualTypeArgument)) {
-                    return new ResultDTO(code, message);
+                    return new ResultDTO<>(code, message);
                 } else {
-                    ResultDTO dto = new ResultDTO(code, message);
-                    dto.setData(parseResultData(response, data, actualTypeArgument));
-                    return dto;
+                    return new ResultDTO<>(code, message).setData(parseResultData(response, data, actualTypeArgument));
                 }
             }
         }

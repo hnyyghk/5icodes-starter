@@ -63,12 +63,11 @@ public class CodeMsgResponseBodyAdvice implements ResponseBodyAdvice<Object>, Ap
     }
 
     private ResultDTO handleResultDTO(ResultDTO resultDTO, ServerHttpRequest serverHttpRequest) {
-        resultDTO.setReqId(TraceUtils.getReqId());
         if (serverHttpRequest instanceof ServletServerHttpRequest) {
             HttpServletRequest servletRequest = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();
             servletRequest.setAttribute(WebMvcConstants.RESULT_CODE, resultDTO.getCode());
         }
-        return resultDTO;
+        return resultDTO.setReqId(TraceUtils.getReqId());
     }
 
     public void addExcludeClasses(Set<String> classNameList) {

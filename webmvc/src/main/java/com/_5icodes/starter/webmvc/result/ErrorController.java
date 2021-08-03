@@ -30,7 +30,7 @@ public class ErrorController extends AbstractErrorController {
     }
 
     @RequestMapping
-    public ResultDTO error(HttpServletRequest request, HttpServletResponse response) {
+    public ResultDTO<?> error(HttpServletRequest request, HttpServletResponse response) {
         WebRequest webRequest = new ServletWebRequest(request);
         Throwable error = getError(webRequest);
         String msg = null;
@@ -48,9 +48,7 @@ public class ErrorController extends AbstractErrorController {
         if (status != null) {
             response.setStatus(status);
         }
-        ResultDTO resultDTO = new ResultDTO(errorProperties.getCode(), msg);
-        resultDTO.setReqId(TraceUtils.getReqId());
-        return resultDTO;
+        return new ResultDTO<>(errorProperties.getCode(), msg).setReqId(TraceUtils.getReqId());
     }
 
     @Override

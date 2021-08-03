@@ -57,11 +57,13 @@ public class ResultDTO<T> {
         this.message = message;
     }
 
-    protected void setReqId(String reqId) {
+    protected ResultDTO<T> setReqId(String reqId) {
         this.reqId = reqId;
+        return this;
     }
 
-    protected void setData(T data) {
+    protected ResultDTO<T> setData(T data) {
         this.data = data;
+        return this;
     }
 }
