@@ -1,6 +1,7 @@
 package com._5icodes.starter.webmvc;
 
 import com._5icodes.starter.feign.FeignAutoConfiguration;
+import com._5icodes.starter.webmvc.log.LogFilter;
 import com._5icodes.starter.webmvc.result.CodeMsgResponseBodyAdvice;
 import com._5icodes.starter.webmvc.result.GlobalControllerAdvice;
 import com._5icodes.starter.webmvc.advice.HandlerExceptionResolverEditor;
@@ -91,5 +92,10 @@ public class WebMvcAutoConfiguration {
         public CodeMsgDecodeAnnotationConfigHolder codeMsgDecodeAnnotationConfigHolder() {
             return new CodeMsgDecodeAnnotationConfigHolder();
         }
+    }
+
+    @Bean
+    public LogFilter logFilter() {
+        return new LogFilter();
     }
 }

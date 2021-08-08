@@ -1,12 +1,11 @@
-package com._5icodes.starter.webmvc;
+package com._5icodes.starter.common.utils;
 
-import com._5icodes.starter.common.utils.SpringUtils;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * 区域获取类
  */
-public class Region {
+public class RegionUtils {
     private final static String EUREKA_INSTANCE_ZONE = "eureka.instance.metadata-map.zone";
 
     /**
@@ -72,8 +71,7 @@ public class Region {
             } catch (Exception e) {
                 return ZONE.CN_SHENZHEN.getValue();
             }
-            String property = environment.getProperty(EUREKA_INSTANCE_ZONE);
-            zone = property != null ? property : ZONE.CN_SHENZHEN.getValue();
+            zone = environment.getProperty(EUREKA_INSTANCE_ZONE, String.class, ZONE.CN_SHENZHEN.getValue());
         }
         return zone;
     }
