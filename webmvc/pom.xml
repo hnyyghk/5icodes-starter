@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.5icodes</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>web</artifactId>
         </dependency>
 
         <dependency>

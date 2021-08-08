@@ -1,8 +1,7 @@
 package com._5icodes.starter.webmvc.auth;
 
-import com._5icodes.starter.webmvc.WebMvcConstants;
+import com._5icodes.starter.web.WebConstants;
 import com._5icodes.starter.webmvc.WebMvcProperties;
-import com._5icodes.starter.webmvc.common.OnlyOnceHandlerInterceptor;
 import com._5icodes.starter.webmvc.common.OnlyOnceInterceptorConfigurer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,8 @@ public class PermissionInterceptor implements OnlyOnceInterceptorConfigurer, Ord
 
     @Override
     public boolean doPreHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String groupId = request.getHeader(WebMvcConstants.GROUP_ID);
-        String moduleId = request.getHeader(WebMvcConstants.MODULE_ID);
+        String groupId = request.getHeader(WebConstants.GROUP_ID);
+        String moduleId = request.getHeader(WebConstants.MODULE_ID);
         if (moduleId == null || groupId == null) {
             //todo
             log.warn("unauthorized request without groupId or moduleId from server: {}", request.getRemoteAddr());

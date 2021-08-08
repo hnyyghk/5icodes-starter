@@ -25,6 +25,7 @@
         <module>jasypt</module>
         <module>monitor</module>
         <module>stress</module>
+        <module>web</module>
         <module>webmvc</module>
         <module>feign</module>
     </modules>
@@ -133,6 +134,12 @@
             <dependency>
                 <groupId>com.5icodes</groupId>
                 <artifactId>feign</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
+                <artifactId>web</artifactId>
                 <version>${starter.version}</version>
             </dependency>
 

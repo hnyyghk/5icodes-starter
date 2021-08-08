@@ -1,13 +1,10 @@
 package com._5icodes.starter.webmvc;
 
+import com._5icodes.starter.web.WebConstants;
+
 public interface WebMvcConstants {
     String MODULE_NAME = "webmvc";
-    String SUCCESS_PREFIX = "starter.web.success";
-    String ERROR_PREFIX = "starter.web.error";
-    String PROPERTY_PREFIX = "starter.web";
+    String SUCCESS_PREFIX = WebConstants.PROPERTY_PREFIX + ".success";
+    String ERROR_PREFIX = WebConstants.PROPERTY_PREFIX + ".error";
     String RESULT_CODE = "resultCode";
-    String GROUP_ID = "GROUP_ID";
-    String MODULE_ID = "MODULE_ID";
-    String ZONE = "ZONE";
-    String REQ_IP = "REQ_IP";
 }
