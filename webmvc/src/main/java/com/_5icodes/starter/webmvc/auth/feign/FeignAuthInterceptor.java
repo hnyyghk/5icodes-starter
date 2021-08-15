@@ -2,6 +2,7 @@ package com._5icodes.starter.webmvc.auth.feign;
 
 import com._5icodes.starter.common.utils.IpUtils;
 import com._5icodes.starter.common.utils.RegionUtils;
+import com._5icodes.starter.sleuth.SleuthConstants;
 import com._5icodes.starter.web.WebConstants;
 import com._5icodes.starter.webmvc.WebMvcProperties;
 import feign.RequestInterceptor;
@@ -19,6 +20,6 @@ public class FeignAuthInterceptor implements RequestInterceptor {
         requestTemplate.header(WebConstants.GROUP_ID, webMvcProperties.getGroup());
         requestTemplate.header(WebConstants.MODULE_ID, webMvcProperties.getModule());
         requestTemplate.header(WebConstants.ZONE, RegionUtils.getZone());
-        requestTemplate.header(WebConstants.REQ_IP, IpUtils.getHostAddress());
+        requestTemplate.header(SleuthConstants.REQ_IP, IpUtils.getHostAddress());
     }
 }

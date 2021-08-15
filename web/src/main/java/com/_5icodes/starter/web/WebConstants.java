@@ -9,5 +9,4 @@ public interface WebConstants {
     String GROUP_ID = "GROUP_ID";
     String MODULE_ID = "MODULE_ID";
     String ZONE = "ZONE";
-    String REQ_IP = "REQ_IP";
 }
