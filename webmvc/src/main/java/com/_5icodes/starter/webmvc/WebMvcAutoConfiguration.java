@@ -2,6 +2,10 @@ package com._5icodes.starter.webmvc;
 
 import com._5icodes.starter.feign.FeignAutoConfiguration;
 import com._5icodes.starter.webmvc.log.LogFilter;
+import com._5icodes.starter.webmvc.monitor.AccessLogFilter;
+import com._5icodes.starter.webmvc.monitor.ExceptionReportResolver;
+import com._5icodes.starter.webmvc.monitor.WebMvcCalleeAccessLogCollector;
+import com._5icodes.starter.webmvc.monitor.WebMvcMetaInfoProvider;
 import com._5icodes.starter.webmvc.result.CodeMsgResponseBodyAdvice;
 import com._5icodes.starter.webmvc.result.GlobalControllerAdvice;
 import com._5icodes.starter.webmvc.advice.HandlerExceptionResolverEditor;
@@ -36,6 +40,11 @@ public class WebMvcAutoConfiguration {
         @Bean
         public PermissionInterceptor permissionInterceptor() {
             return new PermissionInterceptor();
+        }
+
+        @Bean
+        public WebMvcMetaInfoProvider webMvcMetaInfoProvider(WebMvcProperties webMvcProperties) {
+            return new WebMvcMetaInfoProvider(webMvcProperties);
         }
     }
 
@@ -75,6 +84,21 @@ public class WebMvcAutoConfiguration {
     @Bean
     public RequestMappingRegister requestMappingRegister() {
         return new RequestMappingRegister();
+    }
+
+    @Bean
+    public AccessLogFilter accessLogFilter() {
+        return new AccessLogFilter();
+    }
+
+    @Bean
+    public WebMvcCalleeAccessLogCollector webMvcCalleeAccessLogCollector() {
+        return new WebMvcCalleeAccessLogCollector();
+    }
+
+    @Bean
+    public ExceptionReportResolver exceptionReportResolver() {
+        return new ExceptionReportResolver();
     }
 
     @Bean

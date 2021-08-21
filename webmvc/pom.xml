@@ -37,5 +37,10 @@
             <groupId>com.5icodes</groupId>
             <artifactId>feign</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>monitor</artifactId>
+        </dependency>
     </dependencies>
 </project>
