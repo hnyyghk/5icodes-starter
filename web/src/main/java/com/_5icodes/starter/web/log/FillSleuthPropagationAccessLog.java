@@ -30,11 +30,11 @@ public class FillSleuthPropagationAccessLog extends AbstractAccessLog {
         TraceContext traceContext = currentTraceContext.get();
         if (traceContext != null) {
             trace.put("spanId", traceContext.spanIdString());
-            trace.put("pSpanId", traceContext.parentIdString());
+            trace.put("parentId", traceContext.parentIdString());
             trace.put("traceId", traceContext.traceIdString());
         } else {
             trace.put("spanId", "");
-            trace.put("pSpanId", "");
+            trace.put("parentId", "");
             trace.put("traceId", "");
         }
         return trace;

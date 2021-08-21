@@ -2,7 +2,7 @@ package com._5icodes.starter.stress.feign.test.local;
 
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com._5icodes.starter.stress.feign.test.remote.MockUtil;
-import com._5icodes.starter.stress.utils.TraceTestUtils;
+import com._5icodes.starter.sleuth.utils.TraceTestUtils;
 import lombok.Data;
 import org.apache.http.client.methods.RequestBuilder;
 

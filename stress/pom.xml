@@ -16,5 +16,10 @@
             <groupId>com.5icodes</groupId>
             <artifactId>common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>sleuth</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,6 @@
-package com._5icodes.starter.stress.utils;
+package com._5icodes.starter.sleuth.utils;
 
-import com._5icodes.starter.stress.StressConstants;
+import com._5icodes.starter.sleuth.SleuthConstants;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -9,7 +9,7 @@ import org.slf4j.MDC;
 @UtilityClass
 public class TraceTestUtils {
     public boolean isTraceTest() {
-        return null != MDC.get(StressConstants.TRACE_TEST);
+        return null != MDC.get(SleuthConstants.TRACE_TEST);
     }
 
     public void info(String format, Object... arguments) {

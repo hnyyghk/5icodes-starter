@@ -1,7 +1,7 @@
 package com._5icodes.starter.stress.feign.test.local;
 
 import com._5icodes.starter.stress.feign.test.remote.MockUtil;
-import com._5icodes.starter.stress.utils.TraceTestUtils;
+import com._5icodes.starter.sleuth.utils.TraceTestUtils;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;

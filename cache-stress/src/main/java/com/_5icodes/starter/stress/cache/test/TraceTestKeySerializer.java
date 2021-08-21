@@ -1,7 +1,7 @@
 package com._5icodes.starter.stress.cache.test;
 
 import com._5icodes.starter.stress.cache.CacheStressConstants;
-import com._5icodes.starter.stress.utils.TraceTestUtils;
+import com._5icodes.starter.sleuth.utils.TraceTestUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
