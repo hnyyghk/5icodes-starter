@@ -9,38 +9,37 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>webmvc</artifactId>
+    <artifactId>sentinel</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.5icodes</groupId>
-            <artifactId>web</artifactId>
+            <artifactId>apollo</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-sentinel</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-cluster-client-default</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-cluster-server-default</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-extension</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.5icodes</groupId>
-            <artifactId>feign</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.5icodes</groupId>
-            <artifactId>monitor</artifactId>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-apollo</artifactId>
         </dependency>
     </dependencies>
 </project>

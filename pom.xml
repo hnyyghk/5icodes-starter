@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>2.3.5.RELEASE</version>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.12.RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>starter</artifactId>
     <groupId>com.5icodes</groupId><!--https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html-->
+    <artifactId>starter</artifactId>
     <packaging>pom</packaging>
     <version>${starter.version}</version>
     <description>Starter practice for Spring Cloud</description>
@@ -23,6 +23,7 @@
         <module>common</module>
         <module>demo</module>
         <module>jasypt</module>
+        <module>sentinel</module>
         <module>monitor</module>
         <module>stress</module>
         <module>sleuth</module>
@@ -33,9 +34,10 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <starter.version>0.0.1</starter.version>
         <jackson.version>2.11.3</jackson.version>
+        <sentinel.version>1.6.3</sentinel.version>
         <jetcache.version>2.6.0</jetcache.version>
         <apollo.version>1.8.0</apollo.version>
         <guava.version>20.0</guava.version>
@@ -99,6 +101,12 @@
             <dependency>
                 <groupId>com.5icodes</groupId>
                 <artifactId>jasypt</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
+                <artifactId>sentinel</artifactId>
                 <version>${starter.version}</version>
             </dependency>
 
@@ -240,9 +248,73 @@
             </dependency>
 
             <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-datasource-apollo</artifactId>
+                <version>${sentinel.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.alibaba.csp</groupId>
+                        <artifactId>sentinel-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.ctrip.framework.apollo</groupId>
+                        <artifactId>apollo-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.csp</groupId>
+                        <artifactId>sentinel-datasource-extension</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-annotation-aspectj</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-core</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-web-servlet</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-transport-simple-http</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-parameter-flow-control</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-datasource-extension</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>0.9.0.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
