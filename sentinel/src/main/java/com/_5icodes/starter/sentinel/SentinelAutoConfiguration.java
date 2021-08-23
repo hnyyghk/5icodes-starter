@@ -22,19 +22,20 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.alibaba.sentinel.custom.SentinelBeanPostProcessor;
-import org.springframework.cloud.alibaba.sentinel.custom.SentinelDataSourceHandler;
-import org.springframework.cloud.alibaba.sentinel.datasource.converter.JsonConverter;
+import com.alibaba.cloud.sentinel.custom.SentinelBeanPostProcessor;
+import com.alibaba.cloud.sentinel.custom.SentinelDataSourceHandler;
+import com.alibaba.cloud.sentinel.datasource.converter.JsonConverter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.cloud.alibaba.sentinel.SentinelProperties;
+import com.alibaba.cloud.sentinel.SentinelProperties;
+import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 
 /**
- * @see org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration
+ * @see com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration
  */
 @Configuration
 @ConditionalOnSentinel
@@ -137,9 +138,11 @@ public class SentinelAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public SentinelDataSourceHandler sentinelDataSourceHandler(
-            DefaultListableBeanFactory beanFactory) {
-        return new SentinelDataSourceHandler(beanFactory);
+            DefaultListableBeanFactory beanFactory, SentinelProperties sentinelProperties,
+            Environment env) {
+        return new SentinelDataSourceHandler(beanFactory, sentinelProperties, env);
     }
 
     @ConditionalOnClass(ObjectMapper.class)

@@ -5,13 +5,17 @@ import com._5icodes.starter.common.utils.PropertySourceUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.alibaba.sentinel.datasource.RuleType;
+import com.alibaba.cloud.sentinel.datasource.RuleType;
 import org.springframework.core.env.ConfigurableEnvironment;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 public class SentinelEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     @Override
     protected boolean shouldProcess(ConfigurableEnvironment env, SpringApplication application) {
+        //todo 这里逻辑都执行了两遍
         //禁用feign自带的hystrix
         PropertySourceUtils.put(env, "feign.hystrix.enabled", false);
         String flag = env.getProperty(SentinelConstants.PROPERTY_ENABLED, "true");
@@ -27,9 +31,9 @@ public class SentinelEnvInjector extends AbstractProfileEnvironmentPostProcessor
         PropertySourceUtils.put(env, "spring.cloud.sentinel.filter.enabled", false);
         //配置基础apollo的动态降级限流规则
         String applicationName = SpringApplicationUtils.getApplicationName();
-        RuleType[] values = RuleType.values();
-        for (int i = 0; i < values.length; i++) {
-            initApolloDataSource(env, applicationName, values[i], i + 1);
+        List<RuleType> values = Arrays.asList(RuleType.FLOW, RuleType.DEGRADE, RuleType.PARAM_FLOW, RuleType.SYSTEM, RuleType.AUTHORITY);
+        for (int i = 0; i < values.size(); i++) {
+            initApolloDataSource(env, applicationName, values.get(i), i + 1);
         }
         //默认启动的sentinel监控数据查询端口
         PropertySourceUtils.put(env, "spring.cloud.sentinel.transport.port", 15719);
