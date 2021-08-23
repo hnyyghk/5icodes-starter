@@ -9,10 +9,10 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Data
-@ConfigurationProperties(prefix = WebMvcConstants.ERROR_PREFIX)
-public class ErrorProperties implements CodeMsg {
-    private Integer code = -100;
-    private String message = "服务器竟然出错了";
+@ConfigurationProperties(prefix = WebMvcConstants.PARAM_FLOW_PREFIX)
+public class ParamFlowProperties implements CodeMsg {
+    private Integer code = -103;
+    private String message = "请求太频繁了";
 
     @PostConstruct
     public void postConstructMethod() {

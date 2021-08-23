@@ -84,6 +84,7 @@ public class SpringApplicationUtils {
     }
 
     public void setApplicationName(String appName) {
+        Assert.notNull(appName, "spring.application.name must not be null");
         applicationName = appName;
     }
 }

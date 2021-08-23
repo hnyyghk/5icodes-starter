@@ -1,6 +1,7 @@
 package com._5icodes.starter.webmvc.monitor;
 
 import com._5icodes.starter.monitor.ExceptionReport;
+import com.alibaba.csp.sentinel.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -17,7 +18,7 @@ public class ExceptionReportResolver implements HandlerExceptionResolver, Ordere
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) {
         boolean report = exceptionReport.report("webmvc:" + request.getRequestURI(), e);
         if (report) {
-            //todo sentinel
+            Tracer.trace(e);
         }
         return null;
     }

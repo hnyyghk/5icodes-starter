@@ -35,6 +35,11 @@
 
         <dependency>
             <groupId>com.5icodes</groupId>
+            <artifactId>sentinel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
             <artifactId>feign</artifactId>
         </dependency>
 
