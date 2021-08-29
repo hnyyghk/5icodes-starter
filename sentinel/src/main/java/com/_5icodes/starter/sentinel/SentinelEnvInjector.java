@@ -15,11 +15,7 @@ import java.util.List;
 public class SentinelEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     @Override
     protected boolean shouldProcess(ConfigurableEnvironment env, SpringApplication application) {
-        //todo 这里逻辑都执行了两遍
-        //禁用feign自带的hystrix
-        PropertySourceUtils.put(env, "feign.hystrix.enabled", false);
-        String flag = env.getProperty(SentinelConstants.PROPERTY_ENABLED, "true");
-        return "true".equals(flag);
+        return super.shouldProcess(env, application) && env.getProperty(SentinelConstants.PROPERTY_ENABLED, Boolean.class, true);
     }
 
     @Override

@@ -4,7 +4,7 @@ import com._5icodes.starter.common.exception.BizException;
 import com._5icodes.starter.common.exception.BizRuntimeException;
 import com._5icodes.starter.common.exception.CodeMsg;
 import com._5icodes.starter.common.utils.ExceptionUtils;
-import com._5icodes.starter.webmvc.ErrorProperties;
+import com._5icodes.starter.webmvc.properties.ErrorProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.io.EofException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +104,7 @@ public class GlobalControllerAdvice {
         return processBindingResult(e.getBindingResult());
     }
 
-    private ResultDTO processBindingResult(BindingResult bindingResult) {
+    ResultDTO processBindingResult(BindingResult bindingResult) {
 //        bindingResult.getFieldErrors().forEach(fieldError -> {
 //            fieldError.getField();
 //            fieldError.getRejectedValue();

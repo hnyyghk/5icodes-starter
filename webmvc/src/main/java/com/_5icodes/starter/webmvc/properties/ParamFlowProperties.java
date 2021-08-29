@@ -1,7 +1,8 @@
-package com._5icodes.starter.webmvc;
+package com._5icodes.starter.webmvc.properties;
 
 import com._5icodes.starter.common.exception.CodeMsg;
 import com._5icodes.starter.common.exception.CodeMsgRegistry;
+import com._5icodes.starter.webmvc.WebMvcConstants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

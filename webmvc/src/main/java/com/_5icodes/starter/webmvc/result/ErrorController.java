@@ -1,7 +1,7 @@
 package com._5icodes.starter.webmvc.result;
 
 import com._5icodes.starter.common.utils.TraceUtils;
-import com._5icodes.starter.webmvc.ErrorProperties;
+import com._5icodes.starter.webmvc.properties.ErrorProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;

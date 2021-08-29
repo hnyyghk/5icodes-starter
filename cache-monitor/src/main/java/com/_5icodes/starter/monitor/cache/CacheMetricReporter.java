@@ -2,6 +2,7 @@ package com._5icodes.starter.monitor.cache;
 
 import com._5icodes.starter.common.infrastructure.AbstractSmartLifecycle;
 import com._5icodes.starter.common.utils.JsonUtils;
+import com._5icodes.starter.common.utils.RegionUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com._5icodes.starter.monitor.cache.monitor.*;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +45,7 @@ public class CacheMetricReporter extends AbstractSmartLifecycle implements Runna
             for (Map<String, Object> map : entry.getValue()) {
                 map.put("reportTime", entry.getKey());
                 map.put("app", SpringApplicationUtils.getApplicationName());
+                map.put("zone", RegionUtils.getZone());
                 log.info(JsonUtils.toJson(map));
             }
         }

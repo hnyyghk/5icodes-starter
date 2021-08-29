@@ -20,7 +20,9 @@ public class ApolloEnvInjector extends AbstractProfileEnvironmentPostProcessor i
     @Override
     protected void onAllProfiles(ConfigurableEnvironment env, SpringApplication application) {
         String applicationName = SpringApplicationUtils.getApplicationName();
+        //启用Apollo配置开关 在应用启动阶段是否向Spring容器注入被托管的properties文件配置信息
         PropertySourceUtils.put(env, PropertySourcesConstants.APOLLO_BOOTSTRAP_ENABLED, true);
+        //将Apollo配置加载提到初始化日志系统之前
         PropertySourceUtils.put(env, PropertySourcesConstants.APOLLO_BOOTSTRAP_EAGER_LOAD_ENABLED, true);
         PropertySourceUtils.put(env, "app.id", applicationName);
         PropertySourceUtils.put(env, "apollo.cacheDir", "/data/webapps/" + applicationName + "/conf");

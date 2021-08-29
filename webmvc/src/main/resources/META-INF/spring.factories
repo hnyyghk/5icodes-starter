@@ -1,3 +1,5 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.webmvc.WebMvcEnvInjector
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com._5icodes.starter.webmvc.WebMvcAutoConfiguration
 org.springframework.boot.SpringApplicationRunListener=\

@@ -1,7 +1,7 @@
 package com._5icodes.starter.webmvc.result;
 
 import com._5icodes.starter.common.utils.JsonUtils;
-import com._5icodes.starter.webmvc.SuccessProperties;
+import com._5icodes.starter.webmvc.properties.SuccessProperties;
 import feign.FeignException;
 import feign.Response;
 import feign.Util;

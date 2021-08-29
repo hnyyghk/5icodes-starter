@@ -1,6 +1,6 @@
 package com._5icodes.starter.webmvc.sentinel;
 
-import com._5icodes.starter.webmvc.*;
+import com._5icodes.starter.webmvc.properties.*;
 import com._5icodes.starter.webmvc.result.ResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.csp.sentinel.slots.block.BlockException;

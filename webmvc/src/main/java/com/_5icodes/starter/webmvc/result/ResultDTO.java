@@ -3,7 +3,7 @@ package com._5icodes.starter.webmvc.result;
 import com._5icodes.starter.common.exception.CodeMsg;
 import com._5icodes.starter.common.exception.CodeMsgRegistry;
 import com._5icodes.starter.common.utils.SpringUtils;
-import com._5icodes.starter.webmvc.SuccessProperties;
+import com._5icodes.starter.webmvc.properties.SuccessProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

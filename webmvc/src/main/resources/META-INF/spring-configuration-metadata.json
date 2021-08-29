@@ -7,12 +7,52 @@
       "type": "com._5icodes.starter.webmvc.WebMvcProperties"
     },
     {
-      "sourceType": "com._5icodes.starter.webmvc.SuccessProperties",
+      "sourceType": "com._5icodes.starter.webmvc.properties.SuccessProperties",
       "name": "starter.web.success",
-      "type": "com._5icodes.starter.webmvc.SuccessProperties"
+      "type": "com._5icodes.starter.webmvc.properties.SuccessProperties"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.ErrorProperties",
+      "name": "starter.web.error",
+      "type": "com._5icodes.starter.webmvc.properties.ErrorProperties"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.FlowProperties",
+      "name": "starter.web.flow",
+      "type": "com._5icodes.starter.webmvc.properties.FlowProperties"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.DegradeProperties",
+      "name": "starter.web.degrade",
+      "type": "com._5icodes.starter.webmvc.properties.DegradeProperties"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.ParamFlowProperties",
+      "name": "starter.web.param.flow",
+      "type": "com._5icodes.starter.webmvc.properties.ParamFlowProperties"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.SystemBlockProperties",
+      "name": "starter.web.system.block",
+      "type": "com._5icodes.starter.webmvc.properties.SystemBlockProperties"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.AuthorityProperties",
+      "name": "starter.web.authority",
+      "type": "com._5icodes.starter.webmvc.properties.AuthorityProperties"
     }
   ],
   "properties": [
+    {
+      "sourceType": "com._5icodes.starter.webmvc.WebMvcProperties",
+      "name": "starter.web.module",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.WebMvcProperties",
+      "name": "starter.web.group",
+      "type": "java.lang.String"
+    },
     {
       "sourceType": "com._5icodes.starter.webmvc.WebMvcProperties",
       "name": "starter.web.autoWrap",
@@ -21,16 +61,86 @@
     {
       "sourceType": "com._5icodes.starter.webmvc.WebMvcProperties",
       "name": "starter.web.autoWrapExcludeClasses",
-      "type": "java.util.List"
+      "type": "java.util.Set"
     },
     {
-      "sourceType": "com._5icodes.starter.webmvc.SuccessProperties",
+      "sourceType": "com._5icodes.starter.webmvc.WebMvcProperties",
+      "name": "starter.web.allowList",
+      "type": "java.util.Set"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.WebMvcProperties",
+      "name": "starter.web.authEnabled",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.SuccessProperties",
       "name": "starter.web.success.code",
       "type": "java.lang.Integer"
     },
     {
-      "sourceType": "com._5icodes.starter.webmvc.SuccessProperties",
+      "sourceType": "com._5icodes.starter.webmvc.properties.SuccessProperties",
       "name": "starter.web.success.message",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.ErrorProperties",
+      "name": "starter.web.error.code",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.ErrorProperties",
+      "name": "starter.web.error.message",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.FlowProperties",
+      "name": "starter.web.flow.code",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.FlowProperties",
+      "name": "starter.web.flow.message",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.DegradeProperties",
+      "name": "starter.web.degrade.code",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.DegradeProperties",
+      "name": "starter.web.degrade.message",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.ParamFlowProperties",
+      "name": "starter.web.param.flow.code",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.ParamFlowProperties",
+      "name": "starter.web.param.flow.message",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.SystemBlockProperties",
+      "name": "starter.web.system.block.code",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.SystemBlockProperties",
+      "name": "starter.web.system.block.message",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.AuthorityProperties",
+      "name": "starter.web.authority.code",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com._5icodes.starter.webmvc.properties.AuthorityProperties",
+      "name": "starter.web.authority.message",
       "type": "java.lang.String"
     }
   ]

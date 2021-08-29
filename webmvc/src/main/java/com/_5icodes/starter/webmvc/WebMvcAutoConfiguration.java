@@ -8,6 +8,7 @@ import com._5icodes.starter.webmvc.monitor.AccessLogFilter;
 import com._5icodes.starter.webmvc.monitor.ExceptionReportResolver;
 import com._5icodes.starter.webmvc.monitor.WebMvcCalleeAccessLogCollector;
 import com._5icodes.starter.webmvc.monitor.WebMvcMetaInfoProvider;
+import com._5icodes.starter.webmvc.properties.*;
 import com._5icodes.starter.webmvc.result.CodeMsgResponseBodyAdvice;
 import com._5icodes.starter.webmvc.result.GlobalControllerAdvice;
 import com._5icodes.starter.webmvc.advice.HandlerExceptionResolverEditor;
@@ -29,6 +30,7 @@ import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.util.CollectionUtils;
 
 import javax.servlet.Filter;
@@ -38,6 +40,7 @@ import java.util.Set;
 @EnableConfigurationProperties({WebMvcProperties.class, SuccessProperties.class, ErrorProperties.class,
         FlowProperties.class, DegradeProperties.class, ParamFlowProperties.class, SystemBlockProperties.class, AuthorityProperties.class})
 //@AutoConfigureBefore({ErrorMvcAutoConfiguration.class, ServletWebServerFactoryAutoConfiguration.class})
+@Import(DisableJettyTraceAutoConfiguration.class)
 public class WebMvcAutoConfiguration {
     @Configuration
     @ConditionalOnAuth
