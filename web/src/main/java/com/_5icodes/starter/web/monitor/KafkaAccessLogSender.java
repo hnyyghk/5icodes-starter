@@ -1,4 +1,4 @@
-package com._5icodes.starter.web.log;
+package com._5icodes.starter.web.monitor;
 
 import lombok.extern.slf4j.Slf4j;
 

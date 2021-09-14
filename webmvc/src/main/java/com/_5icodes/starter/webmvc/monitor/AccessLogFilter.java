@@ -1,9 +1,13 @@
 package com._5icodes.starter.webmvc.monitor;
 
+import com._5icodes.starter.common.utils.GrayUtils;
+import com._5icodes.starter.common.utils.IpUtils;
+import com._5icodes.starter.common.utils.RegionUtils;
+import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com._5icodes.starter.sleuth.SleuthConstants;
 import com._5icodes.starter.web.WebConstants;
 import com._5icodes.starter.web.WebProperties;
-import com._5icodes.starter.web.log.FillSleuthPropagationAccessLog;
+import com._5icodes.starter.web.monitor.FillSleuthPropagationAccessLog;
 import com._5icodes.starter.webmvc.WebMvcConstants;
 import com._5icodes.starter.webmvc.common.OnlyOnceInterceptorConfigurer;
 import com._5icodes.starter.webmvc.common.RequestMappingRegister;
@@ -42,23 +46,24 @@ public class AccessLogFilter extends FillSleuthPropagationAccessLog implements O
         }
         long endTime = System.currentTimeMillis();
         Map<String, Object> accessLog = new HashMap<>();
+
         accessLog.put("version", webProperties.getAccessVersion());
-        accessLog.put("caller", getCallerMap(request));
+        accessLog.put("caller", getCaller(request));
+        accessLog.put("callee", getCallee(request));
+
         accessLog.put("resource", resource);
         accessLog.put("method", request.getMethod());
-        String refererHeader = request.getHeader(HttpHeaders.REFERER);
-        accessLog.put("referer", refererHeader == null ? "" : refererHeader);
+        String referer = request.getHeader(HttpHeaders.REFERER);
+        accessLog.put("referer", referer == null ? "" : referer);
         accessLog.put("startTime", startTime);
-        String reqLengthHeader = request.getHeader(HttpHeaders.CONTENT_LENGTH);
-        Integer reqLength = reqLengthHeader == null ? 0 : Integer.parseInt(reqLengthHeader);
-        accessLog.put("reqLength", reqLength);
-        String userAgentHeader = request.getHeader(HttpHeaders.USER_AGENT);
-        accessLog.put("userAgent", userAgentHeader == null ? "" : userAgentHeader);
+        String reqLength = request.getHeader(HttpHeaders.CONTENT_LENGTH);
+        accessLog.put("reqLength", reqLength == null ? 0 : Long.parseLong(reqLength));
+        String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
+        accessLog.put("userAgent", userAgent == null ? "" : userAgent);
 
         accessLog.put("status", response.getStatus());
-        String resLengthHeader = response.getHeader(HttpHeaders.CONTENT_LENGTH);
-        Integer resLength = resLengthHeader == null ? 0 : Integer.parseInt(resLengthHeader);
-        accessLog.put("resLength", resLength);
+        String resLength = response.getHeader(HttpHeaders.CONTENT_LENGTH);
+        accessLog.put("resLength", resLength == null ? 0 : Long.parseLong(resLength));
         accessLog.put("rt", endTime - startTime);
         accessLog.put("endTime", endTime);
 
@@ -67,7 +72,7 @@ public class AccessLogFilter extends FillSleuthPropagationAccessLog implements O
             accessLog.put("resultCode", resultCode);
         }
         if (RequestContextHolder.getRequestAttributes() != null) {
-            Map attribute = (Map) request.getAttribute(WebConstants.ACCESS_LOG_EXTEND_KEY);
+            Map<String, Object> attribute = (Map<String, Object>) request.getAttribute(WebConstants.ACCESS_LOG_EXTEND_KEY);
             if (null != attribute) {
                 accessLog.putAll(attribute);
             }
@@ -75,7 +80,28 @@ public class AccessLogFilter extends FillSleuthPropagationAccessLog implements O
         sendAccessLog(accessLog);
     }
 
-    private Map<String, Object> getCallerMap(HttpServletRequest request) {
+    /**
+     * 被调日志上报
+     *
+     * @param request
+     * @return
+     */
+    private Map<String, Object> getCallee(HttpServletRequest request) {
+        Map<String, Object> callee = new HashMap<>();
+        callee.put("moduleId", SpringApplicationUtils.getApplicationName());
+        callee.put("groupId", GrayUtils.isGray() ? "GRAY" : "PRD");
+        callee.put("zone", RegionUtils.getZone());
+        callee.put("reqIp", IpUtils.getHostAddress());
+        return callee;
+    }
+
+    /**
+     * 获取主调
+     *
+     * @param request
+     * @return
+     */
+    private Map<String, Object> getCaller(HttpServletRequest request) {
         Map<String, Object> caller = new HashMap<>();
         caller.put("moduleId", request.getHeader(WebConstants.MODULE_ID));
         caller.put("groupId", request.getHeader(WebConstants.GROUP_ID));

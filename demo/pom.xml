@@ -19,6 +19,11 @@
 
         <dependency>
             <groupId>com.5icodes</groupId>
+            <artifactId>webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
             <artifactId>cache-monitor</artifactId>
         </dependency>
 

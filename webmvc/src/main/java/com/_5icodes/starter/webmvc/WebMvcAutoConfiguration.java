@@ -6,7 +6,6 @@ import com._5icodes.starter.sentinel.condition.ConditionalOnSentinel;
 import com._5icodes.starter.webmvc.log.LogFilter;
 import com._5icodes.starter.webmvc.monitor.AccessLogFilter;
 import com._5icodes.starter.webmvc.monitor.ExceptionReportResolver;
-import com._5icodes.starter.webmvc.monitor.WebMvcCalleeAccessLogCollector;
 import com._5icodes.starter.webmvc.monitor.WebMvcMetaInfoProvider;
 import com._5icodes.starter.webmvc.properties.*;
 import com._5icodes.starter.webmvc.result.CodeMsgResponseBodyAdvice;
@@ -117,11 +116,6 @@ public class WebMvcAutoConfiguration {
     @Bean
     public AccessLogFilter accessLogFilter() {
         return new AccessLogFilter();
-    }
-
-    @Bean
-    public WebMvcCalleeAccessLogCollector webMvcCalleeAccessLogCollector() {
-        return new WebMvcCalleeAccessLogCollector();
     }
 
     @Bean

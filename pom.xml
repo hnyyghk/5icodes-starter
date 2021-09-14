@@ -29,6 +29,7 @@
         <module>sleuth</module>
         <module>web</module>
         <module>webmvc</module>
+        <module>webflux</module>
         <module>feign</module>
     </modules>
 
@@ -162,6 +163,12 @@
             <dependency>
                 <groupId>com.5icodes</groupId>
                 <artifactId>webmvc</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
+                <artifactId>webflux</artifactId>
                 <version>${starter.version}</version>
             </dependency>
 
