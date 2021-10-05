@@ -31,6 +31,7 @@
         <module>webmvc</module>
         <module>webflux</module>
         <module>feign</module>
+        <module>swagger</module>
     </modules>
 
     <properties>
