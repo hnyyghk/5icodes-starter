@@ -3,6 +3,7 @@ package com._5icodes.starter.webmvc;
 import com._5icodes.starter.feign.FeignAutoConfiguration;
 import com._5icodes.starter.sentinel.SentinelAutoConfiguration;
 import com._5icodes.starter.sentinel.condition.ConditionalOnSentinel;
+import com._5icodes.starter.web.condition.ConditionalOnAccessLog;
 import com._5icodes.starter.webmvc.log.LogFilter;
 import com._5icodes.starter.webmvc.monitor.AccessLogFilter;
 import com._5icodes.starter.webmvc.monitor.ExceptionReportResolver;
@@ -114,6 +115,7 @@ public class WebMvcAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnAccessLog
     public AccessLogFilter accessLogFilter() {
         return new AccessLogFilter();
     }

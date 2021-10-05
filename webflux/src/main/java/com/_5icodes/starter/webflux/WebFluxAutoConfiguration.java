@@ -1,6 +1,7 @@
 package com._5icodes.starter.webflux;
 
 import com._5icodes.starter.web.WebProperties;
+import com._5icodes.starter.web.condition.ConditionalOnAccessLog;
 import com._5icodes.starter.webflux.monitor.ExceptionReportHandler;
 import com._5icodes.starter.webflux.monitor.WebFluxAccessLog;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.core.annotation.Order;
 @Configuration
 public class WebFluxAutoConfiguration {
     @Bean
+    @ConditionalOnAccessLog
     public WebFluxAccessLog webFluxAccessLog(WebProperties webProperties) {
         return new WebFluxAccessLog(webProperties);
     }

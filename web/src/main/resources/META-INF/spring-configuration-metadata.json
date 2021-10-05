@@ -1,0 +1,37 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com._5icodes.starter.web.WebProperties",
+      "name": "starter.web.common",
+      "type": "com._5icodes.starter.web.WebProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com._5icodes.starter.web.WebProperties",
+      "name": "starter.web.common.accessLogTopic",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.web.WebProperties",
+      "name": "starter.web.common.accessLogEnabled",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com._5icodes.starter.web.WebProperties",
+      "name": "starter.web.common.internalEnabled",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com._5icodes.starter.web.WebProperties",
+      "name": "starter.web.common.internalPort",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com._5icodes.starter.web.WebProperties",
+      "name": "starter.web.common.accessVersion",
+      "type": "java.lang.String"
+    }
+  ]
+}
