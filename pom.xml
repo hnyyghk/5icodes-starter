@@ -39,7 +39,7 @@
         <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
         <starter.version>0.0.1</starter.version>
         <jackson.version>2.11.3</jackson.version>
-        <sentinel.version>1.6.3</sentinel.version>
+        <sentinel.version>1.8.2</sentinel.version>
         <jetcache.version>2.6.0</jetcache.version>
         <apollo.version>1.8.0</apollo.version>
         <guava.version>20.0</guava.version>
