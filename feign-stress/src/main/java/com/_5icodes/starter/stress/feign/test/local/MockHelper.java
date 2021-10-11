@@ -1,6 +1,6 @@
 package com._5icodes.starter.stress.feign.test.local;
 
-import com._5icodes.starter.sleuth.utils.TraceTestUtils;
+import com._5icodes.starter.stress.utils.TraceTestUtils;
 import feign.Request;
 import feign.Response;
 import lombok.experimental.UtilityClass;

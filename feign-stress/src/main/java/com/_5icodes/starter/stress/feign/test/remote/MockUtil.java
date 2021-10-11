@@ -6,7 +6,7 @@ import com._5icodes.starter.common.utils.SpringUtils;
 import com._5icodes.starter.stress.feign.FeignStressConstants;
 import com._5icodes.starter.stress.feign.test.local.MockData;
 import com._5icodes.starter.stress.feign.test.local.MockSao;
-import com._5icodes.starter.sleuth.utils.TraceTestUtils;
+import com._5icodes.starter.stress.utils.TraceTestUtils;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;

@@ -4,7 +4,7 @@ import brave.propagation.CurrentTraceContext;
 import brave.propagation.TraceContext;
 import com._5icodes.starter.common.exception.CodeMsg;
 import com._5icodes.starter.common.utils.*;
-import com._5icodes.starter.sleuth.utils.TraceTestUtils;
+import com._5icodes.starter.stress.utils.TraceTestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
