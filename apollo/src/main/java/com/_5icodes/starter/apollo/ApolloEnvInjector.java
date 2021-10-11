@@ -86,7 +86,7 @@ public class ApolloEnvInjector extends AbstractProfileEnvironmentPostProcessor i
     }
 
     /**
-     * 比apollo优先级高
+     * 比ApolloApplicationContextInitializer优先级高
      *
      * @see com.ctrip.framework.apollo.spring.boot.ApolloApplicationContextInitializer#getOrder()
      */

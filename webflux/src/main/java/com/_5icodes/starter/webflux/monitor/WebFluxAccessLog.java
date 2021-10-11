@@ -1,6 +1,6 @@
 package com._5icodes.starter.webflux.monitor;
 
-import com._5icodes.starter.common.utils.IpUtils;
+import com._5icodes.starter.common.utils.HostNameUtils;
 import com._5icodes.starter.common.utils.RegionUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com._5icodes.starter.web.WebConstants;
@@ -92,7 +92,7 @@ public class WebFluxAccessLog extends FillSleuthPropagationAccessLog implements 
         String groupId = request.getHeaders().getFirst(WebConstants.GROUP_ID);
         callee.put("groupId", groupId == null ? "" : groupId);
         callee.put("zone", RegionUtils.getZone());
-        callee.put("reqIp", IpUtils.getHostAddress());
+        callee.put("reqIp", HostNameUtils.getHostAddress());
         return callee;
     }
 

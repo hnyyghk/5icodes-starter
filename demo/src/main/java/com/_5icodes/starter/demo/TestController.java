@@ -2,7 +2,7 @@ package com._5icodes.starter.demo;
 
 import com._5icodes.starter.common.exception.BizRuntimeException;
 import com._5icodes.starter.common.utils.JsonUtils;
-import com._5icodes.starter.monitor.cache.monitor.CacheContextUtils;
+import com._5icodes.starter.monitor.cache.key.CacheKeyUtils;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
@@ -50,8 +50,8 @@ public class TestController {
 
     @PostMapping("/test")
     public Object test() {
-        redisTemplate.opsForValue().set(CacheContextUtils.just("123"), "123");
-        redisTemplate.opsForValue().get(CacheContextUtils.just("123"));
+        redisTemplate.opsForValue().set(CacheKeyUtils.just("123"), "123");
+        redisTemplate.opsForValue().get(CacheKeyUtils.just("123"));
         userCache.put("test", "1");
         return userCache.get("test");
     }

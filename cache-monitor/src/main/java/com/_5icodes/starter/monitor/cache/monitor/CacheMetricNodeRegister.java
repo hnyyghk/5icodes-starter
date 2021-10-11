@@ -2,6 +2,7 @@ package com._5icodes.starter.monitor.cache.monitor;
 
 import com._5icodes.starter.common.utils.JsonUtils;
 import com._5icodes.starter.monitor.cache.CacheContext;
+import com._5icodes.starter.monitor.cache.key.CacheKeyUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -18,7 +19,7 @@ public class CacheMetricNodeRegister {
             }
             //todo
         } finally {
-            CacheContextUtils.removeCacheContext();
+            CacheKeyUtils.removeCacheContext();
         }
     }
 }

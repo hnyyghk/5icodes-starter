@@ -26,7 +26,7 @@ public class ExceptionReport {
         }
         Map<String, Object> exceptionMap = new HashMap<>();
         exceptionMap.put("app", SpringApplicationUtils.getApplicationName());
-        exceptionMap.put("ip", IpUtils.getHostAddress());
+        exceptionMap.put("ip", HostNameUtils.getHostAddress());
         exceptionMap.put("resource", resource);
         exceptionMap.put("exception", realException.getClass().getSimpleName());
         exceptionMap.put("test", TraceTestUtils.isTraceTest());

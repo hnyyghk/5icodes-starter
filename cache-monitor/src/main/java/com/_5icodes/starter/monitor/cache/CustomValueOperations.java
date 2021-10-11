@@ -1,6 +1,6 @@
 package com._5icodes.starter.monitor.cache;
 
-import com._5icodes.starter.monitor.cache.monitor.CacheContextUtils;
+import com._5icodes.starter.monitor.cache.key.CacheKeyUtils;
 import com._5icodes.starter.monitor.cache.monitor.CacheMetricNodeRegister;
 import org.springframework.data.redis.connection.BitFieldSubCommands;
 import org.springframework.data.redis.core.RedisOperations;
@@ -21,7 +21,7 @@ public class CustomValueOperations<K, V> implements ValueOperations<K, V> {
     }
 
     private <T> T execute(Supplier<T> supplier, Consumer<CacheContext> cacheContextConsumer) {
-        CacheContext cacheContext = CacheContextUtils.getCacheContext();
+        CacheContext cacheContext = CacheKeyUtils.getCacheContext();
         T res;
         if (null != cacheContext) {
             try {

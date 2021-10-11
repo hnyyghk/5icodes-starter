@@ -1,7 +1,7 @@
 package com._5icodes.starter.webmvc.monitor;
 
 import com._5icodes.starter.common.utils.GrayUtils;
-import com._5icodes.starter.common.utils.IpUtils;
+import com._5icodes.starter.common.utils.HostNameUtils;
 import com._5icodes.starter.common.utils.RegionUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com._5icodes.starter.sleuth.SleuthConstants;
@@ -91,7 +91,7 @@ public class AccessLogFilter extends FillSleuthPropagationAccessLog implements O
         callee.put("moduleId", SpringApplicationUtils.getApplicationName());
         callee.put("groupId", GrayUtils.isGray() ? "GRAY" : "PRD");
         callee.put("zone", RegionUtils.getZone());
-        callee.put("reqIp", IpUtils.getHostAddress());
+        callee.put("reqIp", HostNameUtils.getHostAddress());
         return callee;
     }
 

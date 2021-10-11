@@ -1,9 +1,10 @@
-package com._5icodes.starter.monitor.cache.monitor;
+package com._5icodes.starter.monitor.cache.key;
 
 import com._5icodes.starter.monitor.cache.CacheContext;
 import com._5icodes.starter.monitor.cache.CacheOperationType;
+import com._5icodes.starter.monitor.cache.monitor.TimeUtil;
 
-public class CacheContextUtils {
+public class CacheKeyUtils {
     private static final ThreadLocal<CacheContext> CACHE_THREAD_LOCAL = new ThreadLocal<>();
 
     public static CacheContext getCacheContext() {
@@ -31,9 +32,8 @@ public class CacheContextUtils {
     }
 
     public static String prefix(String prefix, String arg) {
-        String key = prefix + arg;
-        initContext(key);
-        return key;
+        initContext(prefix + "%s");
+        return prefix + arg;
     }
 
     public static void setOperationType(CacheOperationType operationType) {

@@ -7,9 +7,10 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
+import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 
-public class CacheEnvInjector extends AbstractProfileEnvironmentPostProcessor {
+public class CacheEnvInjector extends AbstractProfileEnvironmentPostProcessor implements Ordered {
     @Override
     protected void onAllProfiles(ConfigurableEnvironment env, SpringApplication application) {
         int nodes = 1;
@@ -40,5 +41,10 @@ public class CacheEnvInjector extends AbstractProfileEnvironmentPostProcessor {
         PropertySourceUtils.put(env, "jetcache.remote.default.valueDecoder", "jackson");
         PropertySourceUtils.put(env, "jetcache.remote.default.expireAfterWriteInMillis", 30 * 60 * 1000);
         super.onAllProfiles(env, application);
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
     }
 }
