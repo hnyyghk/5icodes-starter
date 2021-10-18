@@ -14,7 +14,9 @@ public class LettuceClientOptionsCustomizer implements LettuceClientConfiguratio
     public void customize(LettuceClientConfiguration.LettuceClientConfigurationBuilder clientConfigurationBuilder) {
         clientConfigurationBuilder.clientOptions(
                 ClusterClientOptions.builder()
+                        //disable validateClusterNodeMembership
                         .validateClusterNodeMembership(false)
+                        //支持主从切换
                         .disconnectedBehavior(ClientOptions.DisconnectedBehavior.REJECT_COMMANDS)
                         .topologyRefreshOptions(
                                 ClusterTopologyRefreshOptions.builder()
