@@ -40,6 +40,7 @@
         <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
         <starter.version>0.0.1</starter.version>
         <jackson.version>2.11.3</jackson.version>
+        <hutool.version>5.3.1</hutool.version>
         <sentinel.version>1.8.2</sentinel.version>
         <jetcache.version>2.6.0</jetcache.version>
         <apollo.version>1.8.0</apollo.version>
@@ -230,6 +231,18 @@
                         <artifactId>jedis</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.kstyrc</groupId>
+                <artifactId>embedded-redis</artifactId>
+                <version>0.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
 
             <dependency>

@@ -1,10 +1,19 @@
 package com._5icodes.starter.cache;
 
 import com._5icodes.starter.cache.config.LettuceClientOptionsCustomizer;
+import com._5icodes.starter.cache.test.EmbeddedRedisServer;
+import com._5icodes.starter.cache.test.RedisConnectFactoryLifecycle;
 import com.alicp.jetcache.anno.support.SpringConfigProvider;
 import com.alicp.jetcache.support.DecoderMap;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Role;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import redis.embedded.RedisServer;
 
 import java.util.function.Function;
 
@@ -51,5 +60,22 @@ public class CacheAutoConfiguration {
     @Bean
     public LettuceClientOptionsCustomizer lettuceClientOptionsCustomizer() {
         return new LettuceClientOptionsCustomizer();
+    }
+
+    @ConditionalOnClass(RedisServer.class)
+    @Configuration
+    @Profile("it")
+    public static class EmbeddedRedisServerAutoConfiguration {
+        @Bean(destroyMethod = "stop", name = CacheConstants.EMBEDDED_REDIS_SERVER_BEAN)
+        @ConditionalOnMissingBean
+        @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+        public static EmbeddedRedisServer embeddedRedisServer() {
+            return new EmbeddedRedisServer(6379, 20);
+        }
+
+        @Bean
+        public RedisConnectFactoryLifecycle redisConnectFactoryLifecycle(LettuceConnectionFactory connectionFactory) {
+            return new RedisConnectFactoryLifecycle(connectionFactory);
+        }
     }
 }
