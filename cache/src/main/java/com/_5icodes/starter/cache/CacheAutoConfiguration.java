@@ -3,6 +3,8 @@ package com._5icodes.starter.cache;
 import com._5icodes.starter.cache.config.LettuceClientOptionsCustomizer;
 import com._5icodes.starter.cache.test.EmbeddedRedisServer;
 import com._5icodes.starter.cache.test.RedisConnectFactoryLifecycle;
+import com._5icodes.starter.common.utils.SpringApplicationUtils;
+import com._5icodes.starter.common.utils.snowflake.SnowflakeIdGenerator;
 import com.alicp.jetcache.anno.support.SpringConfigProvider;
 import com.alicp.jetcache.support.DecoderMap;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Role;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import redis.embedded.RedisServer;
 
 import java.util.function.Function;
@@ -55,6 +58,13 @@ public class CacheAutoConfiguration {
                 }
             }
         };
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public SnowflakeIdGenerator snowflakeIdGenerator(StringRedisTemplate stringRedisTemplate) {
+        long customId = stringRedisTemplate.opsForValue().increment(CacheConstants.SNOW_FLAKE_REDIS_PREFIX + SpringApplicationUtils.getApplicationName());
+        return new SnowflakeIdGenerator(customId);
     }
 
     @Bean
