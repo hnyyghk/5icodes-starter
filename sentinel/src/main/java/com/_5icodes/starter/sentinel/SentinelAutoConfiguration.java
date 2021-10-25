@@ -44,16 +44,10 @@ import static com.alibaba.csp.sentinel.config.SentinelConfig.setConfig;
 @ConditionalOnSentinel
 @EnableConfigurationProperties({SentinelProperties.class, com._5icodes.starter.sentinel.SentinelProperties.class})
 public class SentinelAutoConfiguration {
-
 	@Bean
 	@ConditionalOnMissingBean
 	public AbstractSentinelMetricSender metricTimerListener() {
 		return new KafkaSentinelMetricSender();
-	}
-
-	@Bean
-	public ChangeLogApplicationListener changeLogApplicationListener() {
-		return new ChangeLogApplicationListener();
 	}
 
 	@Value("${project.name:${spring.application.name:}}")

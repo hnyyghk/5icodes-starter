@@ -10,10 +10,9 @@ import org.apache.http.client.HttpClient;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
+import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.cloud.openfeign.ribbon.CachingSpringLoadBalancerFactory;
-import org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient;
+import org.springframework.cloud.openfeign.loadbalancer.FeignBlockingLoadBalancerClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,11 +23,10 @@ import org.springframework.context.annotation.Configuration;
 public class FeignStressAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
-    public Client feignClient(CachingSpringLoadBalancerFactory cachingFactory,
-                              SpringClientFactory clientFactory, HttpClient httpClient) {
+    public Client feignClient(BlockingLoadBalancerClient loadBalancerClient, HttpClient httpClient) {
         CustomHttpClient delegate = new CustomHttpClient(httpClient);
         CustomStressHttpClient customStressHttpClient = new CustomStressHttpClient(delegate);
-        return new LoadBalancerFeignClient(customStressHttpClient, cachingFactory, clientFactory);
+        return new FeignBlockingLoadBalancerClient(customStressHttpClient, loadBalancerClient);
     }
 
     @Bean

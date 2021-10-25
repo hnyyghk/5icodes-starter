@@ -32,6 +32,7 @@
         <module>webflux</module>
         <module>feign</module>
         <module>swagger</module>
+        <module>gray</module>
     </modules>
 
     <properties>
@@ -165,6 +166,12 @@
             <dependency>
                 <groupId>com.5icodes</groupId>
                 <artifactId>webmvc</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
+                <artifactId>gray</artifactId>
                 <version>${starter.version}</version>
             </dependency>
 

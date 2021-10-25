@@ -29,6 +29,17 @@ public class WebAutoConfiguration {
 
     @Configuration
     @ConditionalOnInternalServer
+    @ConditionalOnClass(ApplicationInfoManager.class)
+    public static class RegistryAccessLogAutoConfiguration {
+        @Bean
+        @ConditionalOnBean(EurekaClient.class)
+        public GracefulShutdownHandler gracefulShutdownHandler(EurekaClient discoveryClient) {
+            return new GracefulShutdownHandler(discoveryClient);
+        }
+    }
+
+    @Configuration
+    @ConditionalOnInternalServer
     public static class InternalServerAutoConfiguration {
         @Bean
         public DumpHandler dumpHandler() {
@@ -38,13 +49,6 @@ public class WebAutoConfiguration {
         @Bean
         public InternalServer internalServer(List<InternalHandler> internalHandlers, WebProperties properties) {
             return new InternalServer(internalHandlers, properties.getInternalPort());
-        }
-
-        @Bean
-        @ConditionalOnClass(ApplicationInfoManager.class)
-        @ConditionalOnBean(EurekaClient.class)
-        public GracefulShutdownHandler gracefulShutdownHandler(EurekaClient discoveryClient) {
-            return new GracefulShutdownHandler(discoveryClient);
         }
     }
 }

@@ -34,11 +34,7 @@ public class SentinelEnvInjector extends AbstractProfileEnvironmentPostProcessor
         //默认启动的sentinel监控数据查询端口
         PropertySourceUtils.put(env, "spring.cloud.sentinel.transport.port", 15719);
         //sentinel的缓存数据目录
-        String logDir = "/tmp/sentinel-" + applicationName + "-sentinel";
-        PropertySourceUtils.put(env, "spring.cloud.sentinel.log.dir", logDir);
-        //修改sentinel的日志级别为error
-        PropertySourceUtils.put(env, "logging.level.cspCommandCenterLog", "error");
-        PropertySourceUtils.put(env, "logging.level.cspSentinelRecordLog", "error");
+        PropertySourceUtils.put(env, "spring.cloud.sentinel.log.dir", "/data/logs/" + applicationName);
         super.onAllProfiles(env, application);
     }
 

@@ -35,12 +35,11 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.commons.httpclient.ApacheHttpClientConnectionManagerFactory;
-import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
+import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
 import org.springframework.cloud.openfeign.AnnotatedParameterProcessor;
 import org.springframework.cloud.openfeign.FeignFormatterRegistrar;
-import org.springframework.cloud.openfeign.ribbon.CachingSpringLoadBalancerFactory;
-import org.springframework.cloud.openfeign.ribbon.FeignRibbonClientAutoConfiguration;
-import org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient;
+import org.springframework.cloud.openfeign.loadbalancer.FeignBlockingLoadBalancerClient;
+import org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfiguration;
 import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;
 import org.springframework.cloud.openfeign.support.SpringDecoder;
 import org.springframework.context.annotation.Bean;
@@ -88,10 +87,9 @@ public class FeignAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public Client feignClient(CachingSpringLoadBalancerFactory cachingFactory,
-                              SpringClientFactory clientFactory, HttpClient httpClient) {
+    public Client feignClient(BlockingLoadBalancerClient loadBalancerClient, HttpClient httpClient) {
         CustomHttpClient delegate = new CustomHttpClient(httpClient);
-        return new LoadBalancerFeignClient(delegate, cachingFactory, clientFactory);
+        return new FeignBlockingLoadBalancerClient(delegate, loadBalancerClient);
     }
 
     @Bean
@@ -131,8 +129,11 @@ public class FeignAutoConfiguration {
         return new CustomContract(parameterProcessors.getIfAvailable(ArrayList::new), conversionService, annotatedMethodProcessors);
     }
 
+    /**
+     * @see org.springframework.cloud.openfeign.clientconfig.HttpClientFeignConfiguration
+     */
     @Configuration
-    @AutoConfigureBefore(FeignRibbonClientAutoConfiguration.class)
+    @AutoConfigureBefore(FeignLoadBalancerAutoConfiguration.class)
     @ConditionalOnMissingBean(CloseableHttpClient.class)
     @EnableConfigurationProperties(CustomFeignHttpClientProperties.class)
     public static class HttpClientFeignConfiguration {
@@ -148,7 +149,7 @@ public class FeignAutoConfiguration {
         @ConditionalOnMissingBean(HttpClientConnectionManager.class)
         public HttpClientConnectionManager connectionManager(ApacheHttpClientConnectionManagerFactory connectionManagerFactory,
                                                              CustomFeignHttpClientProperties httpClientProperties) {
-            HttpClientConnectionManager connectionManager = connectionManagerFactory.newConnectionManager(
+            final HttpClientConnectionManager connectionManager = connectionManagerFactory.newConnectionManager(
                     httpClientProperties.isDisableSslValidation(),
                     httpClientProperties.getMaxConnections(),
                     httpClientProperties.getMaxConnectionsPerRoute(),

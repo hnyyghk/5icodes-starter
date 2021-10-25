@@ -33,6 +33,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.kstyrc</groupId>
+            <artifactId>embedded-redis</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.5icodes</groupId>
             <artifactId>apollo</artifactId>
         </dependency>
@@ -45,6 +50,11 @@
         <dependency>
             <groupId>com.5icodes</groupId>
             <artifactId>feign-stress</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>gray</artifactId>
         </dependency>
 
         <dependency>

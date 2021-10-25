@@ -5,7 +5,6 @@ import com._5icodes.starter.feign.FeignConstants;
 import com._5icodes.starter.feign.utils.TimeoutKeyUtils;
 import com.netflix.config.CachedDynamicLongProperty;
 import feign.Request;
-import lombok.Getter;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.util.ReflectionUtils;
 
@@ -20,7 +19,6 @@ public class ProxyFeignClientInvocationHandler implements InvocationHandler {
 
     private final Class<?> type;
 
-    @Getter
     private final String name;
 
     private volatile boolean initialed = false;

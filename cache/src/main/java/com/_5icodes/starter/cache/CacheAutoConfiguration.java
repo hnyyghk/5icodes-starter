@@ -7,6 +7,7 @@ import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com._5icodes.starter.common.utils.snowflake.SnowflakeIdGenerator;
 import com.alicp.jetcache.anno.support.SpringConfigProvider;
 import com.alicp.jetcache.support.DecoderMap;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -21,6 +22,7 @@ import redis.embedded.RedisServer;
 import java.util.function.Function;
 
 @Configuration
+@Slf4j
 public class CacheAutoConfiguration {
     @Bean
     public SpringConfigProvider springConfigProvider() {
@@ -63,8 +65,13 @@ public class CacheAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public SnowflakeIdGenerator snowflakeIdGenerator(StringRedisTemplate stringRedisTemplate) {
-        long customId = stringRedisTemplate.opsForValue().increment(CacheConstants.SNOW_FLAKE_REDIS_PREFIX + SpringApplicationUtils.getApplicationName());
-        return new SnowflakeIdGenerator(customId);
+        try {
+            long customId = stringRedisTemplate.opsForValue().increment(CacheConstants.SNOW_FLAKE_REDIS_PREFIX + SpringApplicationUtils.getApplicationName());
+            return new SnowflakeIdGenerator(customId);
+        } catch (Exception e) {
+            log.error("init snowflakeIdGenerator error:", e);
+        }
+        return null;
     }
 
     @Bean
