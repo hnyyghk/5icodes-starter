@@ -4,7 +4,7 @@ import com._5icodes.starter.stress.feign.test.remote.MockUtil;
 import com._5icodes.starter.stress.utils.TraceTestUtils;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.util.Args;
 import org.springframework.util.CollectionUtils;
 

@@ -1,7 +1,7 @@
 package com._5icodes.starter.stress.feign.test.local;
 
 import com._5icodes.starter.stress.utils.TraceTestUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.RequestBuilder;
 
 import java.util.List;
