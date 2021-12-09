@@ -1,0 +1,34 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com._5icodes.starter.saturn.SaturnProperties",
+      "name": "saturn properties",
+      "type": "com._5icodes.starter.saturn.SaturnProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com._5icodes.starter.saturn.SaturnProperties",
+      "name": "saturn.enabled",
+      "defaultValue": true,
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com._5icodes.starter.saturn.SaturnProperties",
+      "name": "saturn.namespace",
+      "defaultValue": "/${spring.application.name}Saturn",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.saturn.SaturnProperties",
+      "name": "saturn.executorName",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.saturn.SaturnProperties",
+      "name": "saturn.consoleAddress",
+      "type": "java.lang.String"
+    }
+  ]
+}

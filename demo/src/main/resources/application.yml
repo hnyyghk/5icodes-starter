@@ -6,3 +6,5 @@ logging:
           webmvc:
             log:
               LogFilter: trace
+saturn:
+  enabled: true

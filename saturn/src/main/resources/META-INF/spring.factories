@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com._5icodes.starter.saturn.SaturnAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.saturn.SaturnEnvInjector
