@@ -5,12 +5,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FeignReflectionUtils {
     private final Class<?> specificationClass;
-    private final Class<?> feignFactoryClass;
 
     static {
         try {
             specificationClass = Class.forName("org.springframework.cloud.openfeign.FeignClientSpecification");
-            feignFactoryClass = Class.forName("org.springframework.cloud.openfeign.FeignClientFactoryBean");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -18,9 +16,5 @@ public class FeignReflectionUtils {
 
     public Class<?> getSpecificationClass() {
         return specificationClass;
-    }
-
-    public Class<?> getFeignFactoryClass() {
-        return feignFactoryClass;
     }
 }

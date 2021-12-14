@@ -2,9 +2,6 @@ package com._5icodes.starter.feign.custom;
 
 import com._5icodes.starter.common.utils.PropertySourceUtils;
 import com._5icodes.starter.feign.AnnotationConfigHolder;
-import com._5icodes.starter.feign.custom.FeignClientCustom;
-import com._5icodes.starter.feign.custom.FeignRequestOptions;
-import com._5icodes.starter.feign.custom.ProxyFeignClientInvocationHandler;
 import com._5icodes.starter.feign.utils.FeignPropertyUtils;
 import com._5icodes.starter.feign.utils.FeignReflectionUtils;
 import com._5icodes.starter.feign.utils.TimeoutKeyUtils;
@@ -14,9 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.*;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClientFactoryBean;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -42,8 +40,8 @@ public class FeignClientBeanProcessor implements BeanFactoryPostProcessor, Envir
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        Map<String, List<Class<?>>> feignClientBeanMeta = scanFeignClientBeanDefinition(beanFactory);
-        processFeignSpecificationBeanDefinition(beanFactory, feignClientBeanMeta);
+        scanFeignClientBeanDefinition(beanFactory);
+        processFeignSpecificationBeanDefinition(beanFactory);
         feignContextDestroyBugFix(beanFactory);
     }
 
@@ -64,7 +62,11 @@ public class FeignClientBeanProcessor implements BeanFactoryPostProcessor, Envir
         return Proxy.newProxyInstance(ClassUtils.getDefaultClassLoader(), new Class[]{feignType}, new ProxyFeignClientInvocationHandler(bean, feignType, pair.getRight()));
     }
 
-    private void processFeignSpecificationBeanDefinition(ConfigurableListableBeanFactory beanFactory, Map<String, List<Class<?>>> feignClientBeanMeta) {
+    private void processFeignSpecificationBeanDefinition(ConfigurableListableBeanFactory beanFactory) {
+        Map<String, List<Class<?>>> feignClientBeanMeta = new HashMap<>();
+        for (Pair<Class<?>, String> c : feignBeanMeta.values()) {
+            feignClientBeanMeta.computeIfAbsent(c.getRight(), k -> new ArrayList<>()).add(c.getLeft());
+        }
         Map<Class<? extends Annotation>, Class<?>> annotationConfigMap = getAnnotationConfigMap();
         if (CollectionUtils.isEmpty(annotationConfigMap)) {
             return;
@@ -116,28 +118,20 @@ public class FeignClientBeanProcessor implements BeanFactoryPostProcessor, Envir
         return annotationConfigMap;
     }
 
-    private Map<String, List<Class<?>>> scanFeignClientBeanDefinition(ConfigurableListableBeanFactory beanFactory) {
-        String[] feignFactoryBeanNames = beanFactory.getBeanNamesForType(FeignReflectionUtils.getFeignFactoryClass());
-        Map<String, List<Class<?>>> feignClientBeanMeta = new HashMap<>();
-        for (String feignFactoryBeanName : feignFactoryBeanNames) {
-            String realBeanName = feignFactoryBeanName.substring(1);
-            BeanDefinition feignFactoryBeanDef = beanFactory.getBeanDefinition(realBeanName);
-            MutablePropertyValues propertyValues = feignFactoryBeanDef.getPropertyValues();
-            String contextId = (String) propertyValues.get("contextId");
-            String type = (String) propertyValues.get("type");
-            Class<?> typeClass;
-            try {
-                typeClass = Class.forName(type);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(String.format("feign type: %s class not exists", type), e);
-            }
-            feignBeanMeta.put(realBeanName, Pair.of(typeClass, contextId));
+    private void scanFeignClientBeanDefinition(ConfigurableListableBeanFactory beanFactory) {
+        String[] beanNames = beanFactory.getBeanNamesForAnnotation(FeignClient.class);
+        for (String beanName : beanNames) {
+            AbstractBeanDefinition beanDefinition = (AbstractBeanDefinition) beanFactory.getBeanDefinition(beanName);
+            FeignClientFactoryBean feignClientFactoryBean = (FeignClientFactoryBean) beanDefinition.getAttribute("feignClientsRegistrarFactoryBean");
+            String contextId = feignClientFactoryBean.getContextId();
+            Class<?> typeClass = beanDefinition.getBeanClass();
+            feignBeanMeta.put(beanName, Pair.of(typeClass, contextId));
             Method[] methods = typeClass.getMethods();
             for (Method method : methods) {
-                String connectTimeoutKey = TimeoutKeyUtils.connectTimeoutKey(typeClass, method);
-                String readTimeoutKey = TimeoutKeyUtils.readTimeoutKey(typeClass, method);
-                log.info("use @FeignRequestOptions annotation on method connectTimeoutKey: {}", connectTimeoutKey);
-                log.info("use @FeignRequestOptions annotation on method readTimeoutKey: {}", readTimeoutKey);
+                String connectTimeoutKey = TimeoutKeyUtils.connectTimeoutKey(typeClass, method, contextId);
+                String readTimeoutKey = TimeoutKeyUtils.readTimeoutKey(typeClass, method, contextId);
+                log.info("use @FeignRequestOptions annotation on method connectTimeout key: {}", connectTimeoutKey);
+                log.info("use @FeignRequestOptions annotation on method readTimeout key: {}", readTimeoutKey);
                 FeignRequestOptions options = method.getAnnotation(FeignRequestOptions.class);
                 if (null == options) {
                     continue;
@@ -155,10 +149,7 @@ public class FeignClientBeanProcessor implements BeanFactoryPostProcessor, Envir
             if (null != feignClientCustom) {
                 FeignPropertyUtils.process(feignClientCustom, environment, contextId, FeignClientCustom.class);
             }
-            List<Class<?>> list = feignClientBeanMeta.computeIfAbsent(contextId, s -> new LinkedList<>());
-            list.add(typeClass);
         }
-        return feignClientBeanMeta;
     }
 
     /**

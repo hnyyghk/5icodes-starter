@@ -19,32 +19,38 @@ public class ProxyFeignClientInvocationHandler implements InvocationHandler {
 
     private final Class<?> type;
 
-    private final String name;
+    private final String contextId;
 
     private volatile boolean initialed = false;
 
     private final Map<Method, Pair<DynamicLongFuncProperty, DynamicLongFuncProperty>> methodTimeoutMap = new ConcurrentHashMap<>();
 
     private static class GlobalDynamicTimeout {
-        static CachedDynamicLongProperty connectTimeout = new CachedDynamicLongProperty("ribbon.ConnectTimeout", FeignConstants.DEFAULT_CONNECT_TIMEOUT);
-        static CachedDynamicLongProperty readTimeout = new CachedDynamicLongProperty("ribbon.ReadTimeout", FeignConstants.DEFAULT_READ_TIMEOUT);
+        //feign.client.config.default.connectTimeout: 1000
+        //feign.client.config.default.readTimeout: 3000
+        static CachedDynamicLongProperty connectTimeout = new CachedDynamicLongProperty("feign.client.config.default.connectTimeout", FeignConstants.DEFAULT_CONNECT_TIMEOUT);
+        static CachedDynamicLongProperty readTimeout = new CachedDynamicLongProperty("feign.client.config.default.readTimeout", FeignConstants.DEFAULT_READ_TIMEOUT);
     }
 
-    public ProxyFeignClientInvocationHandler(Object bean, Class<?> type, String name) {
+    public ProxyFeignClientInvocationHandler(Object bean, Class<?> type, String contextId) {
         this.bean = bean;
         this.type = type;
-        this.name = name;
+        this.contextId = contextId;
     }
 
     private synchronized void initial() {
         if (initialed) {
             return;
         }
-        DynamicLongFuncProperty classConnectTimeout = new DynamicLongFuncProperty(name + ".ribbon.ConnectTimeout", GlobalDynamicTimeout.connectTimeout::get);
-        DynamicLongFuncProperty classReadTimeout = new DynamicLongFuncProperty(name + ".ribbon.ReadTimeout", GlobalDynamicTimeout.readTimeout::get);
+        //feign.client.config.contextId.connectTimeout: 1000
+        //feign.client.config.contextId.readTimeout: 3000
+        DynamicLongFuncProperty classConnectTimeout = new DynamicLongFuncProperty("feign.client.config." + contextId + ".connectTimeout", GlobalDynamicTimeout.connectTimeout::get);
+        DynamicLongFuncProperty classReadTimeout = new DynamicLongFuncProperty("feign.client.config." + contextId + ".readTimeout", GlobalDynamicTimeout.readTimeout::get);
         ReflectionUtils.doWithMethods(type, method -> {
-            DynamicLongFuncProperty methodConnectTimeout = new DynamicLongFuncProperty(TimeoutKeyUtils.connectTimeoutKey(type, method), classConnectTimeout::getValue);
-            DynamicLongFuncProperty methodReadTimeout = new DynamicLongFuncProperty(TimeoutKeyUtils.readTimeoutKey(type, method), classReadTimeout::getValue);
+            //feign.client.config.contextId.method.connectTimeout: 1000
+            //feign.client.config.contextId.method.readTimeout: 3000
+            DynamicLongFuncProperty methodConnectTimeout = new DynamicLongFuncProperty(TimeoutKeyUtils.connectTimeoutKey(type, method, contextId), classConnectTimeout::getValue);
+            DynamicLongFuncProperty methodReadTimeout = new DynamicLongFuncProperty(TimeoutKeyUtils.readTimeoutKey(type, method, contextId), classReadTimeout::getValue);
             methodTimeoutMap.put(method, Pair.of(methodConnectTimeout, methodReadTimeout));
         });
         initialed = true;

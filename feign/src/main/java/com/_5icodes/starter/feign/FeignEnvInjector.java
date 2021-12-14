@@ -12,16 +12,16 @@ import org.springframework.core.env.ConfigurableEnvironment;
 public class FeignEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     @Override
     protected void onDev(ConfigurableEnvironment env, SpringApplication application) {
+        PropertySourceUtils.put(env, "feign.auth.userName", "testUserName");
         PropertySourceUtils.put(env, "feign.auth.password", "testPassword");
         super.onDev(env, application);
     }
 
     @Override
     protected void onAllProfiles(ConfigurableEnvironment env, SpringApplication application) {
-        PropertySourceUtils.put(env, "feign.auth.userName", "testUserName");
         PropertySourceUtils.put(env, "spring.main.allow-bean-definition-overriding", true);
-        PropertySourceUtils.put(env, "ribbon.ConnectTimeout", FeignConstants.DEFAULT_CONNECT_TIMEOUT);
-        PropertySourceUtils.put(env, "ribbon.ReadTimeout", FeignConstants.DEFAULT_READ_TIMEOUT);
+        PropertySourceUtils.put(env, "feign.client.config.default.connectTimeout", FeignConstants.DEFAULT_CONNECT_TIMEOUT);
+        PropertySourceUtils.put(env, "feign.client.config.default.readTimeout", FeignConstants.DEFAULT_READ_TIMEOUT);
         PropertySourceUtils.put(env, "ribbon.ServerListRefreshInterval", 3000);
         PropertySourceUtils.put(env, "feign.httpclient.follow-redirects", false);
         PropertySourceUtils.put(env, "feign.client.config.default.loggerLevel", "full");

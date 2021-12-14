@@ -26,8 +26,8 @@ public class FeignEnvInjectorTest {
         ConfigurableEnvironment environment = PowerMockito.mock(ConfigurableEnvironment.class);
         SpringApplication application = PowerMockito.mock(SpringApplication.class);
         PowerMockito.mockStatic(PropertySourceUtils.class);
-        PropertySourceUtils.put(environment, "ribbon.ConnectTimeout", FeignConstants.DEFAULT_CONNECT_TIMEOUT);
-        PropertySourceUtils.put(environment, "ribbon.ReadTimeout", FeignConstants.DEFAULT_READ_TIMEOUT);
+        PropertySourceUtils.put(environment, "feign.client.config.default.connectTimeout", FeignConstants.DEFAULT_CONNECT_TIMEOUT);
+        PropertySourceUtils.put(environment, "feign.client.config.default.readTimeout", FeignConstants.DEFAULT_READ_TIMEOUT);
         Class<?> mainApplicationClass = application.getMainApplicationClass();
         PowerMockito.mockStatic(AnnotationUtils.class);
         FeignClientCustom feignClientCustom = AnnotationUtils.findAnnotation(mainApplicationClass, FeignClientCustom.class);
