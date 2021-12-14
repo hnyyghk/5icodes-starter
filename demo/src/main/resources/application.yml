@@ -8,3 +8,8 @@ logging:
               LogFilter: trace
 saturn:
   enabled: true
+feign:
+  client:
+    config:
+      baidu:
+        localMapping: http://www.5icodes.com
