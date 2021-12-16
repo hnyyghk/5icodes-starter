@@ -21,10 +21,10 @@ public class ServerUtils {
             return Collections.emptySet();
         }
         String value = metadata.get(key);
-        if (StringUtils.isEmpty(value)) {
-            return Collections.emptySet();
+        if (StringUtils.hasText(value)) {
+            return StringUtils.commaDelimitedListToSet(value);
         }
-        return StringUtils.commaDelimitedListToSet(value);
+        return Collections.emptySet();
     }
 
     public String set(ServiceInstance server, String key, String value) {

@@ -4,7 +4,7 @@ import com._5icodes.starter.webmvc.result.CodeMsgResponseBodyAdvice;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.InitializingBean;
 import springfox.documentation.swagger.web.ApiResourceController;
-import springfox.documentation.swagger2.web.Swagger2Controller;
+import springfox.documentation.swagger2.web.Swagger2ControllerWebMvc;
 
 public class CodeMsgSwaggerSwitcher implements InitializingBean {
     private final CodeMsgResponseBodyAdvice advice;
@@ -15,6 +15,6 @@ public class CodeMsgSwaggerSwitcher implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        advice.addExcludeClasses(Sets.newHashSet(Swagger2Controller.class.getName(), ApiResourceController.class.getName()));
+        advice.addExcludeClasses(Sets.newHashSet(Swagger2ControllerWebMvc.class.getName(), ApiResourceController.class.getName()));
     }
 }

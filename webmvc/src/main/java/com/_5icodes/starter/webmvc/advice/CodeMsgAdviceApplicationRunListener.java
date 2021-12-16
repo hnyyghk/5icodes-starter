@@ -4,6 +4,7 @@ import com._5icodes.starter.common.application.ApplicationRunListenerAdapter;
 import com._5icodes.starter.common.utils.AnnotationChangeUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com._5icodes.starter.webmvc.result.CodeMsgResponseBodyAdvice;
+import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -16,7 +17,7 @@ public class CodeMsgAdviceApplicationRunListener extends ApplicationRunListenerA
     }
 
     @Override
-    protected void doStarting() {
+    protected void doStarting(ConfigurableBootstrapContext bootstrapContext) {
         List<String> packages = SpringApplicationUtils.getBasePackages(getApplication());
         final String[] packagesArray = packages.toArray(new String[0]);
         AnnotationChangeUtils.addAnnotation(CodeMsgResponseBodyAdvice.class, RestControllerAdvice.class, new RestControllerAdvice() {
@@ -50,6 +51,6 @@ public class CodeMsgAdviceApplicationRunListener extends ApplicationRunListenerA
                 return RestControllerAdvice.class;
             }
         });
-        super.doStarting();
+        super.doStarting(bootstrapContext);
     }
 }

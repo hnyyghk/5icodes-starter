@@ -21,12 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 public class ErrorController extends AbstractErrorController {
     private static final String ERROR_ATTRIBUTE = DefaultErrorAttributes.class.getName() + ".ERROR";
     private final ErrorProperties errorProperties;
-    private final String errorPath;
 
-    public ErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties, String errorPath) {
+    public ErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties) {
         super(errorAttributes);
         this.errorProperties = errorProperties;
-        this.errorPath = errorPath;
     }
 
     @RequestMapping
@@ -49,11 +47,6 @@ public class ErrorController extends AbstractErrorController {
             response.setStatus(status);
         }
         return new ResultDTO<>(errorProperties.getCode(), msg).setReqId(TraceUtils.getReqId());
-    }
-
-    @Override
-    public String getErrorPath() {
-        return errorPath;
     }
 
     private Throwable getError(WebRequest webRequest) {

@@ -7,10 +7,12 @@ import com._5icodes.starter.stress.feign.test.remote.MockProperties;
 import com._5icodes.starter.stress.feign.test.remote.MockServerStartListener;
 import feign.Client;
 import org.apache.http.client.HttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
+import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.loadbalancer.FeignBlockingLoadBalancerClient;
 import org.springframework.context.annotation.Bean;
@@ -23,10 +25,10 @@ import org.springframework.context.annotation.Configuration;
 public class FeignStressAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
-    public Client feignClient(BlockingLoadBalancerClient loadBalancerClient, HttpClient httpClient) {
+    public Client feignClient(HttpClient httpClient, @Autowired(required = false) BlockingLoadBalancerClient loadBalancerClient, LoadBalancerClientFactory loadBalancerClientFactory) {
         CustomHttpClient delegate = new CustomHttpClient(httpClient);
         CustomStressHttpClient customStressHttpClient = new CustomStressHttpClient(delegate);
-        return new FeignBlockingLoadBalancerClient(customStressHttpClient, loadBalancerClient);
+        return new FeignBlockingLoadBalancerClient(customStressHttpClient, loadBalancerClient, loadBalancerClientFactory);
     }
 
     @Bean

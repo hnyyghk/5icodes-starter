@@ -6,6 +6,7 @@ import org.springframework.data.redis.connection.BitFieldSubCommands;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.ValueOperations;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,26 @@ public class CustomValueOperations<K, V> implements ValueOperations<K, V> {
     public V get(Object key) {
         return execute(() -> delegate.get(key),
                 cacheContext -> cacheContext.setCacheOperationType(CacheOperationType.GET));
+    }
+
+    @Override
+    public V getAndDelete(K key) {
+        return delegate.getAndDelete(key);
+    }
+
+    @Override
+    public V getAndExpire(K key, long timeout, TimeUnit unit) {
+        return delegate.getAndExpire(key, timeout, unit);
+    }
+
+    @Override
+    public V getAndExpire(K key, Duration timeout) {
+        return delegate.getAndExpire(key, timeout);
+    }
+
+    @Override
+    public V getAndPersist(K key) {
+        return delegate.getAndPersist(key);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class WebMvcEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     protected void onAllProfiles(ConfigurableEnvironment env, SpringApplication application) {
         String applicationName = SpringApplicationUtils.getApplicationName();
         String moduleKey = WebConstants.PROPERTY_PREFIX + ".module";
-        if (StringUtils.isEmpty(env.getProperty(moduleKey))) {
+        if (!StringUtils.hasText(env.getProperty(moduleKey))) {
             PropertySourceUtils.put(env, moduleKey, applicationName);
         }
         super.onAllProfiles(env, application);

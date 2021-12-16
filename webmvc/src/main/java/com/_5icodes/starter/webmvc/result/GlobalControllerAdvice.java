@@ -46,6 +46,7 @@ public class GlobalControllerAdvice {
     @Lazy
     private ErrorProperties errorProperties;
     @Autowired
+    @Lazy
     private HandlerExceptionResolver handlerExceptionResolver;
 
     private ResultDTO fail(String message) {
@@ -54,7 +55,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler({BizException.class, BizRuntimeException.class})
     public ResultDTO<?> handleCodeException(CodeMsg codeMsg) {
-        log.warn("CodeMsgException occurred, code: {}, message: {}", codeMsg.getCode(), codeMsg.getMessage());
+        log.warn("exception occurred, code: {}, message: {}", codeMsg.getCode(), codeMsg.getMessage());
         return new ResultDTO(codeMsg.getCode(), codeMsg.getMessage());
     }
 

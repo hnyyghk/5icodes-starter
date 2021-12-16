@@ -41,7 +41,7 @@ public class LocalFeignClientPostProcessor implements BeanFactoryPostProcessor, 
             FeignClientFactoryBean feignClientFactoryBean = (FeignClientFactoryBean) beanDefinition.getAttribute("feignClientsRegistrarFactoryBean");
             String contextId = feignClientFactoryBean.getContextId();
             String localMapping = mappings.get(contextId);
-            if (StringUtils.isEmpty(localMapping)) {
+            if (!StringUtils.hasText(localMapping)) {
                 continue;
             }
             Supplier<?> instanceSupplier = beanDefinition.getInstanceSupplier();

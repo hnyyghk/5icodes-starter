@@ -62,7 +62,7 @@ public class SentinelMvcInterceptor implements OnlyOnceInterceptorConfigurer, Or
 
     protected String parseOrigin(HttpServletRequest request) {
         String origin = request.getHeader(WebConstants.MODULE_ID);
-        return StringUtils.isEmpty(origin) ? "unknown" : origin;
+        return StringUtils.hasText(origin) ? origin : "unknown";
     }
 
     @Override

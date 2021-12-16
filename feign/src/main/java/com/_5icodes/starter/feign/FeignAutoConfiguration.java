@@ -36,6 +36,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.commons.httpclient.ApacheHttpClientConnectionManagerFactory;
 import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
+import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.cloud.openfeign.AnnotatedParameterProcessor;
 import org.springframework.cloud.openfeign.FeignFormatterRegistrar;
 import org.springframework.cloud.openfeign.loadbalancer.FeignBlockingLoadBalancerClient;
@@ -87,9 +88,9 @@ public class FeignAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public Client feignClient(BlockingLoadBalancerClient loadBalancerClient, HttpClient httpClient) {
+    public Client feignClient(HttpClient httpClient, @Autowired(required = false) BlockingLoadBalancerClient loadBalancerClient, LoadBalancerClientFactory loadBalancerClientFactory) {
         CustomHttpClient delegate = new CustomHttpClient(httpClient);
-        return new FeignBlockingLoadBalancerClient(delegate, loadBalancerClient);
+        return new FeignBlockingLoadBalancerClient(delegate, loadBalancerClient, loadBalancerClientFactory);
     }
 
     @Bean

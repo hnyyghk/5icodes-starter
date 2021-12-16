@@ -33,19 +33,19 @@ public class SaturnEnvInjector extends AbstractProfileEnvironmentPostProcessor {
         BindResult<SaturnProperties> bindResult = binder.bind("saturn", SaturnProperties.class);
         if (bindResult.isBound()) {
             SaturnProperties saturnProperties = bindResult.get();
-            if (!StringUtils.isEmpty(saturnProperties.getNamespace())) {
+            if (StringUtils.hasText(saturnProperties.getNamespace())) {
                 namespace = saturnProperties.getNamespace();
             }
-            if (!StringUtils.isEmpty(saturnProperties.getExecutorName())) {
+            if (StringUtils.hasText(saturnProperties.getExecutorName())) {
                 executorName = saturnProperties.getExecutorName();
             }
-            if (!StringUtils.isEmpty(saturnProperties.getConsoleAddress())) {
+            if (StringUtils.hasText(saturnProperties.getConsoleAddress())) {
                 consoleAddress = saturnProperties.getConsoleAddress();
             }
         }
         //设置系统默认环境
         System.setProperty("saturn.app.namespace", namespace);
-        if (!StringUtils.isEmpty(executorName)) {
+        if (StringUtils.hasText(executorName)) {
             System.setProperty("saturn.app.executorName", executorName);
         }
         System.setProperty("VIP_SATURN_CONSOLE_URI", consoleAddress);

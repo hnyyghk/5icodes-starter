@@ -5,6 +5,7 @@ import com._5icodes.starter.common.utils.AnnotationChangeUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import com.alicp.jetcache.anno.config.EnableMethodCache;
+import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.core.Ordered;
@@ -18,7 +19,7 @@ public class JetCacheAnnotationListener extends ApplicationRunListenerAdapter {
     }
 
     @Override
-    protected void doStarting() {
+    protected void doStarting(ConfigurableBootstrapContext bootstrapContext) {
         Class<?> bootApplicationClass = SpringApplicationUtils.getBootApplicationClass(getApplication());
         EnableCreateCacheAnnotation enableCreateCacheAnnotation = bootApplicationClass.getDeclaredAnnotation(EnableCreateCacheAnnotation.class);
         if (null == enableCreateCacheAnnotation) {
@@ -60,6 +61,6 @@ public class JetCacheAnnotationListener extends ApplicationRunListenerAdapter {
                 }
             });
         }
-        super.doStarting();
+        super.doStarting(bootstrapContext);
     }
 }

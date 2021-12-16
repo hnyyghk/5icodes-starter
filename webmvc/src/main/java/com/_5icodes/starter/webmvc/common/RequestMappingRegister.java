@@ -10,7 +10,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerMapping;
-import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
+import org.springframework.web.servlet.mvc.condition.PathPatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 
@@ -37,8 +37,8 @@ public class RequestMappingRegister implements BootApplicationListener<Applicati
             }
             RequestMappingInfoHandlerMapping handlerMapping = (RequestMappingInfoHandlerMapping) mapping;
             handlerMapping.getHandlerMethods().forEach((info, method) -> {
-                PatternsRequestCondition patternsCondition = info.getPatternsCondition();
-                String path = String.join(",", patternsCondition.getPatterns());
+                PathPatternsRequestCondition pathPatternsCondition = info.getPathPatternsCondition();
+                String path = String.join(",", pathPatternsCondition.getPatternValues());
                 if (StringUtils.isBlank(path)) {
                     path = "/";
                 }

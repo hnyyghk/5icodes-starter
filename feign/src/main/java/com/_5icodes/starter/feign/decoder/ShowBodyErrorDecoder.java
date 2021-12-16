@@ -15,6 +15,6 @@ public class ShowBodyErrorDecoder implements ErrorDecoder {
             }
         } catch (Exception ignored) {
         }
-        return new ErrorStatusFeignException(response.status(), bytes);
+        return new ErrorStatusFeignException(response.status(), bytes, response.headers());
     }
 }

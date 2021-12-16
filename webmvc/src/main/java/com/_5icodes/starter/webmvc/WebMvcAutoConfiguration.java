@@ -21,7 +21,6 @@ import com._5icodes.starter.webmvc.feign.CodeMsgDecodeAnnotationConfigHolder;
 import com._5icodes.starter.webmvc.sentinel.SentinelExceptionHandler;
 import com._5icodes.starter.webmvc.sentinel.SentinelMvcInterceptor;
 import feign.Feign;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -129,9 +128,8 @@ public class WebMvcAutoConfiguration {
     @ConditionalOnAutoWrap
     @ConditionalOnMissingBean(ErrorController.class)
     public ErrorController errorController(ErrorAttributes errorAttributes,
-                                           ErrorProperties errorProperties,
-                                           @Value("${server.error.path:${error:path:/error}}") String errorPath) {
-        return new com._5icodes.starter.webmvc.result.ErrorController(errorAttributes, errorProperties, errorPath);
+                                           ErrorProperties errorProperties) {
+        return new com._5icodes.starter.webmvc.result.ErrorController(errorAttributes, errorProperties);
     }
 
     @Configuration

@@ -3,6 +3,7 @@ package com._5icodes.starter.feign;
 import com._5icodes.starter.common.application.ApplicationRunListenerAdapter;
 import com._5icodes.starter.common.utils.AnnotationChangeUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
+import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
@@ -18,7 +19,7 @@ public class FeignAnnotationListener extends ApplicationRunListenerAdapter {
     }
 
     @Override
-    protected void doStarting() {
+    protected void doStarting(ConfigurableBootstrapContext bootstrapContext) {
         Class<?> bootApplicationClass = SpringApplicationUtils.getBootApplicationClass(getApplication());
         EnableFeignClients enableFeignClients = bootApplicationClass.getDeclaredAnnotation(EnableFeignClients.class);
         if (null == enableFeignClients) {
@@ -56,6 +57,6 @@ public class FeignAnnotationListener extends ApplicationRunListenerAdapter {
                 }
             });
         }
-        super.doStarting();
+        super.doStarting(bootstrapContext);
     }
 }

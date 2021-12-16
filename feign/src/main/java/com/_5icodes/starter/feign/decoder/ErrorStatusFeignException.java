@@ -4,10 +4,12 @@ import feign.FeignException;
 
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Map;
 
 public class ErrorStatusFeignException extends FeignException {
-    public ErrorStatusFeignException(int status, byte[] content) {
-        super(status, null, content);
+    public ErrorStatusFeignException(int status, byte[] content, Map<String, Collection<String>> responseHeaders) {
+        super(status, null, content, responseHeaders);
     }
 
     @Override
