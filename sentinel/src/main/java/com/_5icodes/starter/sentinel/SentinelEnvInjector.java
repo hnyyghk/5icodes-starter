@@ -14,15 +14,10 @@ import java.util.List;
 @Slf4j
 public class SentinelEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     @Override
-    protected boolean shouldProcess(ConfigurableEnvironment env, SpringApplication application) {
-        return super.shouldProcess(env, application) && env.getProperty(SentinelConstants.PROPERTY_ENABLED, Boolean.class, true);
-    }
-
-    @Override
     protected void onAllProfiles(ConfigurableEnvironment env, SpringApplication application) {
         //默认启动feign的sentinel全局开关
         PropertySourceUtils.put(env, "feign.sentinel.enabled", true);
-        PropertySourceUtils.put(env, "spring.cloud.sentinel.enabled", false);
+        PropertySourceUtils.put(env, "spring.cloud.sentinel.enabled", true);
         //禁用spring cloud alibaba默认启动的filter拦截
         PropertySourceUtils.put(env, "spring.cloud.sentinel.filter.enabled", false);
         //配置基础apollo的动态降级限流规则

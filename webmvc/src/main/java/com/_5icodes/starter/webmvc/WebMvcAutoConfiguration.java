@@ -1,8 +1,6 @@
 package com._5icodes.starter.webmvc;
 
 import com._5icodes.starter.feign.FeignAutoConfiguration;
-import com._5icodes.starter.sentinel.SentinelAutoConfiguration;
-import com._5icodes.starter.sentinel.condition.ConditionalOnSentinel;
 import com._5icodes.starter.web.condition.ConditionalOnAccessLog;
 import com._5icodes.starter.webmvc.log.LogFilter;
 import com._5icodes.starter.webmvc.monitor.AccessLogFilter;
@@ -24,6 +22,7 @@ import feign.Feign;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -90,21 +89,17 @@ public class WebMvcAutoConfiguration {
     }
 
     @Configuration
-    @ConditionalOnClass(SentinelAutoConfiguration.class)
+    @ConditionalOnProperty(name = "spring.cloud.sentinel.enabled", matchIfMissing = true)
     public static class SentinelWebAutoConfiguration {
-        @Configuration
-        @ConditionalOnSentinel
-        public static class SentinelWebConditionConfiguration {
-            @Bean
-            public SentinelMvcInterceptor sentinelMvcInterceptor(RequestMappingRegister requestMappingRegister) {
-                return new SentinelMvcInterceptor(requestMappingRegister);
-            }
+        @Bean
+        public SentinelMvcInterceptor sentinelMvcInterceptor(RequestMappingRegister requestMappingRegister) {
+            return new SentinelMvcInterceptor(requestMappingRegister);
+        }
 
-            @Bean
-            @ConditionalOnAutoWrap
-            public SentinelExceptionHandler sentinelExceptionHandler() {
-                return new SentinelExceptionHandler();
-            }
+        @Bean
+        @ConditionalOnAutoWrap
+        public SentinelExceptionHandler sentinelExceptionHandler() {
+            return new SentinelExceptionHandler();
         }
     }
 
