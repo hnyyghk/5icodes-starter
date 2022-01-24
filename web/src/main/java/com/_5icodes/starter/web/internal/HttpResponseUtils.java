@@ -13,4 +13,10 @@ public class HttpResponseUtils {
         response.headers().add(HttpHeaderNames.CONTENT_LENGTH, 0);
         return response;
     }
+
+    public DefaultFullHttpResponse notFound() {
+        DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND);
+        response.headers().add(HttpHeaderNames.CONTENT_LENGTH, 0);
+        return response;
+    }
 }

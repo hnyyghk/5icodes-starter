@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DumpHandler implements InternalHandler {
     @Override
     public void doHandle(ChannelHandlerContext ctx, FullHttpRequest msg, InternalHandlerChain chain) {
-        log.info("internal request: {} is given up", msg.uri());
-        ctx.writeAndFlush(HttpResponseUtils.ok());
+        log.info("wrong uri request is given up: {}", msg.uri());
+        ctx.writeAndFlush(HttpResponseUtils.notFound());
     }
 }

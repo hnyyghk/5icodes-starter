@@ -13,7 +13,6 @@
     <artifactId>starter</artifactId>
     <packaging>pom</packaging>
     <version>${starter.version}</version>
-    <description>Starter practice for Spring Cloud</description>
     <modules>
         <module>feign-stress</module>
         <module>apollo</module>
@@ -42,12 +41,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- 编译时的编码 -->
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
         <java.version>1.8</java.version>
+        <starter.version>0.0.1</starter.version>
         <spring-cloud.version>2021.0.0</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-        <starter.version>0.0.1</starter.version>
         <jackson.version>2.11.3</jackson.version>
         <hutool.version>5.3.1</hutool.version>
         <sentinel.version>1.8.2</sentinel.version>

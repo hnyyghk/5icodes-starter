@@ -25,6 +25,11 @@
     },
     {
       "sourceType": "com._5icodes.starter.web.WebProperties",
+      "name": "starter.web.common.contextPath",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com._5icodes.starter.web.WebProperties",
       "name": "starter.web.common.internalPort",
       "type": "java.lang.Integer"
     },

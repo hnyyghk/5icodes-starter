@@ -12,6 +12,8 @@ public class WebProperties {
 
     private boolean internalEnabled = true;
 
+    private String contextPath;
+
     private int internalPort = 6088;
     /**
      * access日志版本

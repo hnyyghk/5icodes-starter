@@ -1,2 +1,4 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.web.WebEnvInjector
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com._5icodes.starter.web.WebAutoConfiguration
