@@ -2,10 +2,7 @@ package com._5icodes.starter.web;
 
 import com._5icodes.starter.web.condition.ConditionalOnAccessLog;
 import com._5icodes.starter.web.condition.ConditionalOnInternalServer;
-import com._5icodes.starter.web.internal.DumpHandler;
-import com._5icodes.starter.web.internal.GracefulShutdownHandler;
-import com._5icodes.starter.web.internal.InternalHandler;
-import com._5icodes.starter.web.internal.InternalServer;
+import com._5icodes.starter.web.internal.*;
 import com._5icodes.starter.web.monitor.AccessLogSender;
 import com._5icodes.starter.web.monitor.KafkaAccessLogSender;
 import com.netflix.appinfo.ApplicationInfoManager;
@@ -42,13 +39,18 @@ public class WebAutoConfiguration {
     @ConditionalOnInternalServer
     public static class InternalServerAutoConfiguration {
         @Bean
+        public HealthProbeHandler healthProbeHandler() {
+            return new HealthProbeHandler();
+        }
+
+        @Bean
         public DumpHandler dumpHandler() {
             return new DumpHandler();
         }
 
         @Bean
         public InternalServer internalServer(List<InternalHandler> internalHandlers, WebProperties properties) {
-            return new InternalServer(internalHandlers, properties.getInternalPort());
+            return new InternalServer(internalHandlers, properties);
         }
     }
 }
