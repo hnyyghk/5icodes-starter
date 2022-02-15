@@ -33,6 +33,7 @@
         <module>swagger</module>
         <module>gray</module>
         <module>saturn</module>
+        <module>eureka</module>
     </modules>
 
     <properties>
@@ -192,6 +193,12 @@
             <dependency>
                 <groupId>com.5icodes</groupId>
                 <artifactId>saturn</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
+                <artifactId>eureka</artifactId>
                 <version>${starter.version}</version>
             </dependency>
 

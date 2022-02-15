@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com._5icodes.starter.eureka.EurekaAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.eureka.EurekaEnvInjector
+org.springframework.boot.SpringApplicationRunListener=\
+  com._5icodes.starter.eureka.EurekaRefreshDisableApplicationListener

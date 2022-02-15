@@ -16,13 +16,14 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 @Slf4j
-public class InternalServer extends AbstractSmartLifecycle implements BootApplicationListener<ApplicationReadyEvent> {
+public class InternalServer extends AbstractSmartLifecycle implements BootApplicationListener<ApplicationReadyEvent>, Ordered {
     private NioEventLoopGroup eventLoopGroup;
 
     private final List<InternalHandler> internalHandlers;
@@ -39,7 +40,6 @@ public class InternalServer extends AbstractSmartLifecycle implements BootApplic
 
     @Override
     public void doStart() {
-        log.info("InternalServer doStart");
     }
 
     @Override
@@ -89,5 +89,10 @@ public class InternalServer extends AbstractSmartLifecycle implements BootApplic
         } else {
             log.info("internal server start success with internalPort: {}", internalPort);
         }
+    }
+
+    @Override
+    public int getOrder() {
+        return LOWEST_PRECEDENCE;
     }
 }

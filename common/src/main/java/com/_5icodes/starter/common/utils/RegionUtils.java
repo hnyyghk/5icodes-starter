@@ -29,23 +29,35 @@ public class RegionUtils {
         CN_GUANGZHOU("华南 3 (广州)"),
         CN_CHENGDU("西南 1 (成都)"),
         CN_HONGKONG("中国（香港）"),
-        AP_NORTHEAST_1("亚太东北 1 (东京)"),
-        AP_SOUTHEAST_1("亚太东南 1 (新加坡)"),
-        AP_SOUTHEAST_2("亚太东南 2 (悉尼)"),
-        AP_SOUTHEAST_3("亚太东南 3 (吉隆坡)"),
-        AP_SOUTHEAST_5("亚太东南 5 (雅加达)"),
+        //亚太东北 1
+        AP_NORTHEAST_1("日本 (东京)"),
+        //亚太东南 1
+        AP_SOUTHEAST_1("新加坡"),
+        //亚太东南 2
+        AP_SOUTHEAST_2("澳大利亚 (悉尼)"),
+        //亚太东南 3
+        AP_SOUTHEAST_3("马来西亚 (吉隆坡)"),
+        //亚太东南 5
+        AP_SOUTHEAST_5("印度尼西亚 (雅加达)"),
+        //亚太东南 6
+        AP_SOUTHEAST_6("菲律宾 (马尼拉)"),
         /**
          * 欧洲与美洲
          */
-        US_WEST_1("美国西部 1 (硅谷)"),
-        US_EAST_1("美国东部 1 (弗吉尼亚)"),
-        EU_CENTRAL_1("欧洲中部 1 (法兰克福)"),
+        //美国西部 1
+        US_WEST_1("美国 (硅谷)"),
+        //美国东部 1
+        US_EAST_1("美国 (弗吉尼亚)"),
+        //欧洲中部 1
+        EU_CENTRAL_1("德国 (法兰克福)"),
         EU_WEST_1("英国（伦敦）"),
         /**
          * 中东与印度
          */
-        ME_EAST_1("中东东部 1 (迪拜)"),
-        AP_SOUTH_1("亚太南部 1 (孟买)"),
+        //中东东部 1
+        ME_EAST_1("阿联酋 (迪拜)"),
+        //亚太南部 1
+        AP_SOUTH_1("印度 (孟买)"),
         ;
 
         private final String name;

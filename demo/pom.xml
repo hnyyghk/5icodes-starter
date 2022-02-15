@@ -66,5 +66,10 @@
             <groupId>com.5icodes</groupId>
             <artifactId>saturn</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>eureka</artifactId>
+        </dependency>
     </dependencies>
 </project>

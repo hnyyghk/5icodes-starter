@@ -92,7 +92,7 @@ public class CachingMetadataReaderFactoryProvider implements ApplicationListener
     }
 
     /**
-     * @See org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer
+     * @see org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer
      */
     private static final String BEAN_NAME = "org.springframework.boot.autoconfigure."
             + "internalCachingMetadataReaderFactory";
