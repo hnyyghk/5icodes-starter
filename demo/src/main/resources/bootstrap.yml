@@ -1,6 +1,3 @@
-spring:
-  application:
-    name: test
 test: test
 testApollo: ENC(IyyA1qUGhf0iUugTGPdrbBdOa3hIVkNhLfFW95gwutH2Suwx80i+a1f2uoxY4OSC)
 server:
