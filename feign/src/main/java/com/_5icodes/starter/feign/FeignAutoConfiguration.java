@@ -41,6 +41,7 @@ import org.springframework.cloud.openfeign.AnnotatedParameterProcessor;
 import org.springframework.cloud.openfeign.FeignFormatterRegistrar;
 import org.springframework.cloud.openfeign.loadbalancer.FeignBlockingLoadBalancerClient;
 import org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfiguration;
+import org.springframework.cloud.openfeign.support.HttpMessageConverterCustomizer;
 import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;
 import org.springframework.cloud.openfeign.support.SpringDecoder;
 import org.springframework.context.annotation.Bean;
@@ -95,8 +96,8 @@ public class FeignAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public Decoder feignDecoder(ObjectFactory<HttpMessageConverters> messageConverters) {
-        return new OptionalDecoder(new ResponseEntityDecoder(new SpringDecoder(messageConverters)));
+    public Decoder feignDecoder(ObjectFactory<HttpMessageConverters> messageConverters, ObjectProvider<HttpMessageConverterCustomizer> customizers) {
+        return new OptionalDecoder(new ResponseEntityDecoder(new SpringDecoder(messageConverters, customizers)));
     }
 
     @Bean

@@ -67,6 +67,11 @@ public class TestController {
         return test;
     }
 
+    @PostMapping("/testCustomFeign")
+    public void testCustomFeign() {
+        log.info("testCustomFeign");
+    }
+
     @PostMapping("/testException")
     public void testException() {
         throw new BizRuntimeException(CodeMsgEnums.TOKEN_OVERTIME);
