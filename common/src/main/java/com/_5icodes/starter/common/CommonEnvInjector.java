@@ -28,6 +28,7 @@ public class CommonEnvInjector extends AbstractProfileEnvironmentPostProcessor i
         PropertySourceUtils.put(env, "spring.jackson.serialization.write_dates_as_timestamps", false);
         //序列化时忽略为null的字段
         PropertySourceUtils.put(env, "spring.jackson.default-property-inclusion", JsonInclude.Include.NON_NULL);
+        GrayUtils.init(env);
         super.onAllProfiles(env, application);
     }
 

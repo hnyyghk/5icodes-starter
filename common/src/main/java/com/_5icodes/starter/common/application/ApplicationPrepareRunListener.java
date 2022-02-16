@@ -4,8 +4,10 @@ import com._5icodes.starter.common.AbstractProfileEnvironmentPostProcessor;
 import com._5icodes.starter.common.CommonConstants;
 import com._5icodes.starter.common.exception.MissingModuleException;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
+import com._5icodes.starter.common.utils.SpringUtils;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -34,6 +36,12 @@ public class ApplicationPrepareRunListener extends ApplicationRunListenerAdapter
         setDefaultActiveProfile(environment);
         injectBasePackages2Environment(environment);
         super.doEnvironmentPrepared(bootstrapContext, environment);
+    }
+
+    @Override
+    protected void doContextPrepared(ConfigurableApplicationContext context) {
+        SpringUtils.setApplicationContext(context);
+        super.doContextPrepared(context);
     }
 
     private void injectBasePackages2Environment(ConfigurableEnvironment environment) {
