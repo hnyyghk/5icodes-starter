@@ -1,0 +1,67 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "name": "rocketmq properties",
+      "type": "com._5icodes.starter.rocketmq.RocketmqProperties",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "starter.rocketmq.group",
+      "type": "java.lang.String",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.nameSrvAddr",
+      "type": "java.lang.String",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.timeout",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.queueNums",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.compressMsgBodySize",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.retryTimes",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.retryTimesAsync",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.retrySendMsg",
+      "type": "java.lang.Boolean",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.maxMessageSize",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.grayTopics",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    },
+    {
+      "name": "starter.rocketmq.consumers",
+      "type": "java.util.Map<java.lang.String, com._5icodes.starter.rocketmq.RocketmqProperties.Consumer>",
+      "sourceType": "com._5icodes.starter.rocketmq.RocketmqProperties"
+    }
+  ]
+}

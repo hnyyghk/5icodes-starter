@@ -8,7 +8,7 @@ import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 public class TraceTestKeySerializer<T> implements RedisSerializer<T> {
-    private static final byte[] CACHE_PREFIX_BYTES = CacheStressConstants.CACHE_PREFIX.getBytes();
+    private static final byte[] CACHE_PREFIX_BYTES = CacheStressConstants.CACHE_STRESS_PREFIX.getBytes();
     private static final int CACHE_PREFIX_BYTES_LENGTH = CACHE_PREFIX_BYTES.length;
     private final RedisSerializer redisSerializer;
 
@@ -24,7 +24,7 @@ public class TraceTestKeySerializer<T> implements RedisSerializer<T> {
     public byte[] serialize(T t) throws SerializationException {
         byte[] bytes = redisSerializer.serialize(t);
         if (TraceTestUtils.isTraceTest()) {
-            TraceTestUtils.info("this is trace test cache key: {}", CacheStressConstants.CACHE_PREFIX + t);
+            TraceTestUtils.info("this is trace test cache key: {}", CacheStressConstants.CACHE_STRESS_PREFIX + t);
             return ArrayUtils.addAll(CACHE_PREFIX_BYTES, bytes);
         }
         return bytes;

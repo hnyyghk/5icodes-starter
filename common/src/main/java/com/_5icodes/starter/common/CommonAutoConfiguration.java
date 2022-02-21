@@ -1,5 +1,6 @@
 package com._5icodes.starter.common;
 
+import brave.Tracing;
 import com._5icodes.starter.common.condition.EnabledConditionOutcomeCacheCleaner;
 import com._5icodes.starter.common.exception.CodeMsgEnumProcessor;
 import com._5icodes.starter.common.infrastructure.CachingMetadataReaderFactoryProvider;
@@ -13,8 +14,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy
 public class CommonAutoConfiguration {
     @Bean
-    public TraceUtils traceUtils() {
-        return new TraceUtils();
+    public TraceUtils traceUtils(Tracing tracing) {
+        return new TraceUtils(tracing);
     }
 
     @Bean

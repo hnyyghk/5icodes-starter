@@ -8,6 +8,16 @@ logging:
               LogFilter: trace
 saturn:
   enabled: true
+starter:
+  gray:
+    app-group: GRAY
+  rocketmq:
+    grayTopics:
+      - TEST_TOPIC
+      - TEST_TOPIC_2
+    consumers:
+      testListener:
+        grayEnable: true
 feign:
   client:
     config:

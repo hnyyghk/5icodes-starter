@@ -34,6 +34,7 @@
         <module>gray</module>
         <module>saturn</module>
         <module>eureka</module>
+        <module>rocketmq</module>
     </modules>
 
     <properties>
@@ -46,7 +47,7 @@
         <maven.compiler.target>8</maven.compiler.target>
         <java.version>1.8</java.version>
         <starter.version>0.0.1</starter.version>
-        <spring-cloud.version>2021.0.0</spring-cloud.version>
+        <spring-cloud.version>2021.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <jackson.version>2.11.3</jackson.version>
         <hutool.version>5.3.1</hutool.version>
@@ -204,6 +205,12 @@
 
             <dependency>
                 <groupId>com.5icodes</groupId>
+                <artifactId>rocketmq</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
                 <artifactId>webflux</artifactId>
                 <version>${starter.version}</version>
             </dependency>
@@ -265,6 +272,12 @@
                         <artifactId>jedis</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>4.3.0</version>
             </dependency>
 
             <dependency>

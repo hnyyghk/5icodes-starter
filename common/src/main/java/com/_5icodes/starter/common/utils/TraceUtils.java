@@ -4,15 +4,17 @@ import brave.ScopedSpan;
 import brave.Tracer;
 import brave.Tracing;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
 public class TraceUtils {
-    @Autowired
-    private Tracing tracing;
+    private final Tracing tracing;
 
     private static Tracer staticTracer;
+
+    public TraceUtils(Tracing tracing) {
+        this.tracing = tracing;
+    }
 
     @PostConstruct
     public void init() {

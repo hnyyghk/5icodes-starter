@@ -47,7 +47,7 @@ public class MockClient {
             }
             list.add(mockData);
         }
-        TraceTestUtils.info(TraceTestUtils.isTraceTest(), "total size: {}, name: {}, resource: [{}], size: {}", MockClientBuilder.APIS.size(), client, path, list.size());
+        TraceTestUtils.info("total size: {}, name: {}, resource: [{}], size: {}", MockClientBuilder.APIS.size(), client, path, list.size());
         return list;
     }
 

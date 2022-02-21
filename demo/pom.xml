@@ -71,5 +71,10 @@
             <groupId>com.5icodes</groupId>
             <artifactId>eureka</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>rocketmq</artifactId>
+        </dependency>
     </dependencies>
 </project>

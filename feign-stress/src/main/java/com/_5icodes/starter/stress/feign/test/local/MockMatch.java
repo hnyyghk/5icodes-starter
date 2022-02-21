@@ -94,7 +94,7 @@ public abstract class MockMatch {
      */
     public boolean matchFeign(List<String> mockHeaders, List<String> mockArgs) {
         boolean compare = feignHeaders.containsAll(mockHeaders) && feignArgs.containsAll(mockArgs);
-        TraceTestUtils.info(TraceTestUtils.isTraceTest(), "match result: {}", compare);
+        TraceTestUtils.info("match result: {}", compare);
         return compare;
     }
 

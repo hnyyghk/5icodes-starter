@@ -84,7 +84,7 @@ public class MockUtil {
 
     public List<MockData> pullAppApiList() {
         if (!MOCK_PROPERTIES.getEnable()) {
-            TraceTestUtils.info(TraceTestUtils.isTraceTest(), "mock.enable: {}", false);
+            TraceTestUtils.info("mock.enable: {}", MOCK_PROPERTIES.getEnable());
             return Collections.emptyList();
         }
         Map<String, String> request = new HashMap<>();

@@ -1,5 +1,6 @@
 package com._5icodes.starter.webflux;
 
+import com._5icodes.starter.monitor.ExceptionReport;
 import com._5icodes.starter.web.WebProperties;
 import com._5icodes.starter.web.condition.ConditionalOnAccessLog;
 import com._5icodes.starter.webflux.monitor.ExceptionReportHandler;
@@ -19,7 +20,7 @@ public class WebFluxAutoConfiguration {
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public ExceptionReportHandler exceptionReportHandler() {
-        return new ExceptionReportHandler();
+    public ExceptionReportHandler exceptionReportHandler(ExceptionReport exceptionReport) {
+        return new ExceptionReportHandler(exceptionReport);
     }
 }

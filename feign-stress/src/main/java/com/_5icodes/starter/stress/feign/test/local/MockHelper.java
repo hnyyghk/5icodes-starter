@@ -83,7 +83,7 @@ public class MockHelper {
         MockMatch mockMatch = getInstance(requestBuilder);
         String key = cacheKey(request, mockMatch);
         if (CACHE.containsKey(key)) {
-            TraceTestUtils.info(TraceTestUtils.isTraceTest(), "mock is success by cache {}", key);
+            TraceTestUtils.info("mock is success by cache {}", key);
             return CACHE.get(key);
         }
         MockData mockData = mockMatch.match();

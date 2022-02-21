@@ -1,5 +1,6 @@
 package com._5icodes.starter.stress.utils;
 
+import com._5icodes.starter.sleuth.utils.BaggageFieldUtils;
 import com._5icodes.starter.stress.StressConstants;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +19,8 @@ public class TraceTestUtils {
         }
     }
 
-    public void info(boolean enable, String format, Object... arguments) {
-        if (log.isDebugEnabled() && enable) {
-            log.info(format, arguments);
-        }
+    public void setTraceTestFlag() {
+        MDC.put(StressConstants.TRACE_TEST_HEADER, "true");
+        BaggageFieldUtils.set(StressConstants.TRACE_TEST_HEADER, "true");
     }
 }

@@ -1,9 +1,9 @@
 package com._5icodes.starter.cache.test;
 
-import org.springframework.context.SmartLifecycle;
+import com._5icodes.starter.common.infrastructure.AbstractSmartLifecycle;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 
-public class RedisConnectFactoryLifecycle implements SmartLifecycle {
+public class RedisConnectFactoryLifecycle extends AbstractSmartLifecycle {
     private final LettuceConnectionFactory connectionFactory;
 
     public RedisConnectFactoryLifecycle(LettuceConnectionFactory connectionFactory) {
@@ -11,17 +11,12 @@ public class RedisConnectFactoryLifecycle implements SmartLifecycle {
     }
 
     @Override
-    public void start() {
+    public void doStart() {
     }
 
     @Override
-    public void stop() {
+    public void doStop() {
         connectionFactory.destroy();
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
     }
 
     @Override

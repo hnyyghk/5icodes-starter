@@ -9,7 +9,7 @@ public class TraceTestRedisSpringDataCacheConfig<K, V> extends RedisSpringDataCa
     public String getKeyPrefix() {
         String keyPrefix = super.getKeyPrefix();
         if (TraceTestUtils.isTraceTest()) {
-            return keyPrefix == null ? CacheStressConstants.CACHE_PREFIX : CacheStressConstants.CACHE_PREFIX + keyPrefix;
+            return keyPrefix == null ? CacheStressConstants.CACHE_STRESS_PREFIX : CacheStressConstants.CACHE_STRESS_PREFIX + keyPrefix;
         } else {
             return keyPrefix;
         }
@@ -18,7 +18,7 @@ public class TraceTestRedisSpringDataCacheConfig<K, V> extends RedisSpringDataCa
     @Override
     public void setKeyPrefix(String keyPrefix) {
         if (TraceTestUtils.isTraceTest()) {
-            super.setKeyPrefix(keyPrefix.substring(CacheStressConstants.CACHE_PREFIX.length()));
+            super.setKeyPrefix(keyPrefix.substring(CacheStressConstants.CACHE_STRESS_PREFIX.length()));
         } else {
             super.setKeyPrefix(keyPrefix);
         }

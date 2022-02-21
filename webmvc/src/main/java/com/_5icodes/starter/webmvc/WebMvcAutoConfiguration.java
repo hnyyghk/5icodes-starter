@@ -1,6 +1,7 @@
 package com._5icodes.starter.webmvc;
 
 import com._5icodes.starter.feign.FeignAutoConfiguration;
+import com._5icodes.starter.monitor.ExceptionReport;
 import com._5icodes.starter.web.condition.ConditionalOnAccessLog;
 import com._5icodes.starter.webmvc.log.LogFilter;
 import com._5icodes.starter.webmvc.monitor.AccessLogFilter;
@@ -115,8 +116,8 @@ public class WebMvcAutoConfiguration {
     }
 
     @Bean
-    public ExceptionReportResolver exceptionReportResolver() {
-        return new ExceptionReportResolver();
+    public ExceptionReportResolver exceptionReportResolver(ExceptionReport exceptionReport) {
+        return new ExceptionReportResolver(exceptionReport);
     }
 
     @Bean
