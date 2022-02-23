@@ -4,6 +4,8 @@ import com._5icodes.starter.common.AbstractProfileEnvironmentPostProcessor;
 import com._5icodes.starter.common.utils.PropertySourceUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com.alibaba.csp.sentinel.config.SentinelConfig;
+import com.alibaba.csp.sentinel.log.RecordLog;
+import com.alibaba.csp.sentinel.transport.log.CommandCenterLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import com.alibaba.cloud.sentinel.datasource.RuleType;
@@ -29,8 +31,9 @@ public class SentinelEnvInjector extends AbstractProfileEnvironmentPostProcessor
         }
         //默认启动的sentinel监控数据查询端口
         PropertySourceUtils.put(env, "spring.cloud.sentinel.transport.port", 15719);
-        //sentinel的缓存数据目录
-        PropertySourceUtils.put(env, "spring.cloud.sentinel.log.dir", "/data/logs/" + applicationName);
+        //修改sentinel的日志级别为error
+        PropertySourceUtils.put(env, "logging.level." + RecordLog.LOGGER_NAME, "error");
+        PropertySourceUtils.put(env, "logging.level." + CommandCenterLog.LOGGER_NAME, "error");
         /**
          * 禁用MetricTimerListener，由AbstractSentinelMetricSender上报调用量信息
          *
@@ -51,9 +54,9 @@ public class SentinelEnvInjector extends AbstractProfileEnvironmentPostProcessor
     }
 
     @Override
-    protected void onLocal(ConfigurableEnvironment env, SpringApplication application) {
+    protected void onDev(ConfigurableEnvironment env, SpringApplication application) {
         setDashboardServer(env, "10.25.80.45:8060");
-        super.onLocal(env, application);
+        super.onDev(env, application);
     }
 
     private void setDashboardServer(ConfigurableEnvironment env, String server) {
