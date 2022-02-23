@@ -5,6 +5,7 @@ import com._5icodes.starter.webmvc.common.OnlyOnceInterceptorConfigurer;
 import com._5icodes.starter.webmvc.common.RequestMappingRegister;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.SphU;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc.AbstractSentinelInterceptor;
 import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class SentinelMvcInterceptor implements OnlyOnceInterceptorConfigurer, Or
                 try {
                     // Parse the request origin using registered origin parser.
                     String origin = parseOrigin(request);
-                    ContextUtil.enter(key, origin);
+                    ContextUtil.enter(AbstractSentinelInterceptor.SENTINEL_SPRING_WEB_CONTEXT_NAME, origin);
                     SphU.entry(key, EntryType.IN);
                 } catch (BlockException e) {
                     log.warn("{} is blocked with {}", key, e.getClass().getSimpleName());
@@ -62,7 +63,7 @@ public class SentinelMvcInterceptor implements OnlyOnceInterceptorConfigurer, Or
 
     protected String parseOrigin(HttpServletRequest request) {
         String origin = request.getHeader(WebConstants.MODULE_ID);
-        return StringUtils.hasText(origin) ? origin : "unknown";
+        return StringUtils.hasText(origin) ? origin : "";
     }
 
     @Override
