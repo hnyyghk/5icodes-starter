@@ -3,6 +3,7 @@ package com._5icodes.starter.sentinel;
 import com._5icodes.starter.common.AbstractProfileEnvironmentPostProcessor;
 import com._5icodes.starter.common.utils.PropertySourceUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
+import com.alibaba.csp.sentinel.config.SentinelConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import com.alibaba.cloud.sentinel.datasource.RuleType;
@@ -30,6 +31,14 @@ public class SentinelEnvInjector extends AbstractProfileEnvironmentPostProcessor
         PropertySourceUtils.put(env, "spring.cloud.sentinel.transport.port", 15719);
         //sentinel的缓存数据目录
         PropertySourceUtils.put(env, "spring.cloud.sentinel.log.dir", "/data/logs/" + applicationName);
+        /**
+         * 禁用MetricTimerListener，由AbstractSentinelMetricSender上报调用量信息
+         *
+         * @see com._5icodes.starter.sentinel.monitor.AbstractSentinelMetricSender
+         * @see com.alibaba.csp.sentinel.node.metric.MetricTimerListener
+         * @see com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager
+         */
+        System.setProperty(SentinelConfig.METRIC_FLUSH_INTERVAL, "-1");
         super.onAllProfiles(env, application);
     }
 
