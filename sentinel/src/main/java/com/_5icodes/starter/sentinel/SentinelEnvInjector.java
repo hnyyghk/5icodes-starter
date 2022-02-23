@@ -39,7 +39,7 @@ public class SentinelEnvInjector extends AbstractProfileEnvironmentPostProcessor
          *
          * @see com._5icodes.starter.sentinel.monitor.AbstractSentinelMetricSender
          * @see com.alibaba.csp.sentinel.node.metric.MetricTimerListener
-         * @see com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager
+         * @see com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager#startMetricTimerListener()
          */
         System.setProperty(SentinelConfig.METRIC_FLUSH_INTERVAL, "-1");
         super.onAllProfiles(env, application);

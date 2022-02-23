@@ -18,8 +18,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 禁用MetricTimerListener，由AbstractSentinelMetricSender上报调用量信息
+ *
+ * @see com._5icodes.starter.sentinel.SentinelEnvInjector
  * @see com.alibaba.csp.sentinel.node.metric.MetricTimerListener
- * @see com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager
+ * @see com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager#startMetricTimerListener()
  */
 public abstract class AbstractSentinelMetricSender implements BootApplicationListener<ApplicationStartedEvent> {
     @SuppressWarnings("PMD.ThreadPoolCreationRule")
