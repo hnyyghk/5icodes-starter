@@ -11,4 +11,6 @@ public interface WebConstants {
     String GROUP_ID = "GROUP_ID";
     String MODULE_ID = "MODULE_ID";
     String ZONE = "ZONE";
+    String PRE_MODULE_ID = "PRE-MODULE-ID";
+    String PRE_REQ_URI = "PRE-REQ-URI";
 }
