@@ -3,6 +3,7 @@ package com._5icodes.starter.common.application;
 import com._5icodes.starter.common.AbstractProfileEnvironmentPostProcessor;
 import com._5icodes.starter.common.CommonConstants;
 import com._5icodes.starter.common.exception.MissingModuleException;
+import com._5icodes.starter.common.loader.CommonModuleNameProvider;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com._5icodes.starter.common.utils.SpringUtils;
 import org.springframework.boot.ConfigurableBootstrapContext;
@@ -21,9 +22,9 @@ public class ApplicationPrepareRunListener extends ApplicationRunListenerAdapter
     private static final Map<String, Map<String, String>> CONDITIONAL_CLASS_ARTIFACT_ID_MAP = new HashMap<>();
 
     static {
-        STARTER_CLASS_ARTIFACT_ID_MAP.put("com._5icodes.starter.common.loader.CommonModuleNameProvider", CommonConstants.MODULE_NAME);
-        CONDITIONAL_CLASS_ARTIFACT_ID_MAP.put("com._5icodes.starter.common.loader.CommonModuleNameProvider",
-                Collections.singletonMap("com._5icodes.starter.common.loader.CommonModuleNameProvider", CommonConstants.MODULE_NAME));
+        STARTER_CLASS_ARTIFACT_ID_MAP.put(CommonModuleNameProvider.class.getName(), CommonConstants.MODULE_NAME);
+        CONDITIONAL_CLASS_ARTIFACT_ID_MAP.put(CommonModuleNameProvider.class.getName(),
+                Collections.singletonMap(CommonModuleNameProvider.class.getName(), CommonConstants.MODULE_NAME));
     }
 
     public ApplicationPrepareRunListener(SpringApplication application, String[] args) {

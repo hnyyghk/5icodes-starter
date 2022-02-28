@@ -4,11 +4,11 @@ import com._5icodes.starter.common.Initable;
 import com._5icodes.starter.common.infrastructure.AbstractSmartLifecycle;
 import com._5icodes.starter.common.utils.GrayUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
-import com._5icodes.starter.rocketmq.RocketmqConstants;
 import com._5icodes.starter.rocketmq.RocketmqProperties;
 import com._5icodes.starter.rocketmq.annotation.RocketmqListener;
 import com._5icodes.starter.rocketmq.annotation.TopicSpec;
 import com._5icodes.starter.rocketmq.interceptor.MessageInterceptorList;
+import com._5icodes.starter.stress.StressConstants;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -175,7 +175,7 @@ public class RocketmqConsumerContainer extends AbstractSmartLifecycle implements
                 (consumerContext, o) -> {
                     String group = resolve((String) o);
                     if (GrayUtils.isAppGroup() && consumerContext.getGrayEnable()) {
-                        group = group + RocketmqConstants.MQ_GRAY_SUFFIX;
+                        group = group + StressConstants.MQ_GRAY_SUFFIX;
                     }
                     consumerContext.getConsumer().setConsumerGroup(group);
                 }));
@@ -243,7 +243,7 @@ public class RocketmqConsumerContainer extends AbstractSmartLifecycle implements
         String tags = resolve(topicSpec.getTags());
         String sql = resolve(topicSpec.getSql());
         if (GrayUtils.isAppGroup() && consumerContext.getGrayEnable()) {
-            topic = topic + RocketmqConstants.MQ_GRAY_SUFFIX;
+            topic = topic + StressConstants.MQ_GRAY_SUFFIX;
         }
         log.info("register group: {}, topic: {}, tags: {}, sql: {}", consumerContext.getConsumer().getConsumerGroup(), topic, tags, sql);
         MessageSelector messageSelector = StringUtils.hasText(sql) ? MessageSelector.bySql(sql) : MessageSelector.byTag(tags);

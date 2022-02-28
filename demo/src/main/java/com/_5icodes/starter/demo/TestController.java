@@ -17,6 +17,8 @@ import org.apache.rocketmq.common.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping
@@ -41,13 +44,21 @@ public class TestController {
     private TestFeign testFeign;
     @Autowired
     private DefaultMQProducer defaultMqProducer;
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     @Value("${testApollo:123}")
     private String testApollo;
 
+    @GetMapping("/kafka")
+    public void testKafka(String topic) throws ExecutionException, InterruptedException {
+        ListenableFuture future = kafkaTemplate.send(topic, "testKafkaProducerKey", "test");
+        future.get();
+    }
+
     @SneakyThrows
-    @GetMapping("/mq")
-    public void testMq(String topic) {
+    @GetMapping("/rocketmq")
+    public void testRocketmq(String topic) {
         Message message = new Message();
         message.setTopic(topic);
         message.setBody("test".getBytes());

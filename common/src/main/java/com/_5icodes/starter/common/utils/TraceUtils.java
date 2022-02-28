@@ -5,19 +5,10 @@ import brave.Tracer;
 import brave.Tracing;
 import org.slf4j.MDC;
 
-import javax.annotation.PostConstruct;
-
 public class TraceUtils {
-    private final Tracing tracing;
-
     private static Tracer staticTracer;
 
     public TraceUtils(Tracing tracing) {
-        this.tracing = tracing;
-    }
-
-    @PostConstruct
-    public void init() {
         staticTracer = tracing.tracer();
     }
 

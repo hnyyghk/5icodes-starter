@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClientConfiguration;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
@@ -20,7 +21,7 @@ public class EurekaRefreshDisablePostProcessorTest {
     @Test
     public void postProcessBeanDefinitionRegistry() throws Exception {
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory();
-        MetadataReader metadataReader = metadataReaderFactory.getMetadataReader("org.springframework.cloud.netflix.eureka.EurekaDiscoveryClientConfiguration");
+        MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(EurekaDiscoveryClientConfiguration.class.getName());
         ClassMetadata classMetadata = metadataReader.getClassMetadata();
         String[] memberClassNames = classMetadata.getMemberClassNames();
         MatcherAssert.assertThat(memberClassNames, Matchers.arrayWithSize(2));

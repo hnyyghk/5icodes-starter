@@ -7,6 +7,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClientConfiguration;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.type.ClassMetadata;
@@ -38,7 +39,7 @@ public class EurekaRefreshDisablePostProcessor implements BeanDefinitionRegistry
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         try {
-            MetadataReader metadataReader = metadataReaderFactory.getMetadataReader("org.springframework.cloud.netflix.eureka.EurekaDiscoveryClientConfiguration");
+            MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(EurekaDiscoveryClientConfiguration.class.getName());
             ClassMetadata classMetadata = metadataReader.getClassMetadata();
             Field field = Class.forName("org.springframework.core.type.classreading.SimpleAnnotationMetadata").getDeclaredField("memberClassNames");
             field.setAccessible(true);

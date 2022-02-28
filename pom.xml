@@ -35,6 +35,7 @@
         <module>saturn</module>
         <module>eureka</module>
         <module>rocketmq</module>
+        <module>kafka</module>
     </modules>
 
     <properties>
@@ -211,6 +212,12 @@
 
             <dependency>
                 <groupId>com.5icodes</groupId>
+                <artifactId>kafka</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
                 <artifactId>webflux</artifactId>
                 <version>${starter.version}</version>
             </dependency>
@@ -231,6 +238,12 @@
                 <groupId>com.ctrip.framework.apollo</groupId>
                 <artifactId>apollo-client</artifactId>
                 <version>${apollo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>3.4.2</version>
             </dependency>
 
             <dependency>

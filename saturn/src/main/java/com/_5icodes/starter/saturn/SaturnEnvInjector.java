@@ -6,6 +6,7 @@ import com._5icodes.starter.common.utils.PropertySourceUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -22,7 +23,7 @@ public class SaturnEnvInjector extends AbstractProfileEnvironmentPostProcessor {
 
     @Override
     protected void onAllProfiles(ConfigurableEnvironment env, SpringApplication application) {
-        PropertySourceUtils.excludeAutoConfiguration(env, "org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration");
+        PropertySourceUtils.excludeAutoConfiguration(env, QuartzAutoConfiguration.class.getName());
         super.onAllProfiles(env, application);
     }
 

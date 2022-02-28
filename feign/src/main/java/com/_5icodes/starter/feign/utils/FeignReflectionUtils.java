@@ -1,6 +1,7 @@
 package com._5icodes.starter.feign.utils;
 
 import lombok.experimental.UtilityClass;
+import org.springframework.cloud.openfeign.FeignClientSpecification;
 
 @UtilityClass
 public class FeignReflectionUtils {
@@ -8,7 +9,7 @@ public class FeignReflectionUtils {
 
     static {
         try {
-            specificationClass = Class.forName("org.springframework.cloud.openfeign.FeignClientSpecification");
+            specificationClass = Class.forName(FeignClientSpecification.class.getName());
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

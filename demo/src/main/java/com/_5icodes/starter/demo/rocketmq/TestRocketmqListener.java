@@ -10,7 +10,7 @@ import java.util.List;
 
 @RocketmqListener(group = "TEST_GROUP", topics = {@TopicSpec(topic = "TEST_TOPIC"), @TopicSpec(topic = "TEST_TOPIC_2")})
 @Slf4j
-public class TestListener implements MessageListenerConcurrently {
+public class TestRocketmqListener implements MessageListenerConcurrently {
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
         for (MessageExt messageExt : msgs) {

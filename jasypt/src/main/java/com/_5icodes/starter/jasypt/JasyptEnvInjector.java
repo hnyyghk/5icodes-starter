@@ -24,7 +24,7 @@ public class JasyptEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     public void postProcessEnvironment(ConfigurableEnvironment env, SpringApplication application) {
         if (!shouldProcess(env, application)) {
             PropertySourceUtils.put(env, "jasypt.encryptor.bootstrap", false);
-//            PropertySourceUtils.put(env, "jasypt.encryptor.skip-property-sources", "org.springframework.boot.env.OriginTrackedMapPropertySource");
+//            PropertySourceUtils.put(env, "jasypt.encryptor.skip-property-sources", OriginTrackedMapPropertySource.class.getName());
         }
         super.postProcessEnvironment(env, application);
     }

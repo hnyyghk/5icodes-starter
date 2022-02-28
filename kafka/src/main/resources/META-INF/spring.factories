@@ -1,4 +1,4 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com._5icodes.starter.monitor.MonitorEnvInjector
+  com._5icodes.starter.kafka.KafkaEnvInjector
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com._5icodes.starter.monitor.MonitorAutoConfiguration
+  com._5icodes.starter.kafka.KafkaAutoConfiguration

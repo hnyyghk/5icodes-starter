@@ -1,0 +1,22 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "name": "monitor kafka properties",
+      "type": "com._5icodes.starter.monitor.MonitorKafkaProperties",
+      "sourceType": "com._5icodes.starter.monitor.MonitorKafkaProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "starter.monitor.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com._5icodes.starter.monitor.MonitorKafkaProperties"
+    },
+    {
+      "name": "starter.monitor.ringBufferSize",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.monitor.MonitorKafkaProperties"
+    }
+  ]
+}
