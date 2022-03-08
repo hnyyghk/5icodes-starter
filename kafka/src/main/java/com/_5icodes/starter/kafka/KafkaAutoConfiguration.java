@@ -19,7 +19,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 @EnableConfigurationProperties(KafkaProperties.class)
 public class KafkaAutoConfiguration {
     @Bean
-    public TraceTestListenerBeanPostProcessor traceTestListenerBeanPostProcessor(CachingMetadataReaderFactoryProvider metadataReaderFactoryProvider, KafkaProperties properties) {
-        return new TraceTestListenerBeanPostProcessor(metadataReaderFactoryProvider, properties);
+    public static TraceTestListenerBeanPostProcessor traceTestListenerBeanPostProcessor(CachingMetadataReaderFactoryProvider metadataReaderFactoryProvider) {
+        return new TraceTestListenerBeanPostProcessor(metadataReaderFactoryProvider);
     }
 }

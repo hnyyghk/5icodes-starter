@@ -65,11 +65,6 @@ public class RocketmqProperties {
 
     @Data
     public static class Consumer {
-        /**
-         * 分组订阅
-         */
-        private Boolean grayEnable;
-
         private String group;
 
         /**

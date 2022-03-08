@@ -24,7 +24,7 @@ public class CommonAutoConfiguration {
     }
 
     @Bean
-    public CodeMsgEnumProcessor codeMsgEnumProcessor(CachingMetadataReaderFactoryProvider metadataReaderFactoryProvider) {
+    public static CodeMsgEnumProcessor codeMsgEnumProcessor(CachingMetadataReaderFactoryProvider metadataReaderFactoryProvider) {
         return new CodeMsgEnumProcessor(metadataReaderFactoryProvider);
     }
 

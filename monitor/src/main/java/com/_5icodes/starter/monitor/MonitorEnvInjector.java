@@ -12,7 +12,7 @@ public class MonitorEnvInjector extends AbstractProfileEnvironmentPostProcessor 
     @Override
     protected void onDev(ConfigurableEnvironment env, SpringApplication application) {
         PropertySourceUtils.put(env, MONITOR_BOOTSTRAP_SERVERS, "localhost:9092");
-        super.onLocal(env, application);
+        super.onDev(env, application);
     }
 
     @Override

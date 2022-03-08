@@ -15,11 +15,6 @@ public @interface RocketmqListener {
 
     MessageModel messageModel() default MessageModel.CLUSTERING;
 
-    /**
-     * 分组订阅
-     */
-    boolean grayEnable() default false;
-
     String group();
 
     /**

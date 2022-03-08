@@ -20,7 +20,6 @@ public class KafkaEnvInjector extends AbstractProfileEnvironmentPostProcessor {
 
     @Override
     protected void onAllProfiles(ConfigurableEnvironment env, SpringApplication application) {
-        //todo gray groupId
         PropertySourceUtils.put(env, "spring.kafka.consumer.group-id", SpringApplicationUtils.getApplicationName());
         PropertySourceUtils.put(env, KAFKA_PRODUCER_PROPERTIES + ProducerConfig.MAX_BLOCK_MS_CONFIG, 1000);
         PropertySourceUtils.put(env, KAFKA_PRODUCER_PROPERTIES + ProducerConfig.INTERCEPTOR_CLASSES_CONFIG,

@@ -10,7 +10,6 @@ import com._5icodes.starter.rocketmq.annotation.TopicSpec;
 import com._5icodes.starter.rocketmq.interceptor.MessageInterceptorList;
 import com._5icodes.starter.stress.StressConstants;
 import com.google.common.collect.Lists;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -47,20 +46,10 @@ public class RocketmqConsumerContainer extends AbstractSmartLifecycle implements
 
     private final MessageInterceptorList interceptorList;
 
-    @Data
-    private static class ConsumerContext {
-        private DefaultMQPushConsumer consumer;
-        private Boolean grayEnable;
-
-        public ConsumerContext(DefaultMQPushConsumer consumer) {
-            this.consumer = consumer;
-        }
-    }
-
     private List<Triple<
             Function<RocketmqProperties.Consumer, Object>,
             Function<RocketmqListener, Object>,
-            BiConsumer<ConsumerContext, Object>
+            BiConsumer<DefaultMQPushConsumer, Object>
             >> propertyMapping;
 
     public RocketmqConsumerContainer(RocketmqProperties properties, MessageInterceptorList interceptorList) {
@@ -139,11 +128,11 @@ public class RocketmqConsumerContainer extends AbstractSmartLifecycle implements
     }
 
     private DefaultMQPushConsumer generateConsumerFromPropertyAndAnnotation(RocketmqProperties.Consumer consumerProperties, RocketmqListener listener) {
-        ConsumerContext consumerContext = new ConsumerContext(new DefaultMQPushConsumer());
-        for (Triple<Function<RocketmqProperties.Consumer, Object>, Function<RocketmqListener, Object>, BiConsumer<ConsumerContext, Object>> triple : propertyMapping) {
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer();
+        for (Triple<Function<RocketmqProperties.Consumer, Object>, Function<RocketmqListener, Object>, BiConsumer<DefaultMQPushConsumer, Object>> triple : propertyMapping) {
             Function<RocketmqProperties.Consumer, Object> left = triple.getLeft();
             Function<RocketmqListener, Object> middle = triple.getMiddle();
-            BiConsumer<ConsumerContext, Object> right = triple.getRight();
+            BiConsumer<DefaultMQPushConsumer, Object> right = triple.getRight();
             Object o = null;
             if (consumerProperties != null) {
                 o = left.apply(consumerProperties);
@@ -152,62 +141,51 @@ public class RocketmqConsumerContainer extends AbstractSmartLifecycle implements
                 o = middle.apply(listener);
             }
             if (o != null) {
-                right.accept(consumerContext, o);
+                right.accept(consumer, o);
             }
         }
-        return consumerContext.getConsumer();
+        return consumer;
     }
 
     private void initPropertyMapping() {
         propertyMapping = Lists.newArrayListWithExpectedSize(6);
-        //设置分组订阅
-        propertyMapping.add(Triple.of(
-                RocketmqProperties.Consumer::getGrayEnable,
-                RocketmqListener::grayEnable,
-                (consumerContext, o) -> {
-                    boolean grayEnable = (Boolean) o;
-                    consumerContext.setGrayEnable(grayEnable);
-                }));
         //设置group
         propertyMapping.add(Triple.of(
                 RocketmqProperties.Consumer::getGroup,
                 RocketmqListener::group,
-                (consumerContext, o) -> {
+                (consumer, o) -> {
                     String group = resolve((String) o);
-                    if (GrayUtils.isAppGroup() && consumerContext.getGrayEnable()) {
-                        group = group + StressConstants.MQ_GRAY_SUFFIX;
-                    }
-                    consumerContext.getConsumer().setConsumerGroup(group);
+                    consumer.setConsumerGroup(group);
                 }));
         //设置batch大小
         propertyMapping.add(Triple.of(
                 RocketmqProperties.Consumer::getBatch,
                 RocketmqListener::batch,
-                (consumerContext, o) -> {
+                (consumer, o) -> {
                     int batch = (Integer) o;
-                    consumerContext.getConsumer().setConsumeMessageBatchMaxSize(batch);
+                    consumer.setConsumeMessageBatchMaxSize(batch);
                 }));
         //设置消费最小线程
         propertyMapping.add(Triple.of(
                 RocketmqProperties.Consumer::getMinThread,
                 RocketmqListener::minThread,
-                (consumerContext, o) -> {
+                (consumer, o) -> {
                     int minThread = (Integer) o;
                     if (minThread == Integer.MAX_VALUE) {
                         minThread = Runtime.getRuntime().availableProcessors() * 2;
                     }
-                    consumerContext.getConsumer().setConsumeThreadMin(minThread);
+                    consumer.setConsumeThreadMin(minThread);
                 }));
         //设置消费最大线程
         propertyMapping.add(Triple.of(
                 RocketmqProperties.Consumer::getMaxThread,
                 RocketmqListener::maxThread,
-                (consumerContext, o) -> {
+                (consumer, o) -> {
                     int maxThread = (Integer) o;
                     if (maxThread == Integer.MAX_VALUE) {
                         maxThread = Runtime.getRuntime().availableProcessors() * 2;
                     }
-                    consumerContext.getConsumer().setConsumeThreadMax(maxThread);
+                    consumer.setConsumeThreadMax(maxThread);
                 }));
         //topic订阅
         propertyMapping.add(Triple.of(
@@ -220,34 +198,33 @@ public class RocketmqConsumerContainer extends AbstractSmartLifecycle implements
                     }
                     return topics;
                 },
-                (consumerContext, o) -> {
+                (consumer, o) -> {
                     List<RocketmqProperties.TopicSpec> topics = (List<RocketmqProperties.TopicSpec>) o;
                     try {
-                        for (RocketmqProperties.TopicSpec topic : topics) {
-                            registerListenerTopic(consumerContext, topic);
+                        List<String> grayTopics = properties.getGrayTopics();
+                        boolean grayEnable = false;
+                        for (RocketmqProperties.TopicSpec topicSpec : topics) {
+                            //注册监听的topic
+                            String topic = resolve(topicSpec.getTopic());
+                            String tags = resolve(topicSpec.getTags());
+                            String sql = resolve(topicSpec.getSql());
+                            if (GrayUtils.isAppGroup() && !CollectionUtils.isEmpty(grayTopics) && grayTopics.contains(topic)) {
+                                grayEnable = true;
+                                topic = topic + StressConstants.MQ_GRAY_SUFFIX;
+                            }
+                            log.info("register topic: {}, tags: {}, sql: {}", topic, tags, sql);
+                            MessageSelector messageSelector = StringUtils.hasText(sql) ? MessageSelector.bySql(sql) : MessageSelector.byTag(tags);
+                            consumer.subscribe(topic, messageSelector);
                         }
+                        if (grayEnable) {
+                            consumer.setConsumerGroup(consumer.getConsumerGroup() + StressConstants.MQ_GRAY_SUFFIX);
+                        }
+                        consumer.getSubscription();
+                        log.info("register group: {}", consumer.getConsumerGroup());
                     } catch (MQClientException e) {
                         throw new BeanInitializationException("init rocketmq consumer failed", e);
                     }
                 }));
-    }
-
-    /**
-     * 注册监听的topic
-     *
-     * @param consumerContext 消费者上下文
-     * @param topicSpec       topic
-     */
-    private void registerListenerTopic(ConsumerContext consumerContext, RocketmqProperties.TopicSpec topicSpec) throws MQClientException {
-        String topic = resolve(topicSpec.getTopic());
-        String tags = resolve(topicSpec.getTags());
-        String sql = resolve(topicSpec.getSql());
-        if (GrayUtils.isAppGroup() && consumerContext.getGrayEnable()) {
-            topic = topic + StressConstants.MQ_GRAY_SUFFIX;
-        }
-        log.info("register group: {}, topic: {}, tags: {}, sql: {}", consumerContext.getConsumer().getConsumerGroup(), topic, tags, sql);
-        MessageSelector messageSelector = StringUtils.hasText(sql) ? MessageSelector.bySql(sql) : MessageSelector.byTag(tags);
-        consumerContext.getConsumer().subscribe(topic, messageSelector);
     }
 
     private String resolve(String value) {
