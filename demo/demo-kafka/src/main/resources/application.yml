@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: 5icodes-demo-kafka
+server:
+  port: 8000
+starter:
+  gray:
+    app-group: GRAY
+  kafka:
+    grayTopics:
+      - TEST_TOPIC

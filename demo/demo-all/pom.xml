@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.5icodes</groupId>
+        <artifactId>demo</artifactId>
+        <version>${starter.version}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>demo-all</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>cache-monitor</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>cache-stress</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.kstyrc</groupId>
+            <artifactId>embedded-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>apollo</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>drools</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>jasypt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>swagger</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>feign-stress</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>gray</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>saturn</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>eureka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>rocketmq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>kafka</artifactId>
+        </dependency>
+    </dependencies>
+</project>

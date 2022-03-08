@@ -1,0 +1,37 @@
+logging:
+  level:
+    com:
+      _5icodes:
+        starter:
+          webmvc:
+            log:
+              LogFilter: trace
+saturn:
+  enabled: true
+starter:
+  gray:
+    app-group: GRAY
+  rocketmq:
+    grayTopics:
+      - TEST_TOPIC
+      - TEST_TOPIC_2
+feign:
+  client:
+    config:
+      baidu:
+        localMapping: http://www.5icodes.com
+spring:
+  application:
+    name: test
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+        retryOnAllOperations: false
+        maxRetriesOnSameServiceInstance: 0
+        maxRetriesOnNextServiceInstance: 1
+        avoid-previous-instance: true
+management:
+  endpoint:
+    shutdown:
+      enabled: true
