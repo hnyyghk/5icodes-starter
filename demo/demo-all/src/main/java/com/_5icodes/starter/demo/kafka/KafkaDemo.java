@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.KafkaListeners;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -15,13 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@SpringBootApplication
 @RestController
-public class KafkaDemoApplication {
-    public static void main(final String[] args) {
-        SpringApplication.run(KafkaDemoApplication.class, args);
-    }
-
+public class KafkaDemo {
     private static final String TEST_TOPIC = "TEST_TOPIC";
 
     @Autowired
