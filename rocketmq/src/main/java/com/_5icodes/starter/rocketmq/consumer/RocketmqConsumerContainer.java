@@ -1,6 +1,6 @@
 package com._5icodes.starter.rocketmq.consumer;
 
-import com._5icodes.starter.common.Initable;
+import com._5icodes.starter.common.Initial;
 import com._5icodes.starter.common.infrastructure.AbstractSmartLifecycle;
 import com._5icodes.starter.common.utils.GrayUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
@@ -94,7 +94,7 @@ public class RocketmqConsumerContainer extends AbstractSmartLifecycle implements
     }
 
     private void initIfNeed(Object bean, Class<?> targetClass, DefaultMQPushConsumer consumer) {
-        if (!Initable.class.isAssignableFrom(targetClass)) {
+        if (!Initial.class.isAssignableFrom(targetClass)) {
             return;
         }
         Type[] interfaces = targetClass.getGenericInterfaces();
@@ -112,7 +112,7 @@ public class RocketmqConsumerContainer extends AbstractSmartLifecycle implements
             }
             Class clazz = (Class) actualTypeArgument;
             if (clazz.isAssignableFrom(DefaultMQPushConsumer.class)) {
-                ((Initable) bean).init(consumer);
+                ((Initial) bean).init(consumer);
             }
         }
     }

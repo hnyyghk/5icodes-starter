@@ -1,7 +1,7 @@
 package com._5icodes.starter.rocketmq;
 
 import brave.Tracing;
-import com._5icodes.starter.common.Initable;
+import com._5icodes.starter.common.Initial;
 import com._5icodes.starter.monitor.ExceptionReport;
 import com._5icodes.starter.rocketmq.consumer.RocketmqConsumerContainer;
 import com._5icodes.starter.rocketmq.interceptor.ErrorReportInterceptor;
@@ -29,7 +29,7 @@ public class RocketmqAutoConfiguration {
     }
 
     @Bean
-    public DefaultMQProducer defaultMqProducer(RocketmqProperties properties, @Autowired(required = false) Initable<DefaultMQProducer> initable) {
+    public DefaultMQProducer defaultMqProducer(RocketmqProperties properties, @Autowired(required = false) Initial<DefaultMQProducer> producerInitial) {
         DefaultMQProducer producer = new DefaultMQProducer(properties.getGroup());
         producer.setNamesrvAddr(properties.getNameSrvAddr());
         producer.setSendMsgTimeout(properties.getTimeout());
@@ -39,8 +39,8 @@ public class RocketmqAutoConfiguration {
         producer.setRetryTimesWhenSendAsyncFailed(properties.getRetryTimesAsync());
         producer.setRetryAnotherBrokerWhenNotStoreOK(properties.isRetrySendMsg());
         producer.setMaxMessageSize(properties.getMaxMessageSize());
-        if (initable != null) {
-            initable.init(producer);
+        if (producerInitial != null) {
+            producerInitial.init(producer);
         }
         return producer;
     }

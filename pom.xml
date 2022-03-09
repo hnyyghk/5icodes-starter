@@ -36,6 +36,7 @@
         <module>eureka</module>
         <module>rocketmq</module>
         <module>kafka</module>
+        <module>redisson</module>
     </modules>
 
     <properties>
@@ -220,6 +221,12 @@
             <dependency>
                 <groupId>com.5icodes</groupId>
                 <artifactId>kafka</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
+                <artifactId>redisson</artifactId>
                 <version>${starter.version}</version>
             </dependency>
 

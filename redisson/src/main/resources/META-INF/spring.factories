@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com._5icodes.starter.redisson.RedissonAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.redisson.RedissonEnvInjector
