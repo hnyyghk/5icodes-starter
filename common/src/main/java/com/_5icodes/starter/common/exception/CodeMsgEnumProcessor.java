@@ -11,16 +11,16 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class CodeMsgEnumProcessor implements BeanFactoryPostProcessor {
-    private final CachingMetadataReaderFactoryProvider cachingMetadataReaderFactoryProvider;
+    private final CachingMetadataReaderFactoryProvider metadataReaderFactoryProvider;
 
     public CodeMsgEnumProcessor(CachingMetadataReaderFactoryProvider metadataReaderFactoryProvider) {
-        cachingMetadataReaderFactoryProvider = metadataReaderFactoryProvider;
+        this.metadataReaderFactoryProvider = metadataReaderFactoryProvider;
     }
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
         String codeMsgClassName = CodeMsg.class.getName();
-        cachingMetadataReaderFactoryProvider.processMetadataReader(metadataReader -> {
+        metadataReaderFactoryProvider.processMetadataReader(metadataReader -> {
             try {
                 ClassMetadata classMetadata = metadataReader.getClassMetadata();
                 String[] interfaceNames = classMetadata.getInterfaceNames();

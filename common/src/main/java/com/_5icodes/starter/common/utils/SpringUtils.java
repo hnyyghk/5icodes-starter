@@ -8,8 +8,8 @@ import org.springframework.context.ApplicationContext;
 public class SpringUtils {
     private ApplicationContext applicationContext;
 
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
-        applicationContext = context;
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        SpringUtils.applicationContext = applicationContext;
     }
 
     public <T> T getBean(Class<T> requiredType) {

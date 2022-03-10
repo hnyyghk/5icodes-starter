@@ -41,7 +41,7 @@ public class HandlerExceptionResolverEditor implements SmartInitializingSingleto
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
-        applicationContext = context;
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

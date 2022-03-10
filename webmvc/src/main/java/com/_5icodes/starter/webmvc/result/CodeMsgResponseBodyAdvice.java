@@ -26,8 +26,8 @@ public class CodeMsgResponseBodyAdvice implements ResponseBodyAdvice<Object>, Ap
     private Set<String> excludeClasses;
 
     @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
-        Map<String, Object> beans = context.getBeansWithAnnotation(NotAutoWrap.class);
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(NotAutoWrap.class);
         for (Map.Entry<String, Object> entry : beans.entrySet()) {
             Class<?> userClass = ClassUtils.getUserClass(entry.getValue().getClass());
             addExcludeClasses(Collections.singleton(userClass.getName()));

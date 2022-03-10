@@ -2,6 +2,9 @@ package com._5icodes.starter.redisson;
 
 import com._5icodes.starter.cache.CacheAutoConfiguration;
 import com._5icodes.starter.common.Initial;
+import com._5icodes.starter.common.infrastructure.CachingMetadataReaderFactoryProvider;
+import com._5icodes.starter.redisson.lock.LockAdvisor;
+import com._5icodes.starter.redisson.lock.LockInterceptor;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.ClusterServersConfig;
@@ -9,11 +12,13 @@ import org.redisson.config.Config;
 import org.redisson.config.SentinelServersConfig;
 import org.redisson.config.SingleServerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Role;
 
 import java.time.Duration;
 
@@ -94,5 +99,16 @@ public class RedissonAutoConfiguration {
     @Bean
     public RedissonClientLifecycle redissonClientLifecycle(RedissonClient redissonClient) {
         return new RedissonClientLifecycle(redissonClient);
+    }
+
+    @Bean
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    public LockAdvisor lockAdvisor(CachingMetadataReaderFactoryProvider metadataReaderFactoryProvider) {
+        return new LockAdvisor(metadataReaderFactoryProvider);
+    }
+
+    @Bean(RedissonConstants.LOCK_INTERCEPTOR_BEAN_NAME)
+    public LockInterceptor lockInterceptor() {
+        return new LockInterceptor();
     }
 }
