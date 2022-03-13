@@ -69,7 +69,7 @@ public class CacheAutoConfiguration {
             long customId = stringRedisTemplate.opsForValue().increment(CacheConstants.SNOW_FLAKE_REDIS_PREFIX + SpringApplicationUtils.getApplicationName());
             return new SnowflakeIdGenerator(customId);
         } catch (Exception e) {
-            log.error("init snowflakeIdGenerator error:", e);
+            log.error("init snowflakeIdGenerator error", e);
         }
         return null;
     }

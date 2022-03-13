@@ -37,6 +37,7 @@
         <module>rocketmq</module>
         <module>kafka</module>
         <module>redisson</module>
+        <module>async</module>
     </modules>
 
     <properties>
@@ -232,6 +233,12 @@
 
             <dependency>
                 <groupId>com.5icodes</groupId>
+                <artifactId>async</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
                 <artifactId>webflux</artifactId>
                 <version>${starter.version}</version>
             </dependency>
@@ -297,6 +304,18 @@
                     <exclusion>
                         <groupId>redis.clients</groupId>
                         <artifactId>jedis</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.esotericsoftware</groupId>
+                <artifactId>kryo</artifactId>
+                <version>4.0.2</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>

@@ -25,6 +25,6 @@ public class DelegateJsonParser<T> implements JsonParser<T> {
                 return (T) delegate.apply(config);
             }
         }
-        throw new ParseException(String.format("jsonParser for type %s is not found.", type));
+        throw new ParseException(String.format("jsonParser for type %s is not found", type));
     }
 }

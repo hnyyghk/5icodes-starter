@@ -1,0 +1,52 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "name": "async properties",
+      "type": "com._5icodes.starter.async.AsyncProperties",
+      "sourceType": "com._5icodes.starter.async.AsyncProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "starter.async.group",
+      "type": "java.lang.String",
+      "sourceType": "com._5icodes.starter.async.AsyncProperties"
+    },
+    {
+      "name": "starter.async.minThread",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.async.AsyncProperties"
+    },
+    {
+      "name": "starter.async.maxThread",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.async.AsyncProperties"
+    },
+    {
+      "name": "starter.async.topics",
+      "type": "java.util.List<com._5icodes.starter.rocketmq.RocketmqProperties.TopicSpec>",
+      "sourceType": "com._5icodes.starter.async.AsyncProperties"
+    },
+    {
+      "name": "starter.async.order.group",
+      "type": "java.lang.String",
+      "sourceType": "com._5icodes.starter.async.AsyncProperties"
+    },
+    {
+      "name": "starter.async.order.minThread",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.async.AsyncProperties"
+    },
+    {
+      "name": "starter.async.order.maxThread",
+      "type": "java.lang.Integer",
+      "sourceType": "com._5icodes.starter.async.AsyncProperties"
+    },
+    {
+      "name": "starter.async.order.topics",
+      "type": "java.util.List<com._5icodes.starter.rocketmq.RocketmqProperties.TopicSpec>",
+      "sourceType": "com._5icodes.starter.async.AsyncProperties"
+    }
+  ]
+}

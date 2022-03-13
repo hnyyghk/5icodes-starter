@@ -28,12 +28,11 @@ public abstract class AbstractEnabledSpringBootCondition<T> extends SpringBootCo
     public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
         return OUTCOME_CACHE.computeIfAbsent(this.getClass(), aClass -> {
             Binder binder = Binder.get(context.getEnvironment());
-            BindResult<T> bind = binder.bind(prefix, actualType);
-            boolean bound = bind.isBound();
-            if (!bound) {
+            BindResult<T> bindResult = binder.bind(prefix, actualType);
+            if (!bindResult.isBound()) {
                 return ConditionOutcome.match();
             }
-            T properties = bind.get();
+            T properties = bindResult.get();
             return enableFunc.apply(properties) ? ConditionOutcome.match() : ConditionOutcome.noMatch(String.format("%s not match", aClass.getSimpleName()));
         });
     }

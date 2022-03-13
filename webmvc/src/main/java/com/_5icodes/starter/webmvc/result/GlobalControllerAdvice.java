@@ -75,13 +75,13 @@ public class GlobalControllerAdvice {
     public ResultDTO<?> handleIllegalArgumentException(IllegalArgumentException e) {
         //非法参数异常
 //        e.getMessage();
-        log.error("非法参数异常:", e);
+        log.error("非法参数异常", e);
         return fail(e.getLocalizedMessage());
     }
 
     @ExceptionHandler(IllegalStateException.class)
     public ResultDTO<?> handleIllegalStateException(IllegalStateException e) {
-        log.error("非法状态异常:", e);
+        log.error("非法状态异常", e);
         return fail(e.getLocalizedMessage());
     }
 
@@ -143,12 +143,12 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(EofException.class)
     public void handleEofException(EofException e) {
-        log.warn("EofException occurred:", e);
+        log.warn("EofException occurred", e);
     }
 
     @ExceptionHandler(Throwable.class)
     public ResultDTO<?> handleThrowable(Throwable e) {
-        log.error("internal error occurred:", e);
+        log.error("internal error occurred", e);
         return ResultDTO.setBack(errorProperties);
     }
 
@@ -166,7 +166,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(ServletException.class)
     public ResultDTO<?> handleServletException(ServletException e) {
         //servlet 异常
-        log.error("servlet exception:", e);
+        log.error("servlet exception", e);
         return fail(e.getMessage());
     }
 

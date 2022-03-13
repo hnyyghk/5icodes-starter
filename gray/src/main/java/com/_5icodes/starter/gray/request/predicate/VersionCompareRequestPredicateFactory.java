@@ -35,7 +35,7 @@ public class VersionCompareRequestPredicateFactory implements RequestPredicateFa
             }
             return version;
         } catch (Exception e) {
-            log.warn("parse versionStr {} failed.", versionStr, e);
+            log.warn("parse versionStr {} failed", versionStr, e);
             return null;
         }
     }

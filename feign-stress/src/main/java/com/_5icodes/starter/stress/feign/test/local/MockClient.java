@@ -25,7 +25,7 @@ public class MockClient {
             }
             TraceTestUtils.info("pull api list size: {}", MockClientBuilder.APIS.size());
         } catch (Exception e) {
-            log.error("call mock error:", e);
+            log.error("call mock error", e);
         }
     }
 

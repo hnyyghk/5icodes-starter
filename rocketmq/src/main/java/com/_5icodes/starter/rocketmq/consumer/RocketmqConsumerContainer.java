@@ -219,7 +219,6 @@ public class RocketmqConsumerContainer extends AbstractSmartLifecycle implements
                         if (grayEnable) {
                             consumer.setConsumerGroup(consumer.getConsumerGroup() + StressConstants.MQ_GRAY_SUFFIX);
                         }
-                        consumer.getSubscription();
                         log.info("register group: {}", consumer.getConsumerGroup());
                     } catch (MQClientException e) {
                         throw new BeanInitializationException("init rocketmq consumer failed", e);

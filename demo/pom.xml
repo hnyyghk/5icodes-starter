@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>demo-all</module>
+        <module>demo-async</module>
         <module>demo-kafka</module>
         <module>demo-redisson</module>
     </modules>

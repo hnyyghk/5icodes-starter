@@ -16,7 +16,7 @@ import java.util.function.Function;
 @Slf4j
 public class RedisLockUtils {
     public final long DEFAULT_WAIT_TIME = 0;
-    public final long DEFAULT_LEASE_TIME = 60 * 1000;
+    public final long DEFAULT_LEASE_TIME = -1;
     public final String DEFAULT_MESSAGE = "抱歉！服务正忙，请稍后重试";
 
     private <T, R> R rLockAndApply(long waitTime, long leaseTime, TimeUnit timeUnit, T t, Function<T, R> function, String message, boolean catchException, RLock rLock) {
@@ -27,7 +27,7 @@ public class RedisLockUtils {
                 //加锁，等待waitTime，租约leaseTime
                 locked = rLock.tryLock(waitTime, leaseTime, timeUnit);
             } catch (Exception e) {
-                log.warn("tryLock failed:", e);
+                log.warn("tryLock failed", e);
                 throw new LockFailedException(e);
             }
             if (!locked) {

@@ -40,7 +40,7 @@ public class SnowflakeIdGenerator {
     }
 
     public SnowflakeIdGenerator(long customId, long epoch, int customIdBits, int sequenceBits) {
-        log.info("initializing snowflakeIdGenerator, epoch start with: {}, available until: {}, customId range: 0 ~ {}, current customId: {}, low {} bit customId: {}, sequence range: 0 ~ {}, support generate {} ids per second single machine.",
+        log.info("initializing snowflakeIdGenerator, epoch start with: {}, available until: {}, customId range: 0 ~ {}, current customId: {}, low {} bit customId: {}, sequence range: 0 ~ {}, support generate {} ids per second single machine",
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(epoch),
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(epoch + ~(-1L << 63 - customIdBits - sequenceBits)),
                 ~(-1L << customIdBits),

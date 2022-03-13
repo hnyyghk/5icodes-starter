@@ -95,7 +95,7 @@ public class MockHelper {
             try {
                 TimeUnit.MILLISECONDS.sleep(timeout);
             } catch (InterruptedException e) {
-                log.error("mock sleep error:", e);
+                log.error("mock sleep error", e);
             }
         }
         Response response = Response.builder()

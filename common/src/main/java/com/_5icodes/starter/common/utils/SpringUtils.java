@@ -19,4 +19,8 @@ public class SpringUtils {
     public Object getBean(String beanName) {
         return applicationContext.getBean(beanName);
     }
+
+    public <T> T getBean(String beanName, Class<T> requiredType) {
+        return applicationContext.getBean(beanName, requiredType);
+    }
 }

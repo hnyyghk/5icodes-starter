@@ -33,7 +33,7 @@ public class ErrorController extends AbstractErrorController {
         Throwable error = getError(webRequest);
         String msg = null;
         if (error != null) {
-            log.error("internal error occurred:", error);
+            log.error("internal error occurred", error);
             msg = error.getMessage();
         }
         if (msg == null) {

@@ -7,6 +7,7 @@ import com._5icodes.starter.web.WebConstants;
 import com._5icodes.starter.webmvc.WebMvcProperties;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -21,7 +22,11 @@ public class FeignAuthInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (!(requestAttributes instanceof ServletRequestAttributes)) {
+            return;
+        }
+        ServletRequestAttributes attributes = (ServletRequestAttributes) requestAttributes;
         HttpServletRequest request = attributes.getRequest();
         template.header(WebConstants.PRE_MODULE_ID, request.getHeader(WebConstants.MODULE_ID));
         template.header(WebConstants.PRE_REQ_URI, request.getRequestURI());

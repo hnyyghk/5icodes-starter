@@ -2,7 +2,7 @@ spring:
   application:
     name: 5icodes-demo-kafka
 server:
-  port: 8001
+  port: 8002
 starter:
   gray:
     app-group: GRAY

@@ -45,7 +45,7 @@ public class SimpleMappingRuleStrategyFactory implements RuleStrategyFactory<Sim
                 }
                 SleuthStrategyContext.set(testRequest && filtered.size() > 0);
                 if (filtered.size() == 0) {
-                    log.trace("filtered servers are empty, fall back to all servers.");
+                    log.trace("filtered servers are empty, fall back to all servers");
                     return RuleStrategy.super.choose(candidates);
                 }
                 log.trace("filtered servers are {}", ServerUtils.getServerStr(filtered));

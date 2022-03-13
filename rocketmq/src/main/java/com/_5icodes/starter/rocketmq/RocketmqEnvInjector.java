@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 public class RocketmqEnvInjector extends AbstractProfileEnvironmentPostProcessor {
-    private final String nameSrvAddr = RocketmqConstants.PROPERTY_PREFIX + ".nameSrvAddr";
+    private static final String nameSrvAddr = RocketmqConstants.PROPERTY_PREFIX + ".nameSrvAddr";
 
     @Override
     protected void onDev(ConfigurableEnvironment env, SpringApplication application) {

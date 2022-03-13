@@ -3,6 +3,7 @@ package com._5icodes.starter.redisson;
 import com._5icodes.starter.cache.CacheAutoConfiguration;
 import com._5icodes.starter.common.Initial;
 import com._5icodes.starter.common.infrastructure.CachingMetadataReaderFactoryProvider;
+import com._5icodes.starter.redisson.codec.RedissonKryoCodec;
 import com._5icodes.starter.redisson.lock.LockAdvisor;
 import com._5icodes.starter.redisson.lock.LockInterceptor;
 import org.redisson.Redisson;
@@ -19,6 +20,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
+import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 
@@ -33,6 +35,7 @@ public class RedissonAutoConfiguration {
                                          @Autowired(required = false) Initial<SingleServerConfig> singleInitial,
                                          @Autowired(required = false) Initial<Config> configInitial) {
         Config config = prepareConfig(redisProperties, clusterInitial, sentinelInitial, singleInitial);
+        config.setCodec(new RedissonKryoCodec());
         if (configInitial != null) {
             configInitial.init(config);
         }
@@ -55,7 +58,7 @@ public class RedissonAutoConfiguration {
             for (String node : cluster.getNodes()) {
                 clusterServersConfig.addNodeAddress("redis://" + node);
             }
-            if (password != null) {
+            if (StringUtils.hasText(password)) {
                 clusterServersConfig.setPassword(password);
             }
             if (timeout > 0) {
@@ -72,7 +75,7 @@ public class RedissonAutoConfiguration {
             for (String node : sentinel.getNodes()) {
                 sentinelServersConfig.addSentinelAddress("redis://" + node);
             }
-            if (password != null) {
+            if (StringUtils.hasText(password)) {
                 sentinelServersConfig.setPassword(password);
             }
             if (timeout > 0) {
@@ -84,7 +87,7 @@ public class RedissonAutoConfiguration {
             return config;
         }
         SingleServerConfig singleServerConfig = config.useSingleServer().setAddress("redis://" + redisProperties.getHost() + ":" + redisProperties.getPort());
-        if (password != null) {
+        if (StringUtils.hasText(password)) {
             singleServerConfig.setPassword(password);
         }
         if (timeout > 0) {
@@ -101,14 +104,14 @@ public class RedissonAutoConfiguration {
         return new RedissonClientLifecycle(redissonClient);
     }
 
+    @Bean(RedissonConstants.LOCK_INTERCEPTOR_BEAN_NAME)
+    public LockInterceptor lockInterceptor() {
+        return new LockInterceptor();
+    }
+
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public LockAdvisor lockAdvisor(CachingMetadataReaderFactoryProvider metadataReaderFactoryProvider) {
         return new LockAdvisor(metadataReaderFactoryProvider);
-    }
-
-    @Bean(RedissonConstants.LOCK_INTERCEPTOR_BEAN_NAME)
-    public LockInterceptor lockInterceptor() {
-        return new LockInterceptor();
     }
 }

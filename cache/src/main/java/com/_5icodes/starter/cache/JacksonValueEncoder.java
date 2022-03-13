@@ -26,7 +26,7 @@ public class JacksonValueEncoder extends AbstractValueEncoder {
                 return bs1;
             }
         } catch (Exception e) {
-            throw new CacheEncodeException("jackson encode error:", e);
+            throw new CacheEncodeException("jackson encode error", e);
         }
     }
 }

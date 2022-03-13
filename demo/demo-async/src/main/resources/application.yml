@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: 5icodes-demo-async
+server:
+  port: 8001
+starter:
+  async:
+    group: 5icodes-async
+    topics:
+      - topic: 5icodes-async
+    order:
+      group: 5icodes-order-async
+      topics:
+        - topic: 5icodes-order-async

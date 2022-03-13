@@ -75,7 +75,7 @@ public class WebFluxAccessLog extends FillSleuthPropagationAccessLog implements 
                 }
                 sendAccessLog(accessLog);
             } catch (Exception e) {
-                log.error("WebFluxAccessLog filter error:", e);
+                log.error("WebFluxAccessLog filter error", e);
             }
         }));
     }

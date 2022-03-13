@@ -45,7 +45,7 @@ public class OrderedConfigChangeListener {
                 try {
                     listener.onChange(changeEvent);
                 } catch (Exception e) {
-                    log.error("fire changeEvent error:", e);
+                    log.error("fire changeEvent error", e);
                 }
             }
         } finally {

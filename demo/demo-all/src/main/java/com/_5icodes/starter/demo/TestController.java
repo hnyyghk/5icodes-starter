@@ -59,7 +59,7 @@ public class TestController {
 
             @Override
             public void onException(Throwable e) {
-                log.error("onException:", e);
+                log.error("onException", e);
             }
         });
     }
