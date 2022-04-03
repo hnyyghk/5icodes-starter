@@ -10,8 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FillSleuthPropagationAccessLog extends AbstractAccessLog {
-    @Autowired
-    private CurrentTraceContext currentTraceContext;
+    private final CurrentTraceContext currentTraceContext;
+
+    public FillSleuthPropagationAccessLog(CurrentTraceContext currentTraceContext) {
+        this.currentTraceContext = currentTraceContext;
+    }
 
     @Override
     protected void sendAccessLog(Map<String, Object> accessLog) {

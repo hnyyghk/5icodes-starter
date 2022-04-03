@@ -1,5 +1,6 @@
 package com._5icodes.starter.webflux.monitor;
 
+import brave.propagation.CurrentTraceContext;
 import com._5icodes.starter.common.utils.HostNameUtils;
 import com._5icodes.starter.common.utils.RegionUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
@@ -28,7 +29,8 @@ public class WebFluxAccessLog extends FillSleuthPropagationAccessLog implements 
 
     private final WebProperties webProperties;
 
-    public WebFluxAccessLog(WebProperties webProperties) {
+    public WebFluxAccessLog(WebProperties webProperties, CurrentTraceContext currentTraceContext) {
+        super(currentTraceContext);
         this.webProperties = webProperties;
     }
 

@@ -12,7 +12,6 @@ import com._5icodes.starter.webmvc.WebMvcConstants;
 import com._5icodes.starter.webmvc.common.OnlyOnceInterceptorConfigurer;
 import com._5icodes.starter.webmvc.common.RequestMappingRegister;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -25,10 +24,14 @@ import java.util.Map;
 
 @Slf4j
 public class AccessLogFilter extends FillSleuthPropagationAccessLog implements OnlyOnceInterceptorConfigurer, Ordered {
-    @Autowired
-    private RequestMappingRegister register;
-    @Autowired
-    private WebProperties webProperties;
+    private final RequestMappingRegister register;
+    private final WebProperties webProperties;
+
+    public AccessLogFilter(CurrentTraceContext currentTraceContext, RequestMappingRegister register, WebProperties webProperties) {
+        super(currentTraceContext);
+        this.register = register;
+        this.webProperties = webProperties;
+    }
 
     @Override
     public boolean doPreHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

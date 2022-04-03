@@ -1,10 +1,15 @@
 package com._5icodes.starter.monitor;
 
+import brave.propagation.CurrentTraceContext;
 import com._5icodes.starter.kafka.KafkaAutoConfiguration;
+import com._5icodes.starter.monitor.common.CommonMetaInfoProvider;
 import com._5icodes.starter.monitor.meta.KafkaMetaInfoSender;
+import com._5icodes.starter.monitor.meta.MetaInfoProvider;
 import com._5icodes.starter.monitor.meta.MetaInfoSender;
 import com._5icodes.starter.monitor.meta.MetaInfoSenderApplicationEventAdapter;
+import com._5icodes.starter.monitor.spi.ModulesMetaInfoProvider;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.kafka.DefaultKafkaProducerFactoryCustomizer;
@@ -19,24 +24,36 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.ProducerListener;
 import org.springframework.kafka.support.converter.RecordMessageConverter;
 
+import java.util.List;
+
 @Configuration
 @EnableConfigurationProperties(MonitorKafkaProperties.class)
 @AutoConfigureAfter(KafkaAutoConfiguration.class)
 public class MonitorAutoConfiguration {
     @Bean
-    public MetaInfoSenderApplicationEventAdapter metaInfoSenderApplicationEventAdapter() {
-        return new MetaInfoSenderApplicationEventAdapter();
+    public MetaInfoSenderApplicationEventAdapter metaInfoSenderApplicationEventAdapter(@Autowired(required = false) List<MetaInfoProvider> metaInfoProviders, MetaInfoSender metaInfoSender) {
+        return new MetaInfoSenderApplicationEventAdapter(metaInfoProviders, metaInfoSender);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public MetaInfoSender kafkaMetaInfoSender() {
-        return new KafkaMetaInfoSender();
+    public MetaInfoSender kafkaMetaInfoSender(MonitorKafkaTemplate monitorKafkaTemplate, MonitorKafkaProperties monitorKafkaProperties) {
+        return new KafkaMetaInfoSender(monitorKafkaTemplate, monitorKafkaProperties);
     }
 
     @Bean
-    public ExceptionReport exceptionReport() {
-        return new ExceptionReport();
+    public ModulesMetaInfoProvider modulesMetaInfoProvider() {
+        return new ModulesMetaInfoProvider();
+    }
+
+    @Bean
+    public CommonMetaInfoProvider commonMetaInfoProvider() {
+        return new CommonMetaInfoProvider();
+    }
+
+    @Bean
+    public ExceptionReport exceptionReport(MonitorKafkaTemplate monitorKafkaTemplate, CurrentTraceContext currentTraceContext, MonitorKafkaProperties monitorKafkaProperties) {
+        return new ExceptionReport(monitorKafkaTemplate, currentTraceContext, monitorKafkaProperties);
     }
 
     @Bean

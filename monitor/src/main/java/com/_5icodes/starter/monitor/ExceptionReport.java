@@ -6,15 +6,21 @@ import com._5icodes.starter.common.exception.CodeMsg;
 import com._5icodes.starter.common.utils.*;
 import com._5icodes.starter.stress.utils.TraceTestUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 public class ExceptionReport {
-    @Autowired
-    private CurrentTraceContext currentTraceContext;
+    private final MonitorKafkaTemplate monitorKafkaTemplate;
+    private final CurrentTraceContext currentTraceContext;
+    private final MonitorKafkaProperties monitorKafkaProperties;
+
+    public ExceptionReport(MonitorKafkaTemplate monitorKafkaTemplate, CurrentTraceContext currentTraceContext, MonitorKafkaProperties monitorKafkaProperties) {
+        this.monitorKafkaTemplate = monitorKafkaTemplate;
+        this.currentTraceContext = currentTraceContext;
+        this.monitorKafkaProperties = monitorKafkaProperties;
+    }
 
     public boolean report(String resource, Throwable throwable) {
         Throwable realException = ExceptionUtils.getRealException(throwable);
@@ -41,8 +47,7 @@ public class ExceptionReport {
         }
         exceptionMap.put("time", System.currentTimeMillis());
         exceptionMap.putAll(getTraceMap());
-        //todo
-        log.info(JsonUtils.toJson(exceptionMap));
+        monitorKafkaTemplate.send(monitorKafkaProperties.getExceptionTopicName(), JsonUtils.toJson(exceptionMap));
         return true;
     }
 

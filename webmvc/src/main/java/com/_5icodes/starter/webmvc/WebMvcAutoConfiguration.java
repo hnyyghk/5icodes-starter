@@ -1,7 +1,9 @@
 package com._5icodes.starter.webmvc;
 
+import brave.propagation.CurrentTraceContext;
 import com._5icodes.starter.feign.FeignAutoConfiguration;
 import com._5icodes.starter.monitor.ExceptionReport;
+import com._5icodes.starter.web.WebProperties;
 import com._5icodes.starter.web.condition.ConditionalOnAccessLog;
 import com._5icodes.starter.webmvc.log.LogFilter;
 import com._5icodes.starter.webmvc.monitor.AccessLogFilter;
@@ -111,8 +113,8 @@ public class WebMvcAutoConfiguration {
 
     @Bean
     @ConditionalOnAccessLog
-    public AccessLogFilter accessLogFilter() {
-        return new AccessLogFilter();
+    public AccessLogFilter accessLogFilter(CurrentTraceContext currentTraceContext, RequestMappingRegister register, WebProperties webProperties) {
+        return new AccessLogFilter(currentTraceContext, register, webProperties);
     }
 
     @Bean

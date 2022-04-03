@@ -534,7 +534,32 @@
     </dependencyManagement>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}-${starter.build.time}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <name>starter.build.time</name>
+                    <pattern>yyyyMMddHHmmss</pattern>
+                    <locale>zh_CN</locale>
+                    <timeZone>GMT+8</timeZone>
+                    <fileSet/>
+                    <regex/>
+                    <source/>
+                    <value/>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId><!--https://maven.apache.org/maven-ci-friendly.html-->

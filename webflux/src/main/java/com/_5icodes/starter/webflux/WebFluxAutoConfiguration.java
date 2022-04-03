@@ -1,5 +1,6 @@
 package com._5icodes.starter.webflux;
 
+import brave.propagation.CurrentTraceContext;
 import com._5icodes.starter.monitor.ExceptionReport;
 import com._5icodes.starter.web.WebProperties;
 import com._5icodes.starter.web.condition.ConditionalOnAccessLog;
@@ -14,8 +15,8 @@ import org.springframework.core.annotation.Order;
 public class WebFluxAutoConfiguration {
     @Bean
     @ConditionalOnAccessLog
-    public WebFluxAccessLog webFluxAccessLog(WebProperties webProperties) {
-        return new WebFluxAccessLog(webProperties);
+    public WebFluxAccessLog webFluxAccessLog(WebProperties webProperties, CurrentTraceContext currentTraceContext) {
+        return new WebFluxAccessLog(webProperties, currentTraceContext);
     }
 
     @Bean
