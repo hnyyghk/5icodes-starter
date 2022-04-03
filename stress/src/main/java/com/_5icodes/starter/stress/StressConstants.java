@@ -8,4 +8,5 @@ public interface StressConstants {
     String TRACE_TEST = "TRACE_TEST";
     String MQ_GRAY_SUFFIX = "_" + GrayUtils.getAppGroup();
     String MQ_STRESS_SUFFIX = "_" + StressConstants.TRACE_TEST;
+    String DB_SUFFIX = "_" + StressConstants.TRACE_TEST.toLowerCase();
 }

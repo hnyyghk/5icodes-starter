@@ -38,6 +38,7 @@
         <module>kafka</module>
         <module>redisson</module>
         <module>async</module>
+        <module>jdbc</module>
     </modules>
 
     <properties>
@@ -59,6 +60,7 @@
         <apollo.version>1.8.0</apollo.version>
         <guava.version>20.0</guava.version>
         <curator.version>2.13.0</curator.version>
+        <druid.version>1.1.20</druid.version>
         <powermock.version>2.0.0</powermock.version>
     </properties>
 
@@ -239,6 +241,12 @@
 
             <dependency>
                 <groupId>com.5icodes</groupId>
+                <artifactId>jdbc</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
                 <artifactId>webflux</artifactId>
                 <version>${starter.version}</version>
             </dependency>
@@ -318,6 +326,57 @@
                         <artifactId>asm</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>1.4.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>2.1.5</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis-spring</artifactId>
+                    </exclusion>
+                    <!-- The Java Persistence API (JPA), in 2019 renamed to Jakarta Persistence -->
+                    <exclusion>
+                        <groupId>javax.persistence</groupId>
+                        <artifactId>persistence-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>1.6.0</version>
             </dependency>
 
             <dependency>

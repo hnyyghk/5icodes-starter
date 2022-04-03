@@ -16,6 +16,7 @@
         <module>demo-async</module>
         <module>demo-kafka</module>
         <module>demo-redisson</module>
+        <module>demo-jdbc</module>
     </modules>
 
     <build>
