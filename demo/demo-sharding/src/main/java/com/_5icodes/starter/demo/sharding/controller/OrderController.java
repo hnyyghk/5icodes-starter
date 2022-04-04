@@ -1,7 +1,7 @@
-package com._5icodes.starter.demo.jdbc.controller;
+package com._5icodes.starter.demo.sharding.controller;
 
-import com._5icodes.starter.demo.jdbc.entity.Order;
-import com._5icodes.starter.demo.jdbc.mapper.OrderMapper;
+import com._5icodes.starter.demo.sharding.entity.Order;
+import com._5icodes.starter.demo.sharding.mapper.OrderMapper;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

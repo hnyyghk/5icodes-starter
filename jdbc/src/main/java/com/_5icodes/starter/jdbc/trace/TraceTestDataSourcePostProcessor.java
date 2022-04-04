@@ -18,14 +18,14 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 @Slf4j
-public class TraceTestDatasourcePostProcessor implements BeanPostProcessor {
-    private static final Class druidDatasourceWrapperClass;
+public class TraceTestDataSourcePostProcessor implements BeanPostProcessor {
+    private static final Class druidDataSourceWrapperClass;
     private static final Constructor constructor;
 
     static {
         try {
-            druidDatasourceWrapperClass = ClassUtils.forName("com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper", ClassUtils.getDefaultClassLoader());
-            constructor = druidDatasourceWrapperClass.getDeclaredConstructor();
+            druidDataSourceWrapperClass = ClassUtils.forName("com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper", ClassUtils.getDefaultClassLoader());
+            constructor = druidDataSourceWrapperClass.getDeclaredConstructor();
             constructor.setAccessible(true);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -34,14 +34,14 @@ public class TraceTestDatasourcePostProcessor implements BeanPostProcessor {
 
     private final JdbcProperties jdbcProperties;
 
-    public TraceTestDatasourcePostProcessor(JdbcProperties jdbcProperties) {
+    public TraceTestDataSourcePostProcessor(JdbcProperties jdbcProperties) {
         this.jdbcProperties = jdbcProperties;
     }
 
     @Override
     @SneakyThrows
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (druidDatasourceWrapperClass.isInstance(bean) && !CollectionUtils.isEmpty(jdbcProperties.getTraceTestMap())) {
+        if (druidDataSourceWrapperClass.isInstance(bean) && !CollectionUtils.isEmpty(jdbcProperties.getTraceTestMap())) {
             DruidDataSource originalDataSource = (DruidDataSource) bean;
             String originalDataSourceName = originalDataSource.getName();
             DruidDataSource druidDataSource = jdbcProperties.getTraceTestMap().get(originalDataSourceName);
@@ -56,14 +56,14 @@ public class TraceTestDatasourcePostProcessor implements BeanPostProcessor {
                 traceTestDataSourceName = originalDataSourceName + StressConstants.DB_SUFFIX;
                 traceTestDataSource.setName(traceTestDataSourceName);
             }
-            log.info("original datasource: {} url: {}", originalDataSourceName, originalDataSource.getUrl());
-            log.info("trace test datasource: {} url: {}", traceTestDataSourceName, traceTestDataSource.getUrl());
+            log.info("original dataSource: {} url: {}", originalDataSourceName, originalDataSource.getUrl());
+            log.info("trace test dataSource: {} url: {}", traceTestDataSourceName, traceTestDataSource.getUrl());
             AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
                 ObjectName objectName = DruidDataSourceStatManager.addDataSource(traceTestDataSource, traceTestDataSource.getName());
                 traceTestDataSource.setObjectName(objectName);
                 return null;
             });
-            return new TraceTestDatasource(originalDataSource, traceTestDataSource);
+            return new TraceTestDataSource(originalDataSource, traceTestDataSource);
         }
         return bean;
     }

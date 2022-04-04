@@ -12,7 +12,7 @@ public class JdbcMetaInfoProvider extends AbstractMetaInfoProvider {
     @Override
     protected Map<String, Object> doGetMetaInfo(ApplicationStartedEvent event) {
         Map<String, Object> result = new HashMap<>();
-        Map<String, String> typeInfos = DatasourceTypeInfoRegistry.getInstance().getTypeInfos();
+        Map<String, String> typeInfos = DataSourceTypeInfoRegistry.getInstance().getTypeInfos();
         if (!CollectionUtils.isEmpty(typeInfos)) {
             result.put(JdbcConstants.JDBC_META, typeInfos);
         }

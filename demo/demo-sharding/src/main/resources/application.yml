@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: 5icodes-demo-sharding
+  datasource:
+    #基于文件
+    #jdbc:h2:~/test
+    #基于内存，所有存储在内存中的数据将会在你重新启动服务器的时候完全丢失
+    url: jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+    username: sa
+    #进行该配置后，每次启动程序，程序都会运行resources/schema.sql文件，对数据库的结构进行操作，相当于新建一个表
+    schema:
+      - classpath:schema.sql
+    #进行该配置后，每次启动程序，程序都会运行resources/data.sql文件，对数据库的数据操作，相当于往表中插入数据
+    data:
+      - classpath:data.sql
+  h2:
+    console:
+      #开启h2控制台
+      enabled: true
+      #设置h2控制台访问地址
+      path: /h2-console
+      settings:
+        #避免在系统控制台中输出trace级别的日志信息
+        trace: false
+        #禁止远程Web访问h2控制台
+        web-allow-others: false
+mybatis:
+  mapper-locations:
+    - classpath*:mappers/*.xml
+  configuration:
+    default-statement-timeout: 10000
+server:
+  port: 8005
+sharding:
+  test:
+    dbPrefix: test
+    dataSource:
+      master:
+        url: jdbc:h2:mem:test
+        driver-class-name: org.h2.Driver
+        username: sa
+    tableRules:
+      - logicTable: t_order
+        shardingColumn: order_id
+    props:
+      sql.show: true

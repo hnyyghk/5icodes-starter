@@ -11,15 +11,15 @@ import java.util.List;
 /**
  * 修复数据库监控对sharding无法生效的bug
  */
-public class DruidDatasourceFilterProcessor {
-    private static final DruidDatasourceFilterProcessor INSTANCE = new DruidDatasourceFilterProcessor();
+public class DruidDataSourceFilterProcessor {
+    private static final DruidDataSourceFilterProcessor INSTANCE = new DruidDataSourceFilterProcessor();
 
     private static final String STAT = "stat";
 
-    private DruidDatasourceFilterProcessor() {
+    private DruidDataSourceFilterProcessor() {
     }
 
-    public static DruidDatasourceFilterProcessor getInstance() {
+    public static DruidDataSourceFilterProcessor getInstance() {
         return INSTANCE;
     }
 

@@ -3,13 +3,13 @@ package com._5icodes.starter.jdbc.monitor;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DatasourceTypeInfoRegistry {
-    private static final DatasourceTypeInfoRegistry INSTANCE = new DatasourceTypeInfoRegistry();
+public class DataSourceTypeInfoRegistry {
+    private static final DataSourceTypeInfoRegistry INSTANCE = new DataSourceTypeInfoRegistry();
 
-    private DatasourceTypeInfoRegistry() {
+    private DataSourceTypeInfoRegistry() {
     }
 
-    public static DatasourceTypeInfoRegistry getInstance() {
+    public static DataSourceTypeInfoRegistry getInstance() {
         return INSTANCE;
     }
 

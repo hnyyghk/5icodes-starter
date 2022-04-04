@@ -1,0 +1,4 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.sharding.ShardingEnvInjector
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com._5icodes.starter.sharding.ShardingAutoConfiguration

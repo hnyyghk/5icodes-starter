@@ -11,23 +11,23 @@ import java.sql.SQLException;
 /**
  * @see org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource
  */
-public class TraceTestDatasource extends AbstractDataSource {
+public class TraceTestDataSource extends AbstractDataSource {
     private final DruidDataSource originalDataSource;
     private final DruidDataSource traceTestDataSource;
 
-    public TraceTestDatasource(DruidDataSource originalDataSource, DruidDataSource traceTestDataSource) {
+    public TraceTestDataSource(DruidDataSource originalDataSource, DruidDataSource traceTestDataSource) {
         this.originalDataSource = originalDataSource;
         this.traceTestDataSource = traceTestDataSource;
     }
 
     @Override
     public Connection getConnection() throws SQLException {
-        return determineTargetDatasource().getConnection();
+        return determineTargetDataSource().getConnection();
     }
 
     @Override
     public Connection getConnection(String username, String password) throws SQLException {
-        return determineTargetDatasource().getConnection(username, password);
+        return determineTargetDataSource().getConnection(username, password);
     }
 
     @Override
@@ -36,17 +36,17 @@ public class TraceTestDatasource extends AbstractDataSource {
         if (iface.isInstance(this)) {
             return (T) this;
         }
-        return determineTargetDatasource().unwrap(iface);
+        return determineTargetDataSource().unwrap(iface);
     }
 
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
-        return iface.isInstance(this) || determineTargetDatasource().isWrapperFor(iface);
+        return iface.isInstance(this) || determineTargetDataSource().isWrapperFor(iface);
     }
 
-    protected DataSource determineTargetDatasource() {
+    protected DataSource determineTargetDataSource() {
         if (TraceTestUtils.isTraceTest()) {
-            TraceTestUtils.info("this is trace test datasource: {}", traceTestDataSource.getName());
+            TraceTestUtils.info("this is trace test dataSource: {}", traceTestDataSource.getName());
             return traceTestDataSource;
         } else {
             return originalDataSource;

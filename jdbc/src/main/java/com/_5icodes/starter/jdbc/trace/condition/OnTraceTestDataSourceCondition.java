@@ -4,8 +4,8 @@ import com._5icodes.starter.common.condition.AbstractEnabledSpringBootCondition;
 import com._5icodes.starter.jdbc.JdbcConstants;
 import com._5icodes.starter.jdbc.JdbcProperties;
 
-public class OnTraceTestDatasourceCondition extends AbstractEnabledSpringBootCondition<JdbcProperties> {
-    public OnTraceTestDatasourceCondition() {
+public class OnTraceTestDataSourceCondition extends AbstractEnabledSpringBootCondition<JdbcProperties> {
+    public OnTraceTestDataSourceCondition() {
         super(JdbcConstants.PROPERTY_PREFIX, JdbcProperties.class, JdbcProperties::isTraceTestEnable);
     }
 }

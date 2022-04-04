@@ -3,27 +3,24 @@ package com._5icodes.starter.jdbc;
 import com._5icodes.starter.common.AbstractProfileEnvironmentPostProcessor;
 import com._5icodes.starter.common.utils.ClassUtils;
 import com._5icodes.starter.common.utils.PropertySourceUtils;
-import com._5icodes.starter.jdbc.utils.DatasourceTimezoneEditUtils;
+import com._5icodes.starter.jdbc.utils.DataSourceTimezoneEditUtils;
 import com._5icodes.starter.jdbc.utils.JdbcUrlResolveUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.ibatis.session.ResultContext;
 import org.objectweb.asm.Label;
-import org.objectweb.asm.Opcodes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.CollectionUtils;
-
-import java.util.Optional;
+import org.springframework.util.StringUtils;
 
 import static org.objectweb.asm.Opcodes.*;
 
 public class JdbcEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     @Override
     protected void onAllProfiles(ConfigurableEnvironment env, SpringApplication application) {
-        //datasource
+        //dataSource
         String name = "spring.datasource.druid.name";
         String validationQuery = "spring.datasource.druid.validation-query";
         String maxActive = "spring.datasource.druid.max-active";
@@ -63,20 +60,18 @@ public class JdbcEnvInjector extends AbstractProfileEnvironmentPostProcessor {
         //指定每个连接上PSCache的大小
         PropertySourceUtils.put(env, maxOpenPreparedStatements, 20);
 
-        String datasourceUrlKey = "spring.datasource.url";
-        String originUrl = env.getProperty(datasourceUrlKey);
-        if (originUrl != null) {
-            JdbcUrlResolveUtils.resolve(originUrl).ifPresent(pair -> {
-                if ("mysql".equals(pair.getLeft())) {
-                    String editedUrl = DatasourceTimezoneEditUtils.editUrl(originUrl);
-                    if (!editedUrl.equals(originUrl)) {
-                        PropertySourceUtils.putPriority(env, datasourceUrlKey, editedUrl);
-                    }
-                } else if ("oracle".equals(pair.getLeft())) {
-                    PropertySourceUtils.put(env, validationQuery, "SELECT 1 FROM DUAL");
+        String dataSourceUrlKey = "spring.datasource.url";
+        String originUrl = env.getProperty(dataSourceUrlKey);
+        JdbcUrlResolveUtils.resolve(originUrl).ifPresent(pair -> {
+            if ("mysql".equals(pair.getLeft())) {
+                String editedUrl = DataSourceTimezoneEditUtils.editUrl(originUrl);
+                if (StringUtils.hasText(editedUrl) && !editedUrl.equals(originUrl)) {
+                    PropertySourceUtils.putPriority(env, dataSourceUrlKey, editedUrl);
                 }
-            });
-        }
+            } else if ("oracle".equals(pair.getLeft())) {
+                PropertySourceUtils.put(env, validationQuery, "SELECT 1 FROM DUAL");
+            }
+        });
 
         //mybatis
         String defaultStatementTimeout = "mybatis.configuration.default-statement-timeout";
@@ -109,9 +104,9 @@ public class JdbcEnvInjector extends AbstractProfileEnvironmentPostProcessor {
      * @see com._5icodes.starter.jdbc.mybatis.DefaultResultHandler#handleResult(ResultContext)
      */
     private void changeMybatisResultHandler(int maxResultSet) {
-        String defaultResultHandlerClassName = "org.apache.ibatis.executor.result.DefaultResultHandler";
-        String asmClassName = defaultResultHandlerClassName.replaceAll("\\.", "/");
-        ClassUtils.changeMethod(defaultResultHandlerClassName,
+        String originClassName = "org.apache.ibatis.executor.result.DefaultResultHandler";
+        String asmClassName = originClassName.replaceAll("\\.", "/");
+        ClassUtils.changeMethod(originClassName,
                 "handleResult",
                 "(Lorg/apache/ibatis/session/ResultContext;)V",
                 methodVisitor -> {
@@ -139,7 +134,7 @@ public class JdbcEnvInjector extends AbstractProfileEnvironmentPostProcessor {
                     methodVisitor.visitMethodInsn(INVOKESPECIAL, "com/_5icodes/starter/jdbc/exception/ResultSetTooBigException", "<init>", "(Ljava/lang/String;)V", false);
                     methodVisitor.visitInsn(ATHROW);
                     methodVisitor.visitLabel(label2);
-                    methodVisitor.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+                    methodVisitor.visitFrame(F_SAME, 0, null, 0, null);
                     methodVisitor.visitInsn(RETURN);
                     Label label4 = new Label();
                     methodVisitor.visitLabel(label4);

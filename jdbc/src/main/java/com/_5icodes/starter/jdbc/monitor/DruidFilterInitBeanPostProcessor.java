@@ -20,7 +20,7 @@ public class DruidFilterInitBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof DruidDataSource) {
-            DruidDatasourceFilterProcessor.getInstance().addFilters((DruidDataSource) bean);
+            DruidDataSourceFilterProcessor.getInstance().addFilters((DruidDataSource) bean);
         }
         return bean;
     }

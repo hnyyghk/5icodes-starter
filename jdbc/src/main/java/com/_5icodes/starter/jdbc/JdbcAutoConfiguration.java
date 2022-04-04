@@ -5,8 +5,8 @@ import com._5icodes.starter.jdbc.monitor.DruidMetricCollector;
 import com._5icodes.starter.jdbc.monitor.DruidMetricReporter;
 import com._5icodes.starter.jdbc.monitor.JdbcMetaInfoProvider;
 import com._5icodes.starter.jdbc.monitor.condition.ConditionalOnDruidMonitor;
-import com._5icodes.starter.jdbc.trace.TraceTestDatasourcePostProcessor;
-import com._5icodes.starter.jdbc.trace.condition.ConditionalOnTraceTestDatasource;
+import com._5icodes.starter.jdbc.trace.TraceTestDataSourcePostProcessor;
+import com._5icodes.starter.jdbc.trace.condition.ConditionalOnTraceTestDataSource;
 import com._5icodes.starter.monitor.MonitorKafkaTemplate;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,11 +21,11 @@ public class JdbcAutoConfiguration {
     }
 
     @Configuration
-    @ConditionalOnTraceTestDatasource
-    public static class TraceTestDatasourceConfiguration {
+    @ConditionalOnTraceTestDataSource
+    public static class TraceTestDataSourceConfiguration {
         @Bean
-        public TraceTestDatasourcePostProcessor traceTestDatasourcePostProcessor(JdbcProperties jdbcProperties) {
-            return new TraceTestDatasourcePostProcessor(jdbcProperties);
+        public TraceTestDataSourcePostProcessor traceTestDataSourcePostProcessor(JdbcProperties jdbcProperties) {
+            return new TraceTestDataSourcePostProcessor(jdbcProperties);
         }
     }
 

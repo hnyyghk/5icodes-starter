@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Documented
-@Conditional(OnTraceTestDatasourceCondition.class)
-public @interface ConditionalOnTraceTestDatasource {
+@Conditional(OnTraceTestDataSourceCondition.class)
+public @interface ConditionalOnTraceTestDataSource {
 }

@@ -1,0 +1,1 @@
+create table t_order (id bigint not null, detail text default 'NONE', order_id varchar(255) not null, primary key (id));
