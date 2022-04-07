@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Import(ShardingDataSourceRegister.class)
 public @interface EnableShardingSource {
     /**
-     * 开始前缀标记
+     * sharding配置前缀，不包含每个数据库的名称配置
      */
     String prefix() default "";
 

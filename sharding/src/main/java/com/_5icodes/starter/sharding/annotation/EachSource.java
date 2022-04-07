@@ -15,17 +15,17 @@ import java.lang.annotation.*;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface EachSource {
     /**
-     * 库的前缀
+     * 当前数据库别名
      */
     String dbPrefix();
 
     /**
-     * 别名扫描的包(如果未配置，则mapper文件中无法使用别名)
+     * 别名扫描路径(如果未配置，则mapper文件中无法使用别名)
      */
     String typeAliasesPackage() default "";
 
     /**
-     * mapper文件路径(如果未配置，则mapper文件必须和mapper接口在同一个包下面)
+     * mapper文件存放的路径(如果未配置，则mapper文件必须和mapper接口在同一个包下面)
      */
     String[] mapperLocations() default {};
 

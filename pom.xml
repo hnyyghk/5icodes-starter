@@ -21,6 +21,7 @@
         <module>cache-stress</module>
         <module>common</module>
         <module>demo</module>
+        <module>drools</module>
         <module>jasypt</module>
         <module>sentinel</module>
         <module>monitor</module>
@@ -40,6 +41,7 @@
         <module>async</module>
         <module>jdbc</module>
         <module>sharding</module>
+        <module>log</module>
     </modules>
 
     <properties>
@@ -63,13 +65,54 @@
         <curator.version>2.13.0</curator.version>
         <druid.version>1.1.20</druid.version>
         <sharding-jdbc.version>2.0.0</sharding-jdbc.version>
+        <log.version>2.13.0</log.version>
         <powermock.version>2.0.0</powermock.version>
+        <kie.version>7.53.0.Final</kie.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jul</artifactId>
+            <version>${log.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -124,6 +167,12 @@
             <dependency>
                 <groupId>com.5icodes</groupId>
                 <artifactId>common</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
+                <artifactId>drools</artifactId>
                 <version>${starter.version}</version>
             </dependency>
 
@@ -255,8 +304,20 @@
 
             <dependency>
                 <groupId>com.5icodes</groupId>
+                <artifactId>log</artifactId>
+                <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.5icodes</groupId>
                 <artifactId>webflux</artifactId>
                 <version>${starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>kie-spring</artifactId>
+                <version>${kie.version}</version>
             </dependency>
 
             <dependency>

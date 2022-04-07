@@ -1,0 +1,6 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com._5icodes.starter.log.LogEnvInjector
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com._5icodes.starter.log.LogAutoConfiguration
+org.springframework.context.ApplicationListener=\
+  com._5icodes.starter.log.AddShutdownHookLogApplicationListener

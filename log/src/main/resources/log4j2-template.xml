@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration packages="com._5icodes.starter.log.converter">
+    <Properties>
+        <Property name="PID">????</Property>
+        <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
+        <Property name="LOG_LEVEL_PATTERN">%-5level</Property>
+        <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+    </Properties>
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <charset>UTF-8</charset>
+                <Pattern>${sys:CONSOLE_LOG_PATTERN}</Pattern>
+            </PatternLayout>
+        </Console>
+
+        <RollingRandomAccessFile name="RollingFile" fileName="${sys:LOG_FILE_NAME}" filePattern="${sys:LOG_FILE_PATTERN}">
+            <PatternLayout>
+                <charset>UTF-8</charset>
+                <Pattern>${sys:FILE_LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Filters>
+                <MdcKeyExistsFilter key="X-Full-Link-Pressure-Test" onMatch="DENY" onMismatch="ACCEPT"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1000 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="GrayRollingFile" fileName="${sys:TRACE_TEST_LOG_FILE_NAME}" filePattern="${sys:TRACE_TEST_LOG_FILE_PATTERN}">
+            <PatternLayout>
+                <charset>UTF-8</charset>
+                <Pattern>${sys:FILE_LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Filters>
+                <MdcKeyExistsFilter key="X-Full-Link-Pressure-Test" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1000 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+    </appenders>
+
+    <loggers>
+        <AsyncRoot level="info">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFile"/>
+            <appender-ref ref="GrayRollingFile"/>
+        </AsyncRoot>
+    </loggers>
+</Configuration>
