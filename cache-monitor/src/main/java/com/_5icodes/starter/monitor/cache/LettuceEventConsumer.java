@@ -4,6 +4,7 @@ import com._5icodes.starter.common.utils.HostNameUtils;
 import com._5icodes.starter.common.utils.JsonUtils;
 import com._5icodes.starter.common.utils.RegionUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
+import com._5icodes.starter.monitor.MonitorKafkaTemplate;
 import io.lettuce.core.event.Event;
 import io.lettuce.core.event.metrics.CommandLatencyEvent;
 import io.lettuce.core.metrics.CommandLatencyId;
@@ -18,9 +19,11 @@ import java.util.Map;
 @Slf4j
 public class LettuceEventConsumer implements InitializingBean {
     private final DefaultClientResources clientResources;
+    private final MonitorKafkaTemplate kafkaTemplate;
 
-    public LettuceEventConsumer(DefaultClientResources clientResources) {
+    public LettuceEventConsumer(DefaultClientResources clientResources, MonitorKafkaTemplate kafkaTemplate) {
         this.clientResources = clientResources;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -45,8 +48,7 @@ public class LettuceEventConsumer implements InitializingBean {
             reportMap.put("reportTime", System.currentTimeMillis());
             reportMap.put("ip", HostNameUtils.getHostAddress());
             reportMap.put("zone", RegionUtils.getZone());
-            //todo
-            log.info(JsonUtils.toJson(reportMap));
+            kafkaTemplate.send(CacheMonitorConstants.LETTUCE_MONITOR_TOPIC, JsonUtils.toJson(reportMap));
         });
     }
 }

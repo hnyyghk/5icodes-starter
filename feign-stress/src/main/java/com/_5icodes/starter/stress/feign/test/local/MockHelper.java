@@ -1,5 +1,6 @@
 package com._5icodes.starter.stress.feign.test.local;
 
+import cn.hutool.cache.impl.LRUCache;
 import com._5icodes.starter.stress.utils.TraceTestUtils;
 import feign.Request;
 import feign.Response;
@@ -27,9 +28,8 @@ public class MockHelper {
     private final long TIMEOUT = 1000 * 55;
     /**
      * 缓存map
-     * todo LRUCache
      */
-    private final Map<String, Response> CACHE = new HashMap<>();
+    private final static LRUCache<String, Response> CACHE = new LRUCache<>(1000, TIMEOUT);
     /**
      * key max = 10K
      */

@@ -4,6 +4,8 @@ import com._5icodes.starter.common.infrastructure.AbstractSmartLifecycle;
 import com._5icodes.starter.common.utils.JsonUtils;
 import com._5icodes.starter.common.utils.RegionUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
+import com._5icodes.starter.monitor.MonitorKafkaTemplate;
+import com._5icodes.starter.monitor.cache.CacheMonitorConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
@@ -14,10 +16,15 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-//todo
 public class CacheMetricReporter extends AbstractSmartLifecycle implements Runnable {
     private static final ScheduledExecutorService SCHEDULER = new ScheduledThreadPoolExecutor(1,
             new BasicThreadFactory.Builder().namingPattern("redis-metric-report-%d").daemon(true).build());
+
+    private final MonitorKafkaTemplate kafkaTemplate;
+
+    public CacheMetricReporter(MonitorKafkaTemplate kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     @Override
     public void doStart() {
@@ -45,8 +52,7 @@ public class CacheMetricReporter extends AbstractSmartLifecycle implements Runna
                 map.put("reportTime", entry.getKey());
                 map.put("app", SpringApplicationUtils.getApplicationName());
                 map.put("zone", RegionUtils.getZone());
-                //todo
-                log.info(JsonUtils.toJson(map));
+                kafkaTemplate.send(CacheMonitorConstants.CACHE_MONITOR_TOPIC, JsonUtils.toJson(map));
             }
         }
     }

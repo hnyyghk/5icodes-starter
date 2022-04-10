@@ -1,6 +1,7 @@
 package com._5icodes.starter.webmvc.common;
 
-import com._5icodes.starter.common.infrastructure.BootApplicationListener;
+import com._5icodes.starter.monitor.meta.AbstractMetaInfoProvider;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.BeanFactoryUtils;
@@ -18,8 +19,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 @Slf4j
-//todo
-public class RequestMappingRegister implements BootApplicationListener<ApplicationStartedEvent> {
+public class RequestMappingRegister extends AbstractMetaInfoProvider {
     private final Map<Method, String> keyMap = new HashMap<>();
     private final List<String> interfaces = new ArrayList<>();
 
@@ -56,6 +56,14 @@ public class RequestMappingRegister implements BootApplicationListener<Applicati
                 }
             });
         });
+        super.doOnApplicationEvent(event);
+    }
+
+    @Override
+    protected Map<String, Object> doGetMetaInfo(ApplicationStartedEvent event) {
+        Map<String, Object> result = Maps.newHashMapWithExpectedSize(1);
+        result.put("interfaces", interfaces);
+        return result;
     }
 
     private boolean shouldApplySentinel(String path) {

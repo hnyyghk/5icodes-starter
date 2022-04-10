@@ -1,5 +1,6 @@
 package com._5icodes.starter.sentinel;
 
+import com._5icodes.starter.monitor.MonitorKafkaTemplate;
 import com._5icodes.starter.sentinel.monitor.AbstractSentinelMetricSender;
 import com._5icodes.starter.sentinel.monitor.KafkaSentinelMetricSender;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -15,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class SentinelAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
-	public AbstractSentinelMetricSender metricTimerListener() {
-		return new KafkaSentinelMetricSender();
+	public AbstractSentinelMetricSender metricTimerListener(MonitorKafkaTemplate kafkaTemplate) {
+		return new KafkaSentinelMetricSender(kafkaTemplate);
 	}
 }

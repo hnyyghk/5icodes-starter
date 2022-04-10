@@ -1,5 +1,6 @@
 package com._5icodes.starter.monitor.cache;
 
+import com._5icodes.starter.monitor.MonitorKafkaTemplate;
 import com._5icodes.starter.monitor.cache.monitor.CacheMetricReporter;
 import com._5icodes.starter.monitor.cache.serializer.RedisTemplateSerializerWrapper;
 import io.lettuce.core.event.DefaultEventPublisherOptions;
@@ -17,8 +18,8 @@ public class CacheMonitorAutoConfiguration {
     }
 
     @Bean
-    public CacheMetricReporter cacheMetricReporter() {
-        return new CacheMetricReporter();
+    public CacheMetricReporter cacheMetricReporter(MonitorKafkaTemplate kafkaTemplate) {
+        return new CacheMetricReporter(kafkaTemplate);
     }
 
     @Bean
@@ -33,7 +34,7 @@ public class CacheMonitorAutoConfiguration {
     }
 
     @Bean
-    public LettuceEventConsumer lettuceEventConsumer(DefaultClientResources clientResources) {
-        return new LettuceEventConsumer(clientResources);
+    public LettuceEventConsumer lettuceEventConsumer(DefaultClientResources clientResources, MonitorKafkaTemplate kafkaTemplate) {
+        return new LettuceEventConsumer(clientResources, kafkaTemplate);
     }
 }

@@ -1,5 +1,6 @@
 package com._5icodes.starter.web;
 
+import com._5icodes.starter.monitor.MonitorKafkaTemplate;
 import com._5icodes.starter.web.condition.ConditionalOnAccessLog;
 import com._5icodes.starter.web.condition.ConditionalOnInternalServer;
 import com._5icodes.starter.web.internal.*;
@@ -20,8 +21,8 @@ import java.util.List;
 public class WebAutoConfiguration {
     @Bean
     @ConditionalOnAccessLog
-    public AccessLogSender accessLogSender(WebProperties properties) {
-        return new KafkaAccessLogSender(properties.getAccessLogTopic());
+    public AccessLogSender accessLogSender(WebProperties properties, MonitorKafkaTemplate kafkaTemplate) {
+        return new KafkaAccessLogSender(properties.getAccessLogTopic(), kafkaTemplate);
     }
 
     @Configuration

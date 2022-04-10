@@ -18,6 +18,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>monitor</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
             <exclusions>
