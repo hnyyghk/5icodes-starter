@@ -1,0 +1,23 @@
+package rules;//同一个包下的drl文件可以相互访问
+
+import com._5icodes.starter.demo.drools.Sale;
+
+rule "DiscountForCarSale"
+	when
+	    //工作内存中必须存在Sale这种类型的Fact对象-----类型约束
+	    //Fact对象的quantity属性值必须大于等于5,item属性值必须等于Car-----属性约束
+		thisSale : Sale (quantity >= 5 , item == "Car");
+//		$sale : Sale (quantity >= 5 , item == "Car");
+	then
+		thisSale.setDiscount(10);
+//		$sale.setDiscount(10);
+		System.out.println("触发了规则:DiscountForCarSale,折扣比例10");
+end;
+
+rule "DiscountForBikeSale"
+	when
+		thisSale : Sale (quantity >= 10 , item == "Bike");
+	then
+		thisSale.setDiscount(15);
+		System.out.println("触发了规则:DiscountForBikeSale,折扣比例15");
+end;
