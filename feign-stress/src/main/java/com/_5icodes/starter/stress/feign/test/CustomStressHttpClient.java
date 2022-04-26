@@ -6,7 +6,6 @@ import com._5icodes.starter.stress.feign.test.remote.MockUtil;
 import feign.Client;
 import feign.Request;
 import feign.Response;
-import org.apache.http.client.methods.RequestBuilder;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,8 +20,7 @@ public class CustomStressHttpClient implements Client {
     @Override
     public Response execute(Request request, Request.Options options) throws IOException {
         if (MockUtil.isMockApi(URI.create(request.url()).getPath())) {
-            RequestBuilder requestBuilder = customHttpClient.toHttpUriRequest(request, options);
-            return MockHelper.handle(request, requestBuilder);
+            return MockHelper.handle(request);
         }
         return customHttpClient.execute(request, options);
     }

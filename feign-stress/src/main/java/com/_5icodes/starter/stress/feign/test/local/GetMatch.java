@@ -1,8 +1,8 @@
 package com._5icodes.starter.stress.feign.test.local;
 
 import com._5icodes.starter.stress.utils.TraceTestUtils;
+import feign.Request;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.methods.RequestBuilder;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import java.util.List;
  * method: GET 实现匹配逻辑
  */
 public class GetMatch extends MockMatch {
-    public GetMatch(RequestBuilder requestBuilder) {
-        super(requestBuilder);
+    public GetMatch(Request request) {
+        super(request);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class GetMatch extends MockMatch {
     }
 
     @Override
-    public void parseFeignArgs(RequestBuilder requestBuilder) {
-        String query = requestBuilder.getUri().getQuery();
+    public void parseFeignArgs() {
+        String query = getRequest().requestTemplate().queryLine();
         getFeignArgs().addAll(ArgsParse.parseQueryArgs(query));
         TraceTestUtils.info("feign.args: {}", getFeignArgs());
     }

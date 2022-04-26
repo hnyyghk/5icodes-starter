@@ -5,7 +5,8 @@ public interface FeignStressConstants {
     /**
      * mock prefix
      */
-    String MOCK_PREFIX = "mock";
+    String PROPERTY_PREFIX = "mock";
+    String NOT_SUPPORT_PREFIX = FeignStressConstants.PROPERTY_PREFIX + ".not.support";
     /**
      * name
      */

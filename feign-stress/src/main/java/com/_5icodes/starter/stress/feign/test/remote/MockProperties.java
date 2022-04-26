@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;
 
 @Data
-@ConfigurationProperties(prefix = FeignStressConstants.MOCK_PREFIX)
+@ConfigurationProperties(prefix = FeignStressConstants.PROPERTY_PREFIX)
 public class MockProperties {
     /**
      * 是否启用mock开关

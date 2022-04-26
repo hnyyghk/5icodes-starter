@@ -2,16 +2,13 @@ package com._5icodes.starter.stress.feign.test.local;
 
 import com._5icodes.starter.common.utils.JsonUtils;
 import com._5icodes.starter.stress.feign.FeignStressConstants;
+import com._5icodes.starter.web.WebConstants;
+import feign.Request;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.http.Header;
-import org.apache.http.client.methods.RequestBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @UtilityClass
 public class ArgsParse {
@@ -70,14 +67,17 @@ public class ArgsParse {
         return list;
     }
 
-    public List<String> parseHeader(RequestBuilder requestBuilder) {
+    public List<String> parseHeader(Request request) {
         List<String> list = new ArrayList<>();
-        for (Header header : requestBuilder.build().getAllHeaders()) {
-            if (filterTraceHeaderType(header.getName())) {
+        for (Map.Entry<String, Collection<String>> header : request.headers().entrySet()) {
+            String headerName = header.getKey().toUpperCase();
+            if (filterTraceHeaderType(headerName)) {
                 continue;
             }
-            String value = String.format(TEMPLATE_KEY, header.getName().toUpperCase(), header.getValue());
-            list.add(value);
+            for (String headerValue : header.getValue()) {
+                String value = String.format(TEMPLATE_KEY, headerName, headerValue);
+                list.add(value);
+            }
         }
         return list;
     }
@@ -85,10 +85,10 @@ public class ArgsParse {
     /**
      * 过滤请求头类型
      *
-     * @param name
+     * @param headerName
      * @return
      */
-    private boolean filterTraceHeaderType(String name) {
-        return TRACE_HEADER_LIST.contains(name.toUpperCase());
+    private boolean filterTraceHeaderType(String headerName) {
+        return TRACE_HEADER_LIST.contains(headerName);
     }
 }

@@ -3,8 +3,10 @@ package com._5icodes.starter.stress.feign.test.local;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
 import com._5icodes.starter.stress.feign.test.remote.MockUtil;
 import com._5icodes.starter.stress.utils.TraceTestUtils;
+import feign.Request;
 import lombok.Data;
-import org.apache.http.client.methods.RequestBuilder;
+import lombok.SneakyThrows;
+import org.apache.http.client.utils.URIBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +31,10 @@ public abstract class MockMatch {
     /**
      * 请求参数
      */
-    private final RequestBuilder requestBuilder;
+    private final Request request;
 
-    public MockMatch(RequestBuilder requestBuilder) {
-        this.requestBuilder = requestBuilder;
+    public MockMatch(Request request) {
+        this.request = request;
         init();
     }
 
@@ -41,7 +43,7 @@ public abstract class MockMatch {
      */
     private void init() {
         parseMockDataList();
-        parseFeignArgs(requestBuilder);
+        parseFeignArgs();
         parseFeignHeaders();
     }
 
@@ -51,7 +53,7 @@ public abstract class MockMatch {
      * @return 匹配的结果集
      */
     public MockData match() {
-        return getMockApiList().stream()
+        return mockApiList.stream()
                 .filter(this::contains)
                 .findFirst()
                 .orElseThrow(() -> new MockNotSupportException(getMockNotSupportMessage()));
@@ -101,22 +103,21 @@ public abstract class MockMatch {
     /**
      * 获取远程mock api list
      */
+    @SneakyThrows
     public void parseMockDataList() {
-        mockApiList.addAll(MockClient.list(SpringApplicationUtils.getApplicationName(), MockUtil.get(), requestBuilder.getUri().getPath()));
+        mockApiList.addAll(MockClient.list(SpringApplicationUtils.getApplicationName(), MockUtil.get(), new URIBuilder(request.url()).build().getPath()));
     }
 
     /**
      * 获取解析请求参数
-     *
-     * @param requestBuilder 请求参数
      */
-    public abstract void parseFeignArgs(RequestBuilder requestBuilder);
+    public abstract void parseFeignArgs();
 
     /**
      * 解析feign请求头
      */
     public void parseFeignHeaders() {
-        feignHeaders.addAll(ArgsParse.parseHeader(requestBuilder));
+        feignHeaders.addAll(ArgsParse.parseHeader(request));
         TraceTestUtils.info("feign.header: {}", feignHeaders);
     }
 
@@ -125,8 +126,9 @@ public abstract class MockMatch {
      *
      * @return java.lang.String
      */
+    @SneakyThrows
     public String getMockNotSupportMessage() {
-        String path = requestBuilder.getUri().getPath();
+        String path = new URIBuilder(request.url()).build().getPath();
         return String.format("not support feign: %s, path: %s, args: %s, headers: %s, match api size: %s",
                 MockUtil.get(), path, feignArgs, feignHeaders, mockApiList.size());
     }

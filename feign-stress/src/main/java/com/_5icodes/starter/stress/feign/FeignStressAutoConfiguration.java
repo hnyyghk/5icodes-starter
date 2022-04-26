@@ -2,6 +2,8 @@ package com._5icodes.starter.stress.feign;
 
 import com._5icodes.starter.feign.client.CustomHttpClient;
 import com._5icodes.starter.stress.feign.test.CustomStressHttpClient;
+import com._5icodes.starter.stress.feign.test.local.MockNotSupportProperties;
+import com._5icodes.starter.stress.feign.test.local.MockSao;
 import com._5icodes.starter.stress.feign.test.remote.MockFeignAspect;
 import com._5icodes.starter.stress.feign.test.remote.MockProperties;
 import com._5icodes.starter.stress.feign.test.remote.MockServerStartListener;
@@ -20,8 +22,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @AutoConfigureBefore(com._5icodes.starter.feign.FeignAutoConfiguration.class)
-@EnableConfigurationProperties(MockProperties.class)
-@EnableFeignClients(basePackages = "com._5icodes.starter.stress.feign.test.local")
+@EnableConfigurationProperties({MockProperties.class, MockNotSupportProperties.class})
+@EnableFeignClients(clients = MockSao.class)
 public class FeignStressAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean

@@ -23,10 +23,6 @@ public class MockUtil {
      * feign local
      */
     private final ThreadLocal<String> FEIGN_LOCAL = new ThreadLocal<>();
-    /**
-     * 单例获取mockSao
-     */
-    private final MockSao MOCK_SAO = SpringUtils.getBean(MockSao.class);
 
     public String get() {
         return FEIGN_LOCAL.get();
@@ -89,7 +85,7 @@ public class MockUtil {
         }
         Map<String, String> request = new HashMap<>();
         request.put("active", SpringApplicationUtils.getApplicationName());
-        Map<String, String> data = MOCK_SAO.queryMockListByCall(request);
+        Map<String, String> data = SpringUtils.getBean(MockSao.class).queryMockListByCall(request);
         String responseData = "data";
         List<MockData> list = new ArrayList<>();
         if (data.containsKey(responseData)) {

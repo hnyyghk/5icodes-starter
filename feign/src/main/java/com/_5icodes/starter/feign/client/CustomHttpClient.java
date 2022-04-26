@@ -1,15 +1,31 @@
+/**
+ * Copyright 2012-2020 The Feign Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com._5icodes.starter.feign.client;
 
 import com._5icodes.starter.feign.custom.FeignRequestOptionsContext;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.Configurable;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -20,9 +36,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import feign.Client;
 import feign.Request;
@@ -51,27 +70,44 @@ public class CustomHttpClient implements Client {
   @Override
   public Response execute(Request request, Request.Options options) throws IOException {
     HttpUriRequest httpUriRequest;
-    httpUriRequest = toHttpUriRequest(request, options).build();
+    try {
+      httpUriRequest = toHttpUriRequest(request, options);
+    } catch (URISyntaxException e) {
+      throw new IOException("URL '" + request.url() + "' couldn't be parsed into a URI", e);
+    }
     HttpResponse httpResponse = client.execute(httpUriRequest);
     return toFeignResponse(httpResponse, request);
   }
 
-  public RequestBuilder toHttpUriRequest(Request request, Request.Options options) {
+  HttpUriRequest toHttpUriRequest(Request request, Request.Options options)
+      throws URISyntaxException {
     RequestBuilder requestBuilder = RequestBuilder.create(request.httpMethod().name());
     //custom feign timeout
     //todo overrideOptions null
     Request.Options overrideOptions = FeignRequestOptionsContext.get();
+    if (overrideOptions != null) {
+      options = overrideOptions;
+    }
 
     // per request timeouts
     RequestConfig requestConfig =
         (client instanceof Configurable ? RequestConfig.copy(((Configurable) client).getConfig())
             : RequestConfig.custom())
-                .setConnectTimeout(overrideOptions.connectTimeoutMillis())
-                .setSocketTimeout(overrideOptions.readTimeoutMillis())
+                .setConnectTimeout(options.connectTimeoutMillis())
+                .setSocketTimeout(options.readTimeoutMillis())
                 .build();
     requestBuilder.setConfig(requestConfig);
 
-    requestBuilder.setUri(request.url());
+    URI uri = new URIBuilder(request.url()).build();
+
+    requestBuilder.setUri(uri.getScheme() + "://" + uri.getAuthority() + uri.getRawPath());
+
+    // request query params
+    List<NameValuePair> queryParams =
+        URLEncodedUtils.parse(uri, requestBuilder.getCharset());
+    for (NameValuePair queryParam : queryParams) {
+      requestBuilder.addParameter(queryParam);
+    }
 
     // request headers
     boolean hasAcceptHeader = false;
@@ -112,11 +148,11 @@ public class CustomHttpClient implements Client {
       requestBuilder.setEntity(new ByteArrayEntity(new byte[0]));
     }
 
-    return requestBuilder;
+    return requestBuilder.build();
   }
 
   private ContentType getContentType(Request request) {
-    ContentType contentType = ContentType.DEFAULT_TEXT;
+    ContentType contentType = null;
     for (Map.Entry<String, Collection<String>> entry : request.headers().entrySet())
       if (entry.getKey().equalsIgnoreCase("Content-Type")) {
         Collection<String> values = entry.getValue();
@@ -183,6 +219,7 @@ public class CustomHttpClient implements Client {
         return entity.getContent();
       }
 
+      @SuppressWarnings("deprecation")
       @Override
       public Reader asReader() throws IOException {
         return new InputStreamReader(asInputStream(), UTF_8);

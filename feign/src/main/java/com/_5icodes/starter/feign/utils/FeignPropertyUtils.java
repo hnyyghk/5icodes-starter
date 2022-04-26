@@ -3,6 +3,7 @@ package com._5icodes.starter.feign.utils;
 import com._5icodes.starter.common.utils.PropertySourceUtils;
 import com._5icodes.starter.feign.custom.FeignClientCustom;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.StringUtils;
 
@@ -16,42 +17,62 @@ public class FeignPropertyUtils {
     private static final Map<Class<?>, List<Holder<?>>> REGISTRY = new HashMap<>();
 
     static {
-        add(FeignClientCustom::ReadTimeout, s -> StringUtils.isEmpty(s) ? "ribbon.ReadTimeout" : s + ".ribbon.ReadTimeout", FeignClientCustom.class);
-        add(FeignClientCustom::ConnectTimeout, s -> StringUtils.isEmpty(s) ? "ribbon.ConnectTimeout" : s + ".ribbon.ConnectTimeout", FeignClientCustom.class);
-        add(FeignClientCustom::MaxAutoRetries, s -> StringUtils.isEmpty(s) ? "ribbon.MaxAutoRetries" : s + ".ribbon.MaxAutoRetries", FeignClientCustom.class);
-        add(FeignClientCustom::MaxAutoRetriesNextServer, s -> StringUtils.isEmpty(s) ? "ribbon.MaxAutoRetriesNextServer" : s + ".ribbon.MaxAutoRetriesNextServer", FeignClientCustom.class);
-        add(FeignClientCustom::OkToRetryOnAllOperations, s -> StringUtils.isEmpty(s) ? "ribbon.OkToRetryOnAllOperations" : s + ".ribbon.OkToRetryOnAllOperations", FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "loggerLevel"), FeignClientCustom::loggerLevel, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "connectTimeout"), FeignClientCustom::connectTimeout, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "readTimeout"), FeignClientCustom::readTimeout, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "retryer"), FeignClientCustom::retryer, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "errorDecoder"), FeignClientCustom::errorDecoder, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "requestInterceptors"), FeignClientCustom::requestInterceptors, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "defaultRequestHeaders"), FeignClientCustom::defaultRequestHeaders, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "defaultQueryParameters"), FeignClientCustom::defaultQueryParameters, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "decode404"), FeignClientCustom::decode404, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "decoder"), FeignClientCustom::decoder, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "encoder"), FeignClientCustom::encoder, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "contract"), FeignClientCustom::contract, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "exceptionPropagationPolicy"), FeignClientCustom::exceptionPropagationPolicy, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "capabilities"), FeignClientCustom::capabilities, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "metrics"), FeignClientCustom::metrics, FeignClientCustom.class);
+        add(contextId -> parseFeignContextId(contextId, "followRedirects"), FeignClientCustom::followRedirects, FeignClientCustom.class);
 
-        add(FeignClientCustom::loggerLevel, s -> StringUtils.isEmpty(s) ? "feign.client.config.default.loggerLevel" : "feign.client.config." + s + ".loggerLevel", FeignClientCustom.class);
-        add(FeignClientCustom::errorDecoder, s -> StringUtils.isEmpty(s) ? "feign.client.config.default.errorDecoder" : "feign.client.config." + s + ".errorDecoder", FeignClientCustom.class);
-        add(FeignClientCustom::requestInterceptors, s -> StringUtils.isEmpty(s) ? "feign.client.config.default.requestInterceptors" : "feign.client.config." + s + ".requestInterceptors", FeignClientCustom.class);
-        add(FeignClientCustom::decode404, s -> StringUtils.isEmpty(s) ? "feign.client.config.default.decode404" : "feign.client.config." + s + ".decode404", FeignClientCustom.class);
-        add(FeignClientCustom::encoder, s -> StringUtils.isEmpty(s) ? "feign.client.config.default.encoder" : "feign.client.config." + s + ".encoder", FeignClientCustom.class);
-        add(FeignClientCustom::decoder, s -> StringUtils.isEmpty(s) ? "feign.client.config.default.decoder" : "feign.client.config." + s + ".decoder", FeignClientCustom.class);
-        add(FeignClientCustom::contract, s -> StringUtils.isEmpty(s) ? "feign.client.config.default.contract" : "feign.client.config." + s + ".contract", FeignClientCustom.class);
+        add(contextId -> parseLoadBalancerContextId(contextId, "retry.retryOnAllOperations"), FeignClientCustom::retryOnAllOperations, FeignClientCustom.class);
+        add(contextId -> parseLoadBalancerContextId(contextId, "retry.maxRetriesOnSameServiceInstance"), FeignClientCustom::maxRetriesOnSameServiceInstance, FeignClientCustom.class);
+        add(contextId -> parseLoadBalancerContextId(contextId, "retry.maxRetriesOnNextServiceInstance"), FeignClientCustom::maxRetriesOnNextServiceInstance, FeignClientCustom.class);
+    }
+
+    private static String parseFeignContextId(String contextId, String propertiesKey) {
+        //feign.client.config.contextId.propertiesKey
+        //feign.client.config.default.propertiesKey
+        return "feign.client.config." + (StringUtils.hasText(contextId) ? contextId : "default") + "." + propertiesKey;
+    }
+
+    private static String parseLoadBalancerContextId(String contextId, String propertiesKey) {
+        //spring.cloud.loadbalancer.contextId.propertiesKey
+        //spring.cloud.loadbalancer.propertiesKey
+        return "spring.cloud.loadbalancer." + (StringUtils.hasText(contextId) ? contextId + "." : "") + propertiesKey;
     }
 
     public static <T> void process(T t, ConfigurableEnvironment environment, String commandKey, Class<T> tClass) {
         List<Holder<?>> holders = REGISTRY.get(tClass);
-        for (Holder holder : holders) {
-            Function<String, String> keyFunc = holder.keyFunc;
-            Function<T, String> valFunc = holder.valFunc;
+        for (Holder<?> holder : holders) {
+            Function<String, String> keyFunc = holder.getKeyFunc();
+            Function<T, String> valFunc = (Function<T, String>) holder.getValFunc();
             String key = keyFunc.apply(commandKey);
             String val = valFunc.apply(t);
-            if (StringUtils.hasLength(val)) {
+            if (StringUtils.hasText(val)) {
                 PropertySourceUtils.put(environment, key, val);
             }
         }
     }
 
-    private static <T> void add(Function<T, String> valFunc, Function<String, String> keyFunc, Class<T> tClass) {
+    private static <T> void add(Function<String, String> keyFunc, Function<T, String> valFunc, Class<T> tClass) {
         List<Holder<?>> holders = REGISTRY.computeIfAbsent(tClass, k -> new LinkedList<>());
-        holders.add(new Holder<>(valFunc, keyFunc));
+        holders.add(new Holder<>(keyFunc, valFunc));
     }
 
     @AllArgsConstructor
+    @Getter
     private static class Holder<T> {
-        private Function<T, String> valFunc;
         private Function<String, String> keyFunc;
+        private Function<T, String> valFunc;
     }
 }

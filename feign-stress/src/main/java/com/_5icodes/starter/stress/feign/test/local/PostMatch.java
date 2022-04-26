@@ -1,7 +1,7 @@
 package com._5icodes.starter.stress.feign.test.local;
 
 import com._5icodes.starter.stress.utils.TraceTestUtils;
-import org.apache.http.client.methods.RequestBuilder;
+import feign.Request;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import java.util.List;
  * method: POST 实现匹配逻辑
  */
 public abstract class PostMatch extends MockMatch {
-    public PostMatch(RequestBuilder requestBuilder) {
-        super(requestBuilder);
+    public PostMatch(Request request) {
+        super(request);
     }
 
     @Override

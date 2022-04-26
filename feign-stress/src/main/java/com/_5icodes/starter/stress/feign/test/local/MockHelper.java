@@ -7,8 +7,6 @@ import feign.Response;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.Header;
-import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ContentType;
 import org.springframework.util.ObjectUtils;
 
@@ -38,24 +36,24 @@ public class MockHelper {
     /**
      * 根据请求获取处理类实例
      *
-     * @param requestBuilder 请求
+     * @param request 请求
      * @return com._5icodes.starter.stress.feign.test.local.MockMatch
      */
-    private MockMatch getInstance(RequestBuilder requestBuilder) {
-        String method = requestBuilder.getMethod();
+    private MockMatch getInstance(Request request) {
+        String method = request.httpMethod().name();
         boolean support = StringUtils.containsAny(method, Request.HttpMethod.POST.name(), Request.HttpMethod.GET.name());
         if (!support) {
             throw new MockNotSupportException(String.format("request method %s not support", method));
         }
         if (Request.HttpMethod.GET.name().equalsIgnoreCase(method)) {
-            return new GetMatch(requestBuilder);
+            return new GetMatch(request);
         }
-        String contentType = getContentType(requestBuilder);
+        String contentType = getContentType(request);
         if (Request.HttpMethod.POST.name().equalsIgnoreCase(method) && contentType.contains(ContentType.APPLICATION_JSON.getMimeType())) {
-            return new PostJsonMatch(requestBuilder);
+            return new PostJsonMatch(request);
         }
         if (Request.HttpMethod.POST.name().equalsIgnoreCase(method) && contentType.contains(ContentType.APPLICATION_FORM_URLENCODED.getMimeType())) {
-            return new PostEncoderMatch(requestBuilder);
+            return new PostEncoderMatch(request);
         }
         throw new MockNotSupportException(String.format("request method %s Content-Type %s not support", method, contentType));
     }
@@ -63,24 +61,23 @@ public class MockHelper {
     /**
      * 获取请求头Content-Type
      *
-     * @param requestBuilder 请求
+     * @param request 请求
      * @return java.lang.String
      */
-    private String getContentType(RequestBuilder requestBuilder) {
-        Header[] headers = requestBuilder.getHeaders("Content-Type");
-        Optional<Header> optional = Arrays.stream(headers).findAny();
-        return optional.isPresent() ? optional.get().getValue() : "";
+    private String getContentType(Request request) {
+        Collection<String> headers = request.headers().get("Content-Type");
+        Optional<String> optional = headers.stream().findAny();
+        return optional.orElse("");
     }
 
     /**
      * 获取mock挡板请求体
      *
-     * @param request
-     * @param requestBuilder 请求
+     * @param request 请求
      * @return feign.Response
      */
-    public Response handle(Request request, RequestBuilder requestBuilder) {
-        MockMatch mockMatch = getInstance(requestBuilder);
+    public Response handle(Request request) {
+        MockMatch mockMatch = getInstance(request);
         String key = cacheKey(request, mockMatch);
         if (CACHE.containsKey(key)) {
             TraceTestUtils.info("mock is success by cache {}", key);
