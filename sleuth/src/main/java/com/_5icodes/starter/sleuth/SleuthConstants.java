@@ -4,5 +4,5 @@ public interface SleuthConstants {
     String MODULE_NAME = "sleuth";
     String REQ_IP = "REQ_IP";
     String X_USER_INFO = "X-USER-INFO";
-    String APP_GROUP = "app-group";
+    String CLIENT_IP = "CLIENT-IP";
 }

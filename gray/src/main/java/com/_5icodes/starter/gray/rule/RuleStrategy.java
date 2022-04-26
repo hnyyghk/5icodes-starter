@@ -16,8 +16,11 @@ public interface RuleStrategy {
      */
     default ServiceInstance choose(List<ServiceInstance> candidates) {
         //优先匹配灰度请求，其次再分组请求筛选
-        candidates = SleuthStrategyContext.get() ? candidates : ServerChooseUtils.chooseServer(candidates);
-        SleuthStrategyContext.remove();
+        if (SleuthStrategyContext.get()) {
+            SleuthStrategyContext.remove();
+        } else {
+            candidates = ServerChooseUtils.chooseServer(candidates);
+        }
         return ServerUtils.randomChoose(candidates);
     }
 }

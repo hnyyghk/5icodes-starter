@@ -133,8 +133,10 @@ public class GrayAutoConfiguration {
     }
 
     @Bean
-    public SimpleWeightRuleStrategyFactory simpleWeightRuleStrategyFactory(ServerWeightLoadBalanceJsonParser serverWeightLoadBalanceJsonParser) {
-        return new SimpleWeightRuleStrategyFactory(serverWeightLoadBalanceJsonParser);
+    public SimpleWeightRuleStrategyFactory simpleWeightRuleStrategyFactory(ServerWeightLoadBalanceJsonParser serverWeightLoadBalanceJsonParser,
+                                                                           RequestPredicateJsonParser requestPredicateJsonParser,
+                                                                           ServerPredicateJsonParser serverPredicateJsonParser) {
+        return new SimpleWeightRuleStrategyFactory(serverWeightLoadBalanceJsonParser, requestPredicateJsonParser, serverPredicateJsonParser);
     }
 
     @Bean

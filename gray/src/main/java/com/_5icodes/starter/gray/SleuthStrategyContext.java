@@ -5,13 +5,14 @@ import org.springframework.core.NamedThreadLocal;
 public class SleuthStrategyContext {
     private static final ThreadLocal<Boolean> THREAD_LOCAL = new NamedThreadLocal<>("sleuthStrategyContext");
 
-    public static void set(Boolean value) {
-        THREAD_LOCAL.set(value);
+    public static void set(boolean value) {
+        if (value) {
+            THREAD_LOCAL.set(Boolean.TRUE);
+        }
     }
 
-    public static Boolean get() {
-        Boolean value = THREAD_LOCAL.get();
-        return value == null ? Boolean.FALSE : value;
+    public static boolean get() {
+        return THREAD_LOCAL.get() == null ? Boolean.FALSE : Boolean.TRUE;
     }
 
     public static void remove() {

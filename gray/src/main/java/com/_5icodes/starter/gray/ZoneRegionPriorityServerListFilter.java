@@ -40,12 +40,12 @@ public class ZoneRegionPriorityServerListFilter extends ZonePreferenceServiceIns
         String zone = metaProvider.getZone();
         String region = metaProvider.getRegion();
         for (ServiceInstance server : output) {
-            Set<String> valueList = ServerUtils.get(server, ServerMetaEnum.ZONE.getName());
+            Set<String> valueList = ServerUtils.get(server, ServerMetaEnum.ZONE.getMetaName());
             String serverZone;
             if (valueList.isEmpty()) {
                 //EurekaClientConfigBean.DEFAULT_ZONE
                 serverZone = "defaultZone";
-                ServerUtils.set(server, ServerMetaEnum.ZONE.getName(), serverZone);
+                ServerUtils.set(server, ServerMetaEnum.ZONE.getMetaName(), serverZone);
             } else {
                 serverZone = valueList.iterator().next();
             }

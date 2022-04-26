@@ -60,14 +60,14 @@ public class RegionUtils {
         AP_SOUTH_1("印度 (孟买)"),
         ;
 
-        private final String name;
+        private final String zoneName;
 
-        ZONE(String name) {
-            this.name = name;
+        ZONE(String zoneName) {
+            this.zoneName = zoneName;
         }
 
-        public String getName() {
-            return name;
+        public String getZoneName() {
+            return zoneName;
         }
 
         public String getValue() {

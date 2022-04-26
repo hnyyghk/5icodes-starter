@@ -24,7 +24,7 @@ public class VersionCompareRequestPredicateFactory implements RequestPredicateFa
     }
 
     private static int[] parseVersion(String versionStr) {
-        if (!StringUtils.hasLength(versionStr)) {
+        if (!StringUtils.hasText(versionStr)) {
             return null;
         }
         try {

@@ -1,6 +1,5 @@
 package com._5icodes.starter.gray.utils;
 
-import com._5icodes.starter.gray.GrayConstants;
 import com._5icodes.starter.gray.enums.ServerMetaEnum;
 import com._5icodes.starter.sleuth.utils.BaggageFieldUtils;
 import lombok.experimental.UtilityClass;
@@ -22,28 +21,14 @@ public class ServerChooseUtils {
      * @return
      */
     public List<ServiceInstance> chooseServer(List<ServiceInstance> candidates) {
-        List<ServiceInstance> filterServer;
-        if (isGroupRequest()) {
-            filterServer = candidates.stream().filter(ServerChooseUtils::isFirstPriorityServer).collect(Collectors.toList());
-            if (filterServer.isEmpty()) {
-                filterServer = candidates.stream().filter(ServerChooseUtils::isSecondPriorityServer).collect(Collectors.toList());
-            }
-            return filterServer.isEmpty() ? candidates : filterServer;
+        //判断当前请求是否是分组请求
+        if (StringUtils.hasText(getGroupValue())) {
+            //如果是分组请求，返回对应分组实例
+            return candidates.stream().filter(server -> ServerMetaEnum.APP_GROUP.test(server, getGroupValue())).collect(Collectors.toList());
+        } else {
+            //如果不是分组请求，返回无分组实例
+            return candidates.stream().filter(server -> ServerUtils.get(server, ServerMetaEnum.APP_GROUP.getMetaName()).isEmpty()).collect(Collectors.toList());
         }
-        filterServer = candidates.stream()
-                .filter(server -> !isSecondPriorityServer(server))
-                .filter(server -> !ServerUtils.get(server, ServerMetaEnum.TAGS.getName()).contains(GrayConstants.GRAY_TAG))
-                .collect(Collectors.toList());
-        return filterServer.isEmpty() ? candidates : filterServer;
-    }
-
-    /**
-     * 判断当前请求是否是分组请求
-     *
-     * @return
-     */
-    private boolean isGroupRequest() {
-        return StringUtils.hasText(getGroupValue());
     }
 
     /**
@@ -52,27 +37,7 @@ public class ServerChooseUtils {
      * @return
      */
     private String getGroupValue() {
-        String group = BaggageFieldUtils.get(ServerMetaEnum.APP_GROUP.getName());
+        String group = BaggageFieldUtils.get(ServerMetaEnum.APP_GROUP.getMetaName());
         return StringUtils.hasText(group) ? group.toUpperCase() : null;
-    }
-
-    /**
-     * 是否是第一优先级服务
-     *
-     * @param server
-     * @return
-     */
-    private boolean isFirstPriorityServer(ServiceInstance server) {
-        return ServerUtils.get(server, ServerMetaEnum.APP_GROUP.getName()).contains(getGroupValue());
-    }
-
-    /**
-     * 是否是第二优先级服务
-     *
-     * @param server
-     * @return
-     */
-    private boolean isSecondPriorityServer(ServiceInstance server) {
-        return !ServerUtils.get(server, ServerMetaEnum.APP_GROUP.getName()).isEmpty();
     }
 }

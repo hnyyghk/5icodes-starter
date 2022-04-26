@@ -50,6 +50,6 @@ public class ServerUtils {
     }
 
     public String getServerStr(List<ServiceInstance> list) {
-        return list.stream().map(server -> server.getHost() + "|" + server.getPort() + "|" + get(server, ServerMetaEnum.ZONE.getName())).collect(Collectors.joining(","));
+        return list.stream().map(server -> server.getHost() + "|" + server.getPort() + "|" + get(server, ServerMetaEnum.ZONE.getMetaName())).collect(Collectors.joining(","));
     }
 }

@@ -1,22 +1,23 @@
 package com._5icodes.starter.common.utils;
 
+import com._5icodes.starter.common.CommonConstants;
 import lombok.experimental.UtilityClass;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.util.StringUtils;
 
 @UtilityClass
 public class GrayUtils {
-    private final String GRAY_ENABLE = "starter.meta.gray";
+    private String appGroup;
 
-    private Boolean gray;
+    public Boolean isAppGroup() {
+        return StringUtils.hasText(appGroup);
+    }
 
-    public Boolean isGray() {
-        return gray;
+    public static String getAppGroup() {
+        return appGroup;
     }
 
     public void init(ConfigurableEnvironment environment) {
-        if (gray != null) {
-            return;
-        }
-        gray = environment.getProperty(GRAY_ENABLE, Boolean.class, false);
+        appGroup = environment.getProperty(CommonConstants.GRAY_PROPERTY_PREFIX + "." + CommonConstants.APP_GROUP);
     }
 }

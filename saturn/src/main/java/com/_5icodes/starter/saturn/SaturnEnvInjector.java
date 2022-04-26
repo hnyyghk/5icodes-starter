@@ -28,7 +28,7 @@ public class SaturnEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     }
 
     private void processSaturnConfig(ConfigurableEnvironment env, String consoleAddress) {
-        String namespace = SpringApplicationUtils.getApplicationName() + (GrayUtils.isGray() ? "Gray" : "") + "Saturn";
+        String namespace = SpringApplicationUtils.getApplicationName() + (GrayUtils.isAppGroup() ? GrayUtils.getAppGroup() : "") + "Saturn";
         String executorName = null;
         Binder binder = Binder.get(env);
         BindResult<SaturnProperties> bindResult = binder.bind("saturn", SaturnProperties.class);

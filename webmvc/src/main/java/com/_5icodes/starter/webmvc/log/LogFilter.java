@@ -1,7 +1,5 @@
 package com._5icodes.starter.webmvc.log;
 
-import com._5icodes.starter.common.utils.GrayUtils;
-import com._5icodes.starter.common.utils.RegionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.MDC;
@@ -22,8 +20,6 @@ import java.util.Enumeration;
 public class LogFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        MDC.put("zone", RegionUtils.getZone());
-        MDC.put("gray", GrayUtils.isGray() ? "GRAY" : "");
         long start = System.currentTimeMillis();
         log.debug("request uri: {}", request.getRequestURI());
         if (log.isTraceEnabled()) {

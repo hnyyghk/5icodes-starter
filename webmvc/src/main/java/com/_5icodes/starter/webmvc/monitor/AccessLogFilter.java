@@ -1,5 +1,7 @@
 package com._5icodes.starter.webmvc.monitor;
 
+import brave.propagation.CurrentTraceContext;
+import com._5icodes.starter.common.CommonConstants;
 import com._5icodes.starter.common.utils.GrayUtils;
 import com._5icodes.starter.common.utils.HostNameUtils;
 import com._5icodes.starter.common.utils.RegionUtils;
@@ -52,7 +54,7 @@ public class AccessLogFilter extends FillSleuthPropagationAccessLog implements O
 
         accessLog.put("version", webProperties.getAccessVersion());
         accessLog.put("caller", getCaller(request));
-        accessLog.put("callee", getCallee(request));
+        accessLog.put("callee", getCallee());
 
         accessLog.put("resource", resource);
         accessLog.put("method", request.getMethod());
@@ -86,13 +88,12 @@ public class AccessLogFilter extends FillSleuthPropagationAccessLog implements O
     /**
      * 被调日志上报
      *
-     * @param request
      * @return
      */
-    private Map<String, Object> getCallee(HttpServletRequest request) {
+    private Map<String, Object> getCallee() {
         Map<String, Object> callee = new HashMap<>();
         callee.put("moduleId", SpringApplicationUtils.getApplicationName());
-        callee.put("groupId", GrayUtils.isGray() ? "GRAY" : "PRD");
+        callee.put(CommonConstants.APP_GROUP, GrayUtils.isAppGroup() ? GrayUtils.getAppGroup() : "");
         callee.put("zone", RegionUtils.getZone());
         callee.put("reqIp", HostNameUtils.getHostAddress());
         return callee;

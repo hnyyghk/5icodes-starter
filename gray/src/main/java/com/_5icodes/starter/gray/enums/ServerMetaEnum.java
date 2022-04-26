@@ -1,7 +1,7 @@
 package com._5icodes.starter.gray.enums;
 
+import com._5icodes.starter.common.CommonConstants;
 import com._5icodes.starter.gray.utils.ServerUtils;
-import com._5icodes.starter.sleuth.SleuthConstants;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
@@ -26,28 +26,28 @@ public enum ServerMetaEnum {
     /**
      * 环境分组
      */
-    APP_GROUP(SleuthConstants.APP_GROUP),
+    APP_GROUP(CommonConstants.APP_GROUP),
     /**
      * 标签
      */
     TAGS("tags");
 
     @Getter
-    private final String name;
+    private final String metaName;
 
-    ServerMetaEnum(String name) {
-        this.name = name;
+    ServerMetaEnum(String metaName) {
+        this.metaName = metaName;
     }
 
     public boolean predicateWhite(ServiceInstance server, Set<String> whiteList) {
-        Set<String> valueList = ServerUtils.get(server, name);
+        Set<String> valueList = ServerUtils.get(server, metaName);
         boolean predicate = contains(whiteList, valueList);
         log.trace("server host: {} port: {} valueList: {} whiteList: {} predicate: {}", server.getHost(), server.getPort(), valueList, whiteList, predicate);
         return predicate;
     }
 
     public boolean predicateBlack(ServiceInstance server, Set<String> blackList) {
-        Set<String> valueList = ServerUtils.get(server, name);
+        Set<String> valueList = ServerUtils.get(server, metaName);
         boolean predicate = !contains(blackList, valueList);
         log.trace("server host: {} port: {} valueList: {} blackList: {} predicate: {}", server.getHost(), server.getPort(), valueList, blackList, predicate);
         return predicate;
@@ -63,7 +63,7 @@ public enum ServerMetaEnum {
     }
 
     public double getWeight(ServiceInstance server, Map<String, Double> weights, double left) {
-        Set<String> valueList = ServerUtils.get(server, name);
+        Set<String> valueList = ServerUtils.get(server, metaName);
         Double res = null;
         Double tmp;
         for (String value : valueList) {
@@ -76,7 +76,7 @@ public enum ServerMetaEnum {
     }
 
     public boolean test(ServiceInstance server, String meta) {
-        Set<String> valueList = ServerUtils.get(server, name);
+        Set<String> valueList = ServerUtils.get(server, metaName);
         return valueList.contains(meta);
     }
 }
