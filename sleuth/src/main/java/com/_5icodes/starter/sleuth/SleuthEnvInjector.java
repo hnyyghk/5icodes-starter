@@ -6,7 +6,9 @@ import com._5icodes.starter.common.utils.PropertySourceUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.core.env.ConfigurableEnvironment;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SleuthEnvInjector extends AbstractProfileEnvironmentPostProcessor {
     /**

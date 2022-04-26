@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @see com.alibaba.csp.sentinel.adapter.spring.webmvc.SentinelWebInterceptor
  * @see com.alibaba.csp.sentinel.slots.clusterbuilder.ClusterBuilderSlot#entry
  * @see com.alibaba.csp.sentinel.slots.block.flow.FlowRuleChecker#checkFlow
- * @see https://blog.csdn.net/gaoliang1719/article/details/116335077
+ * @see <a href="https://blog.csdn.net/gaoliang1719/article/details/116335077">针对调用来源的限流</a>
  */
 @Slf4j
 public class SentinelMvcInterceptor implements OnlyOnceInterceptorConfigurer, Ordered {

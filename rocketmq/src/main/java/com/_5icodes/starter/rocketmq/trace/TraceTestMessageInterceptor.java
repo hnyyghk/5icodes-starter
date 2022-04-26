@@ -40,7 +40,6 @@ public class TraceTestMessageInterceptor implements MessageInterceptor {
         String topic = message.getTopic();
         if (topic.endsWith(StressConstants.MQ_STRESS_SUFFIX)) {
             TraceTestUtils.info("this is trace test rocketmq consumer topic: {}", message.getTopic());
-            TraceTestUtils.setTraceTestFlag();
         }
         return MessageInterceptor.super.preConsume(msgs);
     }

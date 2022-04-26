@@ -19,7 +19,7 @@ public class ArgsParse {
     /**
      * trace header list
      */
-    private final List<String> TRACE_HEADER_LIST = Arrays.asList("X-B3-SPANID", "X-B3-PARENTSPANID", "X-B3-SAMPLED", "X-B3-TRACEID", "MODULE_ID", "ACCEPT");
+    private final List<String> TRACE_HEADER_LIST = Arrays.asList("X-B3-SPANID", "X-B3-PARENTSPANID", "X-B3-SAMPLED", "X-B3-TRACEID", WebConstants.MODULE_ID, "ACCEPT");
 
     public List<String> parseHeader(String header) {
         header = header.trim();

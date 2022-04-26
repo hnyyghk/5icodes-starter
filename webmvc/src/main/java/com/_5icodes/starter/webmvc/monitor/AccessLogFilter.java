@@ -6,7 +6,6 @@ import com._5icodes.starter.common.utils.GrayUtils;
 import com._5icodes.starter.common.utils.HostNameUtils;
 import com._5icodes.starter.common.utils.RegionUtils;
 import com._5icodes.starter.common.utils.SpringApplicationUtils;
-import com._5icodes.starter.sleuth.SleuthConstants;
 import com._5icodes.starter.web.WebConstants;
 import com._5icodes.starter.web.WebProperties;
 import com._5icodes.starter.web.monitor.FillSleuthPropagationAccessLog;
@@ -110,7 +109,7 @@ public class AccessLogFilter extends FillSleuthPropagationAccessLog implements O
         caller.put("moduleId", request.getHeader(WebConstants.MODULE_ID));
         caller.put("groupId", request.getHeader(WebConstants.GROUP_ID));
         caller.put("zone", request.getHeader(WebConstants.ZONE));
-        String reqIp = request.getHeader(SleuthConstants.REQ_IP);
+        String reqIp = request.getHeader(WebConstants.REQ_IP);
         caller.put("reqIp", reqIp != null ? reqIp : request.getRemoteAddr());
         return caller;
     }

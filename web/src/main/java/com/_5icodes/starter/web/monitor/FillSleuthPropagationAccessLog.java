@@ -1,10 +1,9 @@
 package com._5icodes.starter.web.monitor;
 
-import brave.baggage.BaggageField;
 import brave.propagation.CurrentTraceContext;
 import brave.propagation.TraceContext;
-import com._5icodes.starter.web.WebConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+import com._5icodes.starter.sleuth.SleuthConstants;
+import com._5icodes.starter.sleuth.utils.BaggageFieldUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +18,7 @@ public class FillSleuthPropagationAccessLog extends AbstractAccessLog {
     @Override
     protected void sendAccessLog(Map<String, Object> accessLog) {
         Map<String, Object> spec = new HashMap<>();
-        Map<String, String> propagation = BaggageField.getAllValues();
-        String clientIp = propagation.get(WebConstants.CLIENT_IP);
+        String clientIp = BaggageFieldUtils.get(SleuthConstants.CLIENT_IP);
         spec.put("clientIp", clientIp != null ? clientIp : "");
         //todo
         spec.put("trace", getTraceMap());

@@ -59,7 +59,7 @@ public class ApolloEnvInjector extends AbstractProfileEnvironmentPostProcessor i
     }
 
     /**
-     * @see https://github.com/ctripcorp/apollo/wiki/Java客户端使用指南#五本地开发模式
+     * @see <a href="https://github.com/ctripcorp/apollo/wiki/Java客户端使用指南#五本地开发模式">本地开发模式</a>
      */
     @Override
     protected void onIntegrationTest(ConfigurableEnvironment env, SpringApplication application) {

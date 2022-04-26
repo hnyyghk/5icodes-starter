@@ -21,5 +21,10 @@
             <groupId>com.5icodes</groupId>
             <artifactId>feign</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.5icodes</groupId>
+            <artifactId>web</artifactId>
+        </dependency>
     </dependencies>
 </project>

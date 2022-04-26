@@ -14,8 +14,8 @@ public class JasyptEnvInjector extends AbstractProfileEnvironmentPostProcessor {
      * 需手动配置jasypt.encryptor.bootstrap为false让jasypt对bootstrap.yml不做处理
      * @see com.ulisesbocchio.jasyptspringboot.JasyptSpringCloudBootstrapConfiguration
      * @see com.ulisesbocchio.jasyptspringboot.JasyptSpringBootAutoConfiguration
-     * @see https://github.com/ulisesbocchio/jasypt-spring-boot/issues/256
-     * @see https://github.com/ulisesbocchio/jasypt-spring-boot/issues/255
+     * @see <a href="https://github.com/ulisesbocchio/jasypt-spring-boot/issues/256">issue#256</a>
+     * @see <a href="https://github.com/ulisesbocchio/jasypt-spring-boot/issues/255">issue#255</a>
      *
      * @param env
      * @param application

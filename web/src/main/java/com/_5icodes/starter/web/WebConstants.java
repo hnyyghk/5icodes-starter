@@ -7,9 +7,9 @@ public interface WebConstants {
     String ACCESS_LOG_TOPIC = "T-ACCESS-LOG";
     String ACCESS_LOG_EXTEND_KEY = "ACCESS_LOG_EXTEND";
     String ACCESS_LOG_START_TIME = "ACCESS_LOG_START_TIME";
-    String CLIENT_IP = "CLIENT_IP";
-    String GROUP_ID = "GROUP_ID";
-    String MODULE_ID = "MODULE_ID";
+    String REQ_IP = "REQ-IP";
+    String GROUP_ID = "GROUP-ID";
+    String MODULE_ID = "MODULE-ID";
     String ZONE = "ZONE";
     String PRE_MODULE_ID = "PRE-MODULE-ID";
     String PRE_REQ_URI = "PRE-REQ-URI";
