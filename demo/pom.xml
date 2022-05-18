@@ -14,9 +14,9 @@
     <modules>
         <module>demo-all</module>
         <module>demo-async</module>
+        <module>demo-jdbc</module>
         <module>demo-kafka</module>
         <module>demo-redisson</module>
-        <module>demo-jdbc</module>
         <module>demo-sharding</module>
     </modules>
 

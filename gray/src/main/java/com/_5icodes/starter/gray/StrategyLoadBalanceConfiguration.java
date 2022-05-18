@@ -19,6 +19,9 @@ import org.springframework.core.env.Environment;
 
 @Configuration(proxyBeanMethods = false)
 public class StrategyLoadBalanceConfiguration {
+    /**
+     * @see org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientConfiguration
+     */
     @Bean
     public ServiceInstanceListSupplier serviceInstanceListSupplier(
             ReactiveDiscoveryClient discoveryClient,

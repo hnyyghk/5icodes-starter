@@ -164,6 +164,16 @@ public class KafkaListenerFactoryBeanPostProcessor implements BeanFactoryPostPro
                             public String batch() {
                                 return annotation.batch();
                             }
+
+                            @Override
+                            public String filter() {
+                                return annotation.filter();
+                            }
+
+                            @Override
+                            public String info() {
+                                return annotation.info();
+                            }
                         };
                         grayAnnotations.add(grayAnnotation);
                     }
