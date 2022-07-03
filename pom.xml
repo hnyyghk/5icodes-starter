@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
+        <version>2.7.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -54,18 +54,18 @@
         <maven.compiler.target>8</maven.compiler.target>
         <java.version>1.8</java.version>
         <starter.version>0.0.1</starter.version>
-        <spring-cloud.version>2021.0.2</spring-cloud.version>
+        <spring-cloud.version>2021.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
-        <jackson.version>2.11.3</jackson.version>
+        <jackson.version>2.13.2</jackson.version>
         <hutool.version>5.3.1</hutool.version>
         <sentinel.version>1.8.2</sentinel.version>
         <jetcache.version>2.6.4</jetcache.version>
         <apollo.version>1.8.0</apollo.version>
-        <guava.version>20.0</guava.version>
+        <guava.version>30.0-jre</guava.version>
         <curator.version>2.13.0</curator.version>
         <druid.version>1.1.20</druid.version>
         <sharding-jdbc.version>2.0.0</sharding-jdbc.version>
-        <log.version>2.13.0</log.version>
+        <log4j.version>2.17.1</log4j.version>
         <powermock.version>2.0.0</powermock.version>
         <kie.version>7.53.0.Final</kie.version>
     </properties>
@@ -79,28 +79,28 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log.version}</version>
+            <version>${log4j.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log.version}</version>
+            <version>${log4j.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log.version}</version>
+            <version>${log4j.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jul</artifactId>
-            <version>${log.version}</version>
+            <version>${log4j.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -329,7 +329,7 @@
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>2.6</version>
+                <version>2.7</version>
             </dependency>
 
             <dependency>
@@ -451,7 +451,7 @@
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-spring</artifactId>
-                <version>1.6.0</version>
+                <version>1.7.1</version>
             </dependency>
 
             <dependency>
@@ -508,30 +508,6 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jdk8</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-parameter-names</artifactId>
-                <version>${jackson.version}</version>
             </dependency>
 
             <dependency>
@@ -602,6 +578,14 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
