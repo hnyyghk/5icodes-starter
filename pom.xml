@@ -666,16 +666,25 @@
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
                         </path>
+                        <!-- additional annotation processor required as of Lombok 1.18.16 -->
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok-mapstruct-binding</artifactId>
                             <version>${lombok-mapstruct-binding.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                    <!-- due to problem in maven-compiler-plugin, for verbose mode add showWarnings -->
                     <showWarnings>true</showWarnings>
                     <compilerArgs>
-                        <!-- 编译时输出mapstruct的详细信息 -->
-                        <arg>-Amapstruct.verbose=true</arg>
+                        <arg>
+                            -Amapstruct.suppressGeneratorTimestamp=true
+                        </arg>
+                        <arg>
+                            -Amapstruct.suppressGeneratorVersionInfoComment=true
+                        </arg>
+                        <arg>
+                            -Amapstruct.verbose=true
+                        </arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
